@@ -11,6 +11,10 @@ import * as path from 'node:path';
 import { envSchema } from './common/configuration/env-valdiation-schema';
 import configMapping from './common/configuration/config-mapping';
 import { CustomExceptionFilter } from './common/error-handling/filters/custom-exception.filter';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { EnvironmentInterface } from './common/configuration/environment.interface';
+import { TransformResponseInterceptor } from './common/interceptors/transform-response.interceptor';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 
 @Module({
     imports: [
@@ -27,9 +31,8 @@ import { CustomExceptionFilter } from './common/error-handling/filters/custom-ex
                     'en',
                 ),
                 loaderOptions: {
-                    path: path.join(__dirname, '../../i18n/'),
-                    watch:
-                        configService.get<string>('NODE_ENV') === 'development',
+                    path: path.join(process.cwd(), 'src/i18n/'),
+                    watch: process.env.node_env === 'development',
                 },
             }),
             resolvers: [
@@ -38,6 +41,43 @@ import { CustomExceptionFilter } from './common/error-handling/filters/custom-ex
                 new HeaderResolver(['x-lang']),
             ],
         }),
+        TypeOrmModule.forRootAsync({
+            inject: [ConfigService],
+            useFactory: (
+                configService: ConfigService<EnvironmentInterface>,
+            ) => {
+                const isDev = process.env.node_env === 'development';
+                return {
+                    type: 'postgres',
+                    host: configService.getOrThrow<string>('database.host', {
+                        infer: true,
+                    }),
+                    db_port: configService.getOrThrow<number>(
+                        'database.db_port',
+                        {
+                            infer: true,
+                        },
+                    ),
+                    username: configService.getOrThrow<string>(
+                        'database.username',
+                        { infer: true },
+                    ),
+                    password: configService.getOrThrow<string>(
+                        'database.password',
+                        { infer: true },
+                    ),
+                    database: configService.getOrThrow<string>(
+                        'database.name',
+                        {
+                            infer: true,
+                        },
+                    ),
+                    autoLoadEntities: true,
+                    synchronize: isDev,
+                    logging: isDev,
+                };
+            },
+        }),
     ],
     controllers: [],
     providers: [
@@ -45,6 +85,7 @@ import { CustomExceptionFilter } from './common/error-handling/filters/custom-ex
             provide: APP_FILTER,
             useClass: CustomExceptionFilter,
         },
+        { provide: APP_INTERCEPTOR, useClass: TransformResponseInterceptor },
     ],
 })
 export class CoreModule {}

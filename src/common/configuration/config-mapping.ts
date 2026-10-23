@@ -10,7 +10,7 @@ const environment: Record<string, () => EnvironmentInterface> = {
 };
 
 export default () => {
-    const nodeEnv = process.env.NODE_ENV || 'development';
+    const nodeEnv = process.env.node_env || 'development';
     const getEnvToLoad = environment[nodeEnv] || developmentEnv;
     console.log(`Loading configuration for environment: ${nodeEnv}`);
     return getEnvToLoad();

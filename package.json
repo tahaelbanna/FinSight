@@ -18,7 +18,11 @@
     "test:watch": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --watch",
     "test:cov": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --coverage",
     "test:debug": "node --inspect-brk --experimental-vm-modules -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --config ./test/jest-e2e.json"
+    "test:e2e": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --config ./test/jest-e2e.json",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "docker:down:rm": "docker compose down -v",
+    "docker:logs": "docker compose logs -f"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -27,6 +31,7 @@
     "@nestjs/jwt": "^11.0.2",
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/swagger": "^11.4.7",
+    "@nestjs/typeorm": "^12.0.2",
     "@types/bcrypt": "^6.0.0",
     "@types/nodemailer": "^8.0.1",
     "bcrypt": "^6.0.0",
@@ -35,8 +40,10 @@
     "class-validator": "^0.15.1",
     "joi": "^18.3.0",
     "nestjs-i18n": "^10.8.5",
+    "pg": "^8.23.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
+    "typeorm": "^1.1.2",
     "uuid": "^14.0.3"
   },
   "devDependencies": {

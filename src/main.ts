@@ -10,7 +10,7 @@ import { Logger } from '@nestjs/common';
 async function bootstrap() {
     const app = await NestFactory.create<INestApplication>(AppModule, {
         logger: new ConsoleLogger({
-            json: process.env.NODE_ENV === 'production',
+            json: process.env.node_env === 'production',
         }),
     });
 

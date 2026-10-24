@@ -14,16 +14,23 @@ import { PaginatedResult } from 'src/common/data-access/base-repository';
 import { GetAllUsersDto } from './dtos/get-all-users.dto';
 import { UpdateUserStatusDto } from './dtos/update-user-status.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
-
+import { AllowRoles } from 'src/auth/decorators/roles.decorator';
+import {
+    CurrentUser,
+    Principal,
+} from '../auth/decorators/current-user.decorator';
+import { UserRole } from 'src/common/enums';
 @Controller('users')
 export class UsersController {
     constructor(private readonly usersService: UsersService) {}
 
+    @AllowRoles(UserRole.ADMIN)
     @Post()
     async createUser(@Body() body: CreateUserDto): Promise<UserResponseDto> {
         return this.usersService.createUser(body);
     }
 
+    @AllowRoles(UserRole.ADMIN)
     @Get()
     async getAllUsers(
         @Query() query: GetAllUsersDto,
@@ -31,6 +38,7 @@ export class UsersController {
         return this.usersService.getAllUsers(query);
     }
 
+    @AllowRoles(UserRole.ADMIN)
     @Get(':user_id')
     async getUserById(
         @Param('user_id') user_id: string,
@@ -38,6 +46,7 @@ export class UsersController {
         return this.usersService.getUserById(user_id);
     }
 
+    @AllowRoles(UserRole.ADMIN)
     @Patch(':user_id')
     async updateUser(
         @Body() body: UpdateUserDto,
@@ -46,16 +55,17 @@ export class UsersController {
         return this.usersService.updateUser(body, user_id);
     }
 
+    @AllowRoles(UserRole.ADMIN)
     @Patch(':user_id/status')
     async updateUserStatus(
         @Body() body: UpdateUserStatusDto,
         @Param('user_id') user_id: string,
-        // currentUserId: string,
+        @CurrentUser() principal: Principal,
     ): Promise<UserResponseDto> {
         return this.usersService.updateUserStatus(
             body,
             user_id,
-            // currentUserId,
+            principal.user.user_id,
         );
     }
 }

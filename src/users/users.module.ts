@@ -10,9 +10,15 @@ import { UpdateUserStatusUseCase } from './usecases/update-user-status.usecase';
 import { UpdateUserUsecase } from './usecases/update-user.usecase';
 import { User } from './schemas/users.schema';
 import { Department } from 'src/departments/schemas/departments.schema';
+import { GetOneUserUseCase } from './usecases/get-one.usercase';
+import { AuthModule } from 'src/auth/auth.module';
+import { forwardRef } from '@nestjs/common';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([User, Department])],
+    imports: [
+        TypeOrmModule.forFeature([User, Department]),
+        forwardRef(() => AuthModule),
+    ],
     controllers: [UsersController],
     providers: [
         UsersService,
@@ -22,6 +28,7 @@ import { Department } from 'src/departments/schemas/departments.schema';
         GetUserByIdUseCase,
         UpdateUserStatusUseCase,
         UpdateUserUsecase,
+        GetOneUserUseCase,
     ],
     exports: [UsersService],
 })

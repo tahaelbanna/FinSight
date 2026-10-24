@@ -1,0 +1,12 @@
+{
+    "USER_ALREADY_EXISTS": "المستخدم بهذا البريد الإلكتروني موجود بالفعل.",
+    "USER_NOT_FOUND": "المستخدم غير موجود.",
+    "USER_DELETED": "تم حذف المستخدم.",
+    "USER_UPDATED": "تم تحديث المستخدم بنجاح.",
+    "USER_STATUS_UPDATED": "تم تحديث حالة المستخدم بنجاح.",
+    "USER_DEACTIVATED": "تم إلغاء تنشيط المستخدم.",
+    "USER_ACTIVATED": "تم تنشيط المستخدم.",
+    "INVALID_USER_ID": "معرف المستخدم غير صالح.",
+    "INVALID_USER_STATUS": "حالة المستخدم غير صالحة.",
+    "INVALID_USER_ROLE": "دور المستخدم غير صالح."
+}

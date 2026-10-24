@@ -9,4 +9,10 @@ export const envSchema = Joi.object({
     username: Joi.string().required().default('postgres'),
     password: Joi.string().required().default('postgres123'),
     name: Joi.string().required().default('finsight_db'),
+    systemAdminName: Joi.string().required().default('Admin'),
+    systemAdminEmail: Joi.string().required().email(),
+    systemAdminPassword: Joi.string().required().min(8).max(20),
+    jwtSecret: Joi.string().required(),
+    accessTokenExpireIn: Joi.string().required(),
+    refreshTokenExpireIn: Joi.string().required(),
 });

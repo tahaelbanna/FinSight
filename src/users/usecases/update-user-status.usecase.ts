@@ -6,24 +6,27 @@ import { I18nService } from 'nestjs-i18n';
 import { UserResponseDto } from '../dtos/user-response.dto';
 import { UserRepository } from '../repositories/users.repository';
 import { UpdateUserStatusDto } from '../dtos/update-user-status.dto';
-
+import { AuthService } from 'src/auth/auth.service';
+import { Inject, forwardRef } from '@nestjs/common';
 @Injectable()
 export class UpdateUserStatusUseCase {
     constructor(
         private readonly userRepository: UserRepository,
         private readonly i18nService: I18nService,
+        @Inject(forwardRef(() => AuthService))
+        private readonly authService: AuthService,
     ) {}
 
     async execute(
         body: UpdateUserStatusDto,
         user_id: string,
-        // currentUserId: string,
+        currentUserId: string,
     ): Promise<UserResponseDto> {
-        // if (currentUserId === user_id && body.is_active === false) {
-        //     throw new BadRequestException(
-        //         this.i18nService.translate('users.CANNOT_DEACTIVATE_OWN_ACCOUNT'),
-        //     );
-        // }
+        if (currentUserId === user_id && body.is_active === false) {
+            throw new BadRequestException(
+                this.i18nService.translate('users.CANNOT_DEACTIVATE_OWN_ACCOUNT'),
+            );
+        }
 
         const user = await this.userRepository.findById(user_id);
         if (!user) {
@@ -47,7 +50,7 @@ export class UpdateUserStatusUseCase {
         );
 
         if (body.is_active === false) {
-            // استدعاء ميثود لحذف أو الـ Refresh Tokens لليوزر ده
+            await this.authService.DeleteRefreshTokensForUser(user_id);
         }
 
         return plainToInstance(UserResponseDto, updatedUser);

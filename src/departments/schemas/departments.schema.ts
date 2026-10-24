@@ -20,15 +20,15 @@ export class Department {
     @Column({ type: 'varchar', length: 100 })
     department_name: string;
 
-    @Column({ type: 'text', nullable: true })
-    description?: string;
+    @Column({ type: 'text', nullable: false })
+    description: string;
 
-    @Column({ type: 'bigint', nullable: true })
-    manager_id?: string;
+    @Column({ type: 'bigint', nullable: false })
+    manager_id: string;
 
-    @ManyToOne(() => User, { nullable: true, onDelete: 'RESTRICT' })
+    @ManyToOne(() => User, { nullable: false, onDelete: 'RESTRICT' })
     @JoinColumn({ name: 'manager_id' })
-    manager?: User;
+    manager: User;
 
     @OneToMany(() => User, (user) => user.department)
     users: User[];

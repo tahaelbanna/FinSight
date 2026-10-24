@@ -1,0 +1,7 @@
+{
+    "DEPARTMENT_NAME_ALREADY_EXISTS": "القسم موجود بالفعل.",
+    "MANAGER_ID_REQUIRED": "معرف المدير مطلوب.",
+    "DEPARTMENT_NOT_FOUND": "القسم غير موجود.",
+    "INVALID_MANAGER_ROLE_OR_STATUS": "يجب أن يكون المدير المختار بدور 'مدير' ونشط.",
+    "CANNOT_DELETE_DEPARTMENT_WITH_USERS": "لا يمكن حذف قسم يحتوي على مستخدمين مسندين إليه."
+}

@@ -2,6 +2,8 @@ export interface EnvironmentInterface {
     port: number;
     fallbackLanguage: string;
     database: IDB;
+    systemAdmin: ISystemAdmin;
+    jwt: IJWT;
 }
 export interface IDB {
     host: string;
@@ -9,4 +11,14 @@ export interface IDB {
     username: string;
     password: string;
     name: string;
+}
+export interface ISystemAdmin {
+    name: string;
+    email: string;
+    password: string;
+}
+export interface IJWT {
+    jwtSecret: string;
+    accessTokenExpireIn: string;
+    refreshTokenExpireIn: string;
 }

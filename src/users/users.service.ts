@@ -10,7 +10,10 @@ import { UserResponseDto } from './dtos/user-response.dto';
 import { UpdateUserStatusDto } from './dtos/update-user-status.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { PaginatedResult } from 'src/common/data-access/base-repository';
-
+import { GetOneUserUseCase } from './usecases/get-one.usercase';
+import { User } from './schemas/users.schema';
+import { FindOptionsWhere } from 'typeorm';
+import { UserAuthResponseDto } from './dtos/user-auth-response';
 @Injectable()
 export class UsersService {
     constructor(
@@ -19,6 +22,7 @@ export class UsersService {
         private readonly getUserByIdUseCase: GetUserByIdUseCase,
         private readonly updateUserStatusUseCase: UpdateUserStatusUseCase,
         private readonly updateUserUsecase: UpdateUserUsecase,
+        private readonly getOneUserUseCase: GetOneUserUseCase,
     ) {}
 
     async createUser(body: CreateUserDto): Promise<UserResponseDto> {
@@ -38,11 +42,12 @@ export class UsersService {
     async updateUserStatus(
         body: UpdateUserStatusDto,
         user_id: string,
-        // currentUserId: string,
+        currentUserId: string,
     ): Promise<UserResponseDto> {
         return this.updateUserStatusUseCase.execute(
             body,
-            user_id, // currentUserId: string,
+            user_id,
+            currentUserId,
         );
     }
 
@@ -51,5 +56,9 @@ export class UsersService {
         user_id: string,
     ): Promise<UserResponseDto> {
         return this.updateUserUsecase.execute(body, user_id);
+    }
+
+    async getOne(query: FindOptionsWhere<User>): Promise<UserAuthResponseDto> {
+        return this.getOneUserUseCase.execute(query);
     }
 }

@@ -1,0 +1,12 @@
+{
+    "USER_ALREADY_EXISTS": "User with this email already exists.",
+    "USER_NOT_FOUND": "User not found.",
+    "USER_DELETED": "User has been deleted.",
+    "USER_UPDATED": "User updated successfully.",
+    "USER_STATUS_UPDATED": "User status updated successfully.",
+    "USER_DEACTIVATED": "User has been deactivated.",
+    "USER_ACTIVATED": "User has been activated.",
+    "INVALID_USER_ID": "Invalid user ID.",
+    "INVALID_USER_STATUS": "Invalid user status.",
+    "INVALID_USER_ROLE": "Invalid user role."
+}

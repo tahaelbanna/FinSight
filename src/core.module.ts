@@ -15,6 +15,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { EnvironmentInterface } from './common/configuration/environment.interface';
 import { TransformResponseInterceptor } from './common/interceptors/transform-response.interceptor';
 import { APP_INTERCEPTOR } from '@nestjs/core';
+import { RefreshToken } from './auth/schemas/refresh-token.schema';
+import { Department } from './departments/schemas/departments.schema';
+import { User } from './users/schemas/users.schema';
+import { SystemAdmin } from './system-admin/schemas/system-admin.schema';
 
 @Module({
     imports: [
@@ -52,12 +56,9 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
                     host: configService.getOrThrow<string>('database.host', {
                         infer: true,
                     }),
-                    db_port: configService.getOrThrow<number>(
-                        'database.db_port',
-                        {
-                            infer: true,
-                        },
-                    ),
+                    port: configService.getOrThrow<number>('database.db_port', {
+                        infer: true,
+                    }),
                     username: configService.getOrThrow<string>(
                         'database.username',
                         { infer: true },
@@ -72,9 +73,10 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
                             infer: true,
                         },
                     ),
+                    entities: [SystemAdmin, User, Department, RefreshToken],
                     autoLoadEntities: true,
                     synchronize: isDev,
-                    logging: isDev,
+                    logging: false,
                 };
             },
         }),

@@ -52,7 +52,9 @@ export class BaseRepository<T extends ObjectLiteral> {
     constructor(protected readonly repository: Repository<T>) {}
 
     protected getRepo(queryRunner?: QueryRunner): Repository<T> {
-        return queryRunner ? queryRunner.manager.getRepository(this.repository.target) : this.repository;
+        return queryRunner
+            ? queryRunner.manager.getRepository(this.repository.target)
+            : this.repository;
     }
 
     async create(
@@ -78,9 +80,11 @@ export class BaseRepository<T extends ObjectLiteral> {
         options?: FindOneOptions<T> & BaseTransactionalOptions,
     ): Promise<T | null> {
         const repo = this.getRepo(options?.queryRunner);
+        const primaryKey =
+            repo.metadata.primaryColumns[0]?.propertyName || 'id';
         return repo.findOne({
             ...options,
-            where: { id } as unknown as FindOptionsWhere<T>,
+            where: { [primaryKey]: id } as unknown as FindOptionsWhere<T>,
         });
     }
 
@@ -110,8 +114,11 @@ export class BaseRepository<T extends ObjectLiteral> {
     ): Promise<PaginatedResult<T>> {
         const repo = this.getRepo(options.queryRunner);
         const page = Math.max(1, options.page || 1);
-        const limit = options.ignoreLimit ? undefined : Math.max(1, options.limit || 10);
-        const skip = limit && !options.ignoreLimit ? (page - 1) * limit : undefined;
+        const limit = options.ignoreLimit
+            ? undefined
+            : Math.max(1, options.limit || 10);
+        const skip =
+            limit && !options.ignoreLimit ? (page - 1) * limit : undefined;
 
         const findOptions: FindManyOptions<T> = {
             ...options,
@@ -121,12 +128,7 @@ export class BaseRepository<T extends ObjectLiteral> {
 
         const [data, total] = await repo.findAndCount(findOptions);
 
-        return new PaginatedResult<T>(
-            data,
-            total,
-            page,
-            limit || total,
-        );
+        return new PaginatedResult<T>(data, total, page, limit || total);
     }
 
     async update(

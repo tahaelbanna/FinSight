@@ -14,7 +14,7 @@ export class DeleteDepartmentUseCase {
 
     async execute(department_id: string): Promise<void> {
         const department = await this.departmentRepository.findById(department_id, {
-            relations: { users: true },
+            relations: { users: true, projects: true },
         });
 
         if (!department) {

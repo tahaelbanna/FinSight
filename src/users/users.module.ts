@@ -30,6 +30,6 @@ import { forwardRef } from '@nestjs/common';
         UpdateUserUsecase,
         GetOneUserUseCase,
     ],
-    exports: [UsersService],
+    exports: [UsersService, UserRepository],
 })
 export class UsersModule {}

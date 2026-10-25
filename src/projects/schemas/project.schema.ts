@@ -8,9 +8,11 @@ import {
     JoinColumn,
     Unique,
     Check,
+    OneToMany,
 } from 'typeorm';
 import { Department } from '../../departments/schemas/departments.schema';
 import { ProjectStatus } from '../../common/enums';
+import { Budget } from 'src/budgets/schemas/budget.schema';
 
 @Entity('projects')
 @Unique(['project_id', 'department_id'])
@@ -48,4 +50,7 @@ export class Project {
 
     @UpdateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
     updated_at: Date;
+
+    @OneToMany(() => Budget, (budget) => budget.project)
+    budgets: Budget[];
 }

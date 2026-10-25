@@ -7,14 +7,16 @@ import {
     ManyToOne,
     JoinColumn,
     Index,
+    OneToMany,
 } from 'typeorm';
 import { UserRole } from '../../common/enums';
 import { Department } from '../../departments/schemas/departments.schema';
+import { Budget } from 'src/budgets/schemas/budget.schema';
 
 @Entity('users')
 export class User {
     @PrimaryGeneratedColumn({ type: 'bigint' })
-    user_id: string; 
+    user_id: string;
 
     @Column({ type: 'varchar', length: 150 })
     full_name: string;
@@ -43,9 +45,18 @@ export class User {
     @Column({ type: 'boolean', default: true })
     is_active: boolean;
 
-    @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
+    @CreateDateColumn({
+        type: 'timestamptz',
+        default: () => 'CURRENT_TIMESTAMP',
+    })
     created_at: Date;
 
-    @UpdateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
+    @UpdateDateColumn({
+        type: 'timestamptz',
+        default: () => 'CURRENT_TIMESTAMP',
+    })
     updated_at: Date;
+    
+    @OneToMany(() => Budget, (budget) => budget.creator)
+    created_budgets: Budget[];
 }

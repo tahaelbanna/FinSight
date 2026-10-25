@@ -11,6 +11,7 @@ import {
 } from 'typeorm';
 import { User } from '../../users/schemas/users.schema';
 import { Project } from '../../projects/schemas/project.schema';
+import { Budget } from 'src/budgets/schemas/budget.schema';
 @Entity('departments')
 export class Department {
     @PrimaryGeneratedColumn({ type: 'bigint' })
@@ -41,4 +42,7 @@ export class Department {
 
     @UpdateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
     updated_at: Date;
+
+    @OneToMany(() => Budget, (budget) => budget.department)
+    budgets: Budget[];
 }

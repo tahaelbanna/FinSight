@@ -9,6 +9,7 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './auth/guards/role-gaurd.guard';
 import { ProjectsModule } from './projects/projects.module';
+import { BudgetsModule } from './budgets/budgets.module';
 @Module({
     imports: [
         CoreModule,
@@ -17,6 +18,7 @@ import { ProjectsModule } from './projects/projects.module';
         AuthModule,
         SystemAdminModule,
         ProjectsModule,
+        BudgetsModule,
     ],
     providers: [
         { provide: APP_GUARD, useClass: JwtAuthGuard },

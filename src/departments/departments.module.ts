@@ -25,6 +25,6 @@ import { UserRepository } from 'src/users/repositories/users.repository';
         UserRepository,
     ],
     controllers: [DepartmentsController],
-    exports: [DepartmentsService],
+    exports: [DepartmentsService, DepartmentRepository],
 })
 export class DepartmentsModule {}

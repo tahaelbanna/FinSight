@@ -10,7 +10,7 @@ import {
     Index,
 } from 'typeorm';
 import { User } from '../../users/schemas/users.schema';
-
+import { Project } from '../../projects/schemas/project.schema';
 @Entity('departments')
 export class Department {
     @PrimaryGeneratedColumn({ type: 'bigint' })
@@ -32,6 +32,9 @@ export class Department {
 
     @OneToMany(() => User, (user) => user.department)
     users: User[];
+
+    @OneToMany(() => Project, (project) => project.department)
+    projects: Project[];
 
     @CreateDateColumn({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
     created_at: Date;

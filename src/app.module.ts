@@ -11,6 +11,7 @@ import { RolesGuard } from './auth/guards/role-gaurd.guard';
 import { ProjectsModule } from './projects/projects.module';
 import { BudgetsModule } from './budgets/budgets.module';
 import { ExpensesModule } from './expenses/expenses.module';
+import { FilesUploadModule } from './files-upload/files-upload.module';
 @Module({
     imports: [
         CoreModule,
@@ -21,6 +22,7 @@ import { ExpensesModule } from './expenses/expenses.module';
         ProjectsModule,
         BudgetsModule,
         ExpensesModule,
+        FilesUploadModule
     ],
     providers: [
         { provide: APP_GUARD, useClass: JwtAuthGuard },

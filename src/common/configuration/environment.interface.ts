@@ -4,6 +4,7 @@ export interface EnvironmentInterface {
     database: IDB;
     systemAdmin: ISystemAdmin;
     jwt: IJWT;
+    cloudinary: ICloudinaryConfig;
 }
 export interface IDB {
     host: string;
@@ -21,4 +22,10 @@ export interface IJWT {
     jwtSecret: string;
     accessTokenExpireIn: string;
     refreshTokenExpireIn: string;
+}
+
+export interface ICloudinaryConfig {
+    cloudinaryCloudName: string;
+    cloudinaryApiKey: string;
+    cloudinaryApiSecret: string;
 }

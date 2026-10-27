@@ -15,4 +15,7 @@ export const envSchema = Joi.object({
     jwtSecret: Joi.string().required(),
     accessTokenExpireIn: Joi.string().required(),
     refreshTokenExpireIn: Joi.string().required(),
+    cloudinaryCloudName: Joi.string().required().default(''),
+    cloudinaryApiKey: Joi.string().required().default(''),
+    cloudinaryApiSecret: Joi.string().required().default(''),
 });

@@ -1,3 +1,6 @@
 export * from './user-roles.enum';
 export * from './project-status.enum';
 export * from './budget-scope.enum';
+export * from './expense-status.enum';
+export * from './sort-order.enum';
+export * from './expenses-sortby.enum';

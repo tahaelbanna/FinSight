@@ -21,4 +21,9 @@ export const defaultEnv = (): EnvironmentInterface => ({
         accessTokenExpireIn: process.env.accessTokenExpireIn as string,
         refreshTokenExpireIn: process.env.refreshTokenExpireIn as string,
     },
+    cloudinary: {
+        cloudinaryCloudName: process.env.cloudinaryCloudName as string,
+        cloudinaryApiKey: process.env.cloudinaryApiKey as string,
+        cloudinaryApiSecret: process.env.cloudinaryApiSecret as string,
+    },
 });

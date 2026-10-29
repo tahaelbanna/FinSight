@@ -52,7 +52,8 @@ export class BudgetsController {
     async update(
         @Param('budget_id') budget_id: string,
         @Body() body: UpdateBudgetDto,
+        @CurrentUser() principal: Principal,
     ): Promise<BudgetResponseDto> {
-        return this.budgetsService.update(budget_id, body);
+        return this.budgetsService.update(budget_id, body, principal.user.user_id);
     }
 }

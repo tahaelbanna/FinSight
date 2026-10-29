@@ -31,7 +31,7 @@ export class BudgetsService {
         return this.getBudgetByIdUseCase.execute(budget_id, user_id);
     }
 
-    async update(budget_id: string, body: UpdateBudgetDto): Promise<BudgetResponseDto> {
-        return this.updateBudgetUseCase.execute(budget_id, body);
+    async update(budget_id: string, body: UpdateBudgetDto, user_id: string): Promise<BudgetResponseDto> {
+        return this.updateBudgetUseCase.execute(budget_id, body, user_id);
     }
 }

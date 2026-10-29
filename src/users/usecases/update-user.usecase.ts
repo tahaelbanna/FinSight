@@ -7,17 +7,21 @@ import { UpdateUserDto } from '../dtos/update-user.dto';
 import { UserResponseDto } from '../dtos/user-response.dto';
 import { UserRepository } from '../repositories/users.repository';
 import { UserRole } from '../../common/enums';
+import { ActionType, EntityType } from 'src/common/enums';
+import { ActivityLogRepository } from 'src/activity-logs/repositories/activity-log.repository';
 
 @Injectable()
 export class UpdateUserUsecase {
     constructor(
         private readonly userRepository: UserRepository,
         private readonly i18nService: I18nService,
+        private readonly activityLogRepository: ActivityLogRepository,
     ) {}
 
     async execute(
         body: UpdateUserDto,
         user_id: string,
+        admin_id: string,
     ): Promise<UserResponseDto> {
         const user = await this.userRepository.findById(user_id);
         if (!user) {
@@ -45,6 +49,14 @@ export class UpdateUserUsecase {
         }
 
         const updatedUser = await this.userRepository.updateById(user_id, body);
+
+        await this.activityLogRepository.create({
+            user_id: admin_id,
+            action_type: ActionType.USER_UPDATED,
+            entity_type: EntityType.USER,
+            entity_id: user_id,
+        });
+
         return plainToInstance(UserResponseDto, updatedUser);
     }
 }

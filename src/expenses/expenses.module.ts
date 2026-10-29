@@ -22,6 +22,7 @@ import { UsersModule } from 'src/users/users.module';
 import { DepartmentsModule } from 'src/departments/departments.module';
 import { ProjectsModule } from 'src/projects/projects.module';
 import { ExpenseMetricsQuery } from './queries/expense-metrics.query';
+import { ActivityLogsModule } from 'src/activity-logs/activity-logs.module';
 
 @Module({
     imports: [
@@ -30,6 +31,7 @@ import { ExpenseMetricsQuery } from './queries/expense-metrics.query';
         UsersModule,
         DepartmentsModule,
         ProjectsModule,
+        ActivityLogsModule
     ],
     providers: [
         ExpensesService,

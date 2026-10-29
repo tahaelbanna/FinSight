@@ -15,7 +15,8 @@ import { UserRepository } from 'src/users/repositories/users.repository';
 
 import { CreateExpenseDto } from '../dtos/create-expense.dto';
 import { ExpenseResponseDto } from '../dtos/expense-response.dto';
-import { ExpenseStatus } from 'src/common/enums';
+import { ActionType, ExpenseStatus, EntityType } from 'src/common/enums';
+import { ActivityLogRepository } from 'src/activity-logs/repositories/activity-log.repository';
 
 @Injectable()
 export class SubmitExpenseUseCase {
@@ -28,6 +29,7 @@ export class SubmitExpenseUseCase {
         private readonly userRepository: UserRepository,
         private readonly filesUploadService: FilesUploadService,
         private readonly i18nService: I18nService,
+        private readonly activityLogRepository: ActivityLogRepository,
     ) {}
 
     async execute(
@@ -108,8 +110,6 @@ export class SubmitExpenseUseCase {
             attachmentsData.push(...savedAttachments);
         }
 
-        // TODO: Activity Log (EXPENSE_SUBMITTED)
-
         const responseData = {
             expense_id: newExpense.expense_id,
             submitted_by: {
@@ -141,6 +141,13 @@ export class SubmitExpenseUseCase {
             })),
             submitted_at: newExpense.submitted_at,
         };
+
+        await this.activityLogRepository.create({
+            user_id: user_id,
+            action_type: ActionType.EXPENSE_SUBMITTED,
+            entity_type: EntityType.EXPENSE,
+            entity_id: newExpense.expense_id,
+        });
 
         return plainToInstance(ExpenseResponseDto, responseData, {
             excludeExtraneousValues: true,

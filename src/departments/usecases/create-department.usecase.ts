@@ -7,7 +7,8 @@ import { I18nService } from 'nestjs-i18n';
 import { BadRequestException } from 'src/common/error-handling/custom-exceptions/bad-request.exception';
 import { NotFoundException } from 'src/common/error-handling/custom-exceptions/not-found.exception';
 import { UserRepository } from 'src/users/repositories/users.repository';
-import { UserRole } from 'src/common/enums';
+import { EntityType, UserRole, ActionType } from 'src/common/enums';
+import { ActivityLogRepository } from 'src/activity-logs/repositories/activity-log.repository';
 
 @Injectable()
 export class CreateDepartmentUseCase {
@@ -15,9 +16,10 @@ export class CreateDepartmentUseCase {
         private readonly departmentRepository: DepartmentRepository,
         private readonly userRepository: UserRepository,
         private readonly i18nService: I18nService,
+        private readonly activityLogRepository: ActivityLogRepository,
     ) {}
 
-    async execute(body: CreateDepartmentDto): Promise<DepartmentResponseDto> {
+    async execute(body: CreateDepartmentDto, admin_id: string): Promise<DepartmentResponseDto> {
         const existingDepartment = await this.departmentRepository.findOne({
             where: {
                 department_name: body.department_name,
@@ -66,6 +68,13 @@ export class CreateDepartmentUseCase {
             },
             usersCount,
         };
+
+        await this.activityLogRepository.create({
+            user_id: admin_id,
+            action_type: ActionType.DEPARTMENT_CREATED,
+            entity_type: EntityType.DEPARTMENT,
+            entity_id: newDepartment.department_id,
+        });
 
         return plainToInstance(DepartmentResponseDto, responseData, {
             excludeExtraneousValues: true,

@@ -4,3 +4,5 @@ export * from './budget-scope.enum';
 export * from './expense-status.enum';
 export * from './sort-order.enum';
 export * from './expenses-sortby.enum';
+export * from './action-type.enum';
+export * from './entity-type.enum';

@@ -13,7 +13,8 @@ import { ReviewExpenseDto } from '../dtos/review-expense.dto';
 import { ExpenseResponseDto } from 'src/expenses/dtos/expense-response.dto';
 import { ExpenseStatus, UserRole } from 'src/common/enums';
 import { Expense } from 'src/expenses/schemas/expense.schema';
-
+import { ActivityLog } from 'src/activity-logs/schemas/activity-log.schema';
+import { ActionType, EntityType } from 'src/common/enums';
 @Injectable()
 export class ReviewExpenseUseCase {
     constructor(
@@ -76,11 +77,21 @@ export class ReviewExpenseUseCase {
 
             if (updateResult.affected === 0) {
                 throw new ConflictException(
-                    this.i18nService.translate('expenses.EXPENSE_ALREADY_REVIEWED'),
+                    this.i18nService.translate(
+                        'expenses.EXPENSE_ALREADY_REVIEWED',
+                    ),
                 );
             }
 
-            // TODO: كتابة الحدث في الـ Activity Log باستخدام نفس الـ queryRunner
+            await queryRunner.manager.insert(ActivityLog, {
+                user_id: manager.user_id,
+                action_type:
+                    body.decision === ExpenseStatus.APPROVED
+                        ? ActionType.EXPENSE_APPROVED
+                        : ActionType.EXPENSE_REJECTED,
+                entity_type: EntityType.EXPENSE,
+                entity_id: expense_id,
+            });
             // TODO: إرسال إشعار للموظف
 
             await queryRunner.commitTransaction();
@@ -117,9 +128,9 @@ export class ReviewExpenseUseCase {
             },
             project: updatedExpense.project
                 ? {
-                    project_id: updatedExpense.project.project_id,
-                    project_name: updatedExpense.project.project_name,
-                }
+                      project_id: updatedExpense.project.project_id,
+                      project_name: updatedExpense.project.project_name,
+                  }
                 : null,
             amount: Number(updatedExpense.amount),
             category: {

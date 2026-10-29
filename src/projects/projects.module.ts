@@ -11,9 +11,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Project } from './schemas/project.schema';
 import { DepartmentsModule } from 'src/departments/departments.module';
 import { UsersModule } from 'src/users/users.module';
+import { ActivityLogsModule } from 'src/activity-logs/activity-logs.module';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Project]), DepartmentsModule, UsersModule],
+    imports: [
+        TypeOrmModule.forFeature([Project]),
+        DepartmentsModule,
+        UsersModule,
+        ActivityLogsModule,
+    ],
     controllers: [ProjectsController],
     providers: [
         ProjectsService,

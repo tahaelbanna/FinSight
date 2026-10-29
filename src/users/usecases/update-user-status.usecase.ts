@@ -8,6 +8,9 @@ import { UserRepository } from '../repositories/users.repository';
 import { UpdateUserStatusDto } from '../dtos/update-user-status.dto';
 import { AuthService } from 'src/auth/auth.service';
 import { Inject, forwardRef } from '@nestjs/common';
+import { ActionType, EntityType } from 'src/common/enums';
+import { ActivityLogRepository } from 'src/activity-logs/repositories/activity-log.repository';
+
 @Injectable()
 export class UpdateUserStatusUseCase {
     constructor(
@@ -15,6 +18,7 @@ export class UpdateUserStatusUseCase {
         private readonly i18nService: I18nService,
         @Inject(forwardRef(() => AuthService))
         private readonly authService: AuthService,
+        private readonly activityLogRepository: ActivityLogRepository,
     ) {}
 
     async execute(
@@ -52,6 +56,13 @@ export class UpdateUserStatusUseCase {
         if (body.is_active === false) {
             await this.authService.DeleteRefreshTokensForUser(user_id);
         }
+
+        await this.activityLogRepository.create({
+            user_id: currentUserId,
+            action_type: body.is_active ? ActionType.USER_ACTIVATED : ActionType.USER_DEACTIVATED,
+            entity_type: EntityType.USER,
+            entity_id: user_id,
+        });
 
         return plainToInstance(UserResponseDto, updatedUser);
     }

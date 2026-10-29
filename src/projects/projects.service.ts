@@ -21,8 +21,8 @@ export class ProjectsService {
         private readonly updateProjectStatusUseCase: UpdateProjectStatusUseCase,
     ) {}
 
-    async createProject(createProjectDto: CreateProjectDto): Promise<ProjectResponseDto> {
-        return this.createProjectUseCase.execute(createProjectDto);
+    async createProject(createProjectDto: CreateProjectDto, user_id: string): Promise<ProjectResponseDto> {
+        return this.createProjectUseCase.execute(createProjectDto, user_id);
     }
 
     async getAllProjects(
@@ -39,14 +39,16 @@ export class ProjectsService {
     async updateProject(
         projectId: string,
         updateProjectDto: UpdateProjectDto,
+        user_id: string,
     ): Promise<ProjectResponseDto> {
-        return this.updateProjectUseCase.execute(projectId, updateProjectDto);
+        return this.updateProjectUseCase.execute(projectId, updateProjectDto, user_id);
     }
 
     async updateProjectStatus(
         projectId: string,
         updateProjectStatusDto: UpdateProjectStatusDto,
+        user_id: string,
     ): Promise<ProjectResponseDto> {
-        return this.updateProjectStatusUseCase.execute(projectId, updateProjectStatusDto);
+        return this.updateProjectStatusUseCase.execute(projectId, updateProjectStatusDto, user_id);
     }
 }

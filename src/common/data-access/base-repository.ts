@@ -57,6 +57,10 @@ export class BaseRepository<T extends ObjectLiteral> {
             : this.repository;
     }
 
+    createQueryBuilder(alias?: string, queryRunner?: QueryRunner) {
+        return this.getRepo(queryRunner).createQueryBuilder(alias);
+    }
+
     async create(
         entityLike: DeepPartial<T>,
         options?: BaseTransactionalOptions,

@@ -11,9 +11,10 @@ import { Department } from './schemas/departments.schema';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/users/schemas/users.schema';
 import { UserRepository } from 'src/users/repositories/users.repository';
+import { ActivityLogsModule } from 'src/activity-logs/activity-logs.module';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Department, User])],
+    imports: [TypeOrmModule.forFeature([Department, User]), ActivityLogsModule],
     providers: [
         DepartmentsService,
         DepartmentRepository,

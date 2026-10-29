@@ -8,8 +8,9 @@ import { DepartmentRepository } from '../repositories/department.repository';
 import { UserRepository } from 'src/users/repositories/users.repository';
 import { UpdateDepartmentDto } from '../dtos/update-department.dto';
 import { DepartmentResponseDto } from '../dtos/department-response.dto';
-import { UserRole } from 'src/common/enums';
+import { EntityType, UserRole, ActionType } from 'src/common/enums';
 import { Not } from 'typeorm';
+import { ActivityLogRepository } from 'src/activity-logs/repositories/activity-log.repository';
 
 @Injectable()
 export class UpdateDepartmentUseCase {
@@ -17,11 +18,13 @@ export class UpdateDepartmentUseCase {
         private readonly departmentRepository: DepartmentRepository,
         private readonly userRepository: UserRepository,
         private readonly i18nService: I18nService,
+        private readonly activityLogRepository: ActivityLogRepository,
     ) {}
 
     async execute(
         department_id: string,
         body: UpdateDepartmentDto,
+        admin_id: string,
     ): Promise<DepartmentResponseDto> {
         const department = await this.departmentRepository.findById(
             department_id,
@@ -119,6 +122,13 @@ export class UpdateDepartmentUseCase {
             created_at: finalDepartment.created_at,
             updated_at: finalDepartment.updated_at,
         };
+
+        await this.activityLogRepository.create({
+            user_id: admin_id,
+            action_type: ActionType.DEPARTMENT_UPDATED,
+            entity_type: EntityType.DEPARTMENT,
+            entity_id: department_id,
+        });
 
         return plainToInstance(DepartmentResponseDto, responseData, {
             excludeExtraneousValues: true,

@@ -16,6 +16,14 @@ class UserDto {
     full_name: string;
 }
 
+class CategoryDto {
+    @Expose()
+    category_id: string;
+
+    @Expose()
+    category_name: string;
+}
+
 export class BudgetResponseDto {
     @Expose()
     budget_id: string;
@@ -37,31 +45,47 @@ export class BudgetResponseDto {
     @Expose()
     end_date: Date;
 
-    // --- Calculated Fields ---
-    // @Expose()
-    // approved_expenses: number;
+    @Expose()
+    approved_expenses: number;
 
-    // @Expose()
-    // remaining_budget: number;
+    @Expose()
+    remaining_budget: number;
 
-    // @Expose()
-    // utilization_percentage: number;
+    @Expose()
+    utilization_percentage: number;
 
-    // @Expose()
-    // budget_variance: number;
+    @Expose()
+    budget_variance: number;
 
-    // @Expose()
-    // utilization_level: string; // 'low', 'moderate', 'high', 'over'
+    @Expose()
+    utilization_level: string;
 
-    // @Expose()
-    // is_overrun: boolean;
+    @Expose()
+    is_overrun: boolean;
 
-    // TODO: 
-    // @Expose()
-    // @Type(() => ExpenseDto) 
-    // recent_expenses: ExpenseDto[];
+    @Expose()
+    @Type(() => MinimalExpenseDto)
+    recent_expenses: MinimalExpenseDto[];
 
     @Expose()
     @Type(() => UserDto)
     created_by: UserDto;
+}
+
+class MinimalExpenseDto {
+    @Expose()
+    expense_id: string;
+
+    @Expose()
+    amount: number;
+
+    @Expose()
+    expense_date: Date;
+
+    @Expose()
+    status: string;
+
+    @Expose()
+    @Type(() => CategoryDto)
+    category: CategoryDto;
 }

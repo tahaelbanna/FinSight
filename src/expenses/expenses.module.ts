@@ -21,6 +21,7 @@ import { FilesUploadModule } from 'src/files-upload/files-upload.module';
 import { UsersModule } from 'src/users/users.module';
 import { DepartmentsModule } from 'src/departments/departments.module';
 import { ProjectsModule } from 'src/projects/projects.module';
+import { ExpenseMetricsQuery } from './queries/expense-metrics.query';
 
 @Module({
     imports: [
@@ -40,8 +41,9 @@ import { ProjectsModule } from 'src/projects/projects.module';
         GetAllExpensesUseCase,
         GetExpenseByIdUseCase,
         DownloadAttachmentUseCase,
+        ExpenseMetricsQuery
     ],
     controllers: [ExpensesController],
-    exports: [ExpensesService, ExpenseRepository],
+    exports: [ExpensesService, ExpenseRepository, ExpenseMetricsQuery],
 })
 export class ExpensesModule {}

@@ -14,6 +14,7 @@ import { UpdateBudgetUseCase } from './usecases/update-budget.usecase';
 import { DepartmentsModule } from 'src/departments/departments.module';
 import { ProjectsModule } from 'src/projects/projects.module';
 import { UsersModule } from 'src/users/users.module';
+import { ExpensesModule } from 'src/expenses/expenses.module';
 
 @Module({
     imports: [
@@ -21,6 +22,7 @@ import { UsersModule } from 'src/users/users.module';
         DepartmentsModule,
         ProjectsModule,
         UsersModule,
+        ExpensesModule
     ],
     providers: [
         BudgetsService,

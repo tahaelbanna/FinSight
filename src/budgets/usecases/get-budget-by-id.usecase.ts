@@ -10,6 +10,8 @@ import { UserRepository } from 'src/users/repositories/users.repository';
 import { BudgetResponseDto } from '../dtos/budget-response.dto';
 import { UserRole } from 'src/common/enums';
 import { I18nService } from 'nestjs-i18n';
+import { calculateBudgetMetrics } from '../utils/budget-calculator.util';
+import { ExpenseMetricsQuery } from 'src/expenses/queries/expense-metrics.query';
 
 @Injectable()
 export class GetBudgetByIdUseCase {
@@ -17,6 +19,7 @@ export class GetBudgetByIdUseCase {
         private readonly budgetRepository: BudgetRepository,
         private readonly userRepository: UserRepository,
         private readonly i18nService: I18nService,
+        private readonly expenseMetricsQuery: ExpenseMetricsQuery,
     ) {}
 
     async execute(
@@ -24,11 +27,7 @@ export class GetBudgetByIdUseCase {
         user_id: string,
     ): Promise<BudgetResponseDto> {
         const budget = await this.budgetRepository.findById(budget_id, {
-            relations: {
-                department: true,
-                project: true,
-                creator: true,
-            },
+            relations: { department: true, project: true, creator: true },
         });
 
         if (!budget) {
@@ -38,9 +37,7 @@ export class GetBudgetByIdUseCase {
         }
 
         const currentUser = await this.userRepository.findById(user_id);
-        if (!currentUser) {
-            throw new UnauthorizedException();
-        }
+        if (!currentUser) throw new UnauthorizedException();
 
         if (
             currentUser.role !== UserRole.ADMIN &&
@@ -50,7 +47,6 @@ export class GetBudgetByIdUseCase {
                 budget.department_id === currentUser.department_id;
             const isProjectMatch =
                 budget.project?.department_id === currentUser.department_id;
-
             if (!isDepartmentMatch && !isProjectMatch) {
                 throw new ForbiddenException(
                     this.i18nService.translate(
@@ -59,6 +55,26 @@ export class GetBudgetByIdUseCase {
                 );
             }
         }
+
+        const totalApproved =
+            await this.expenseMetricsQuery.getTotalApprovedByScope(
+                budget.start_date,
+                budget.end_date,
+                budget.department_id,
+                budget.project_id,
+            );
+        const recentExpensesRaw =
+            await this.expenseMetricsQuery.getRecentExpensesByScope(
+                budget.start_date,
+                budget.end_date,
+                5,
+                budget.department_id,
+                budget.project_id,
+            );
+        const metrics = calculateBudgetMetrics(
+            Number(budget.allocated_amount),
+            totalApproved,
+        );
 
         const responseData = {
             budget_id: budget.budget_id,
@@ -83,15 +99,19 @@ export class GetBudgetByIdUseCase {
                     full_name: budget.creator.full_name,
                 }
                 : null,
-
-            // TODO: 
-            // approved_expenses: 0,
-            // remaining_budget: Number(budget.allocated_amount),
-            // utilization_percentage: 0,
-            // budget_variance: Number(budget.allocated_amount),
-            // utilization_level: 'low',
-            // is_overrun: false,
-            // recent_expenses: [], 
+            ...metrics,
+            recent_expenses: recentExpensesRaw.map((exp) => ({
+                expense_id: exp.expense_id,
+                amount: Number(exp.amount),
+                expense_date: exp.expense_date,
+                status: exp.status,
+                category: exp.category
+                    ? {
+                        category_id: exp.category.category_id,
+                        category_name: exp.category.category_name,
+                    }
+                    : null,
+            })),
         };
 
         return plainToInstance(BudgetResponseDto, responseData, {

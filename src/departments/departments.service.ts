@@ -20,11 +20,16 @@ export class DepartmentsService {
         private readonly deleteDepartmentUseCase: DeleteDepartmentUseCase,
     ) {}
 
-    async create(body: CreateDepartmentDto): Promise<DepartmentResponseDto> {
-        return this.createDepartmentUseCase.execute(body);
+    async create(
+        body: CreateDepartmentDto,
+        user_id: string,
+    ): Promise<DepartmentResponseDto> {
+        return this.createDepartmentUseCase.execute(body, user_id);
     }
 
-    async GetAll(query: GetAllDepartmentsDto): Promise<PaginatedResult<DepartmentResponseDto>> {
+    async GetAll(
+        query: GetAllDepartmentsDto,
+    ): Promise<PaginatedResult<DepartmentResponseDto>> {
         return this.getAllDepartmentsUseCase.execute(query);
     }
 
@@ -32,11 +37,19 @@ export class DepartmentsService {
         return this.getDepartmentByIdUseCase.execute(department_id);
     }
 
-    async update(department_id: string, body: UpdateDepartmentDto): Promise<DepartmentResponseDto> {
-        return this.updateDepartmentUseCase.execute(department_id, body);
+    async update(
+        department_id: string,
+        body: UpdateDepartmentDto,
+        user_id: string,
+    ): Promise<DepartmentResponseDto> {
+        return this.updateDepartmentUseCase.execute(
+            department_id,
+            body,
+            user_id,
+        );
     }
 
-    async remove(department_id: string): Promise<void> {
-        return this.deleteDepartmentUseCase.execute(department_id);
+    async remove(department_id: string, user_id: string): Promise<void> {
+        return this.deleteDepartmentUseCase.execute(department_id, user_id);
     }
 }

@@ -15,6 +15,7 @@ import { DepartmentsModule } from 'src/departments/departments.module';
 import { ProjectsModule } from 'src/projects/projects.module';
 import { UsersModule } from 'src/users/users.module';
 import { ExpensesModule } from 'src/expenses/expenses.module';
+import { ActivityLogsModule } from 'src/activity-logs/activity-logs.module';
 
 @Module({
     imports: [
@@ -22,7 +23,8 @@ import { ExpensesModule } from 'src/expenses/expenses.module';
         DepartmentsModule,
         ProjectsModule,
         UsersModule,
-        ExpensesModule
+        ExpensesModule,
+        ActivityLogsModule,
     ],
     providers: [
         BudgetsService,

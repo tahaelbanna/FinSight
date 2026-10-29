@@ -26,8 +26,25 @@ export class UsersController {
 
     @AllowRoles(UserRole.ADMIN)
     @Post()
-    async createUser(@Body() body: CreateUserDto): Promise<UserResponseDto> {
-        return this.usersService.createUser(body);
+    async createUser(
+        @Body() body: CreateUserDto,
+        @CurrentUser() principal: Principal,
+    ): Promise<UserResponseDto> {
+        return this.usersService.createUser(body, principal.user.user_id);
+    }
+
+    @AllowRoles(UserRole.ADMIN)
+    @Patch(':user_id')
+    async updateUser(
+        @Body() body: UpdateUserDto,
+        @Param('user_id') user_id: string,
+        @CurrentUser() principal: Principal,
+    ): Promise<UserResponseDto> {
+        return this.usersService.updateUser(
+            body,
+            user_id,
+            principal.user.user_id,
+        );
     }
 
     @AllowRoles(UserRole.ADMIN)
@@ -44,15 +61,6 @@ export class UsersController {
         @Param('user_id') user_id: string,
     ): Promise<UserResponseDto> {
         return this.usersService.getUserById(user_id);
-    }
-
-    @AllowRoles(UserRole.ADMIN)
-    @Patch(':user_id')
-    async updateUser(
-        @Body() body: UpdateUserDto,
-        @Param('user_id') user_id: string,
-    ): Promise<UserResponseDto> {
-        return this.usersService.updateUser(body, user_id);
     }
 
     @AllowRoles(UserRole.ADMIN)

@@ -6,17 +6,21 @@ import { BadRequestException } from 'src/common/error-handling/custom-exceptions
 import { ProjectRepository } from '../repositories/project.repository';
 import { UpdateProjectDto } from '../dtos/update-project.dto';
 import { ProjectResponseDto } from '../dtos/project-response.dto';
+import { ActionType, EntityType } from 'src/common/enums';
+import { ActivityLogRepository } from 'src/activity-logs/repositories/activity-log.repository';
 
 @Injectable()
 export class UpdateProjectUseCase {
     constructor(
         private readonly projectRepository: ProjectRepository,
         private readonly i18nService: I18nService,
+        private readonly activityLogRepository: ActivityLogRepository,
     ) {}
 
     async execute(
         project_id: string,
         body: UpdateProjectDto,
+        admin_id: string,
     ): Promise<ProjectResponseDto> {
         const project = await this.projectRepository.findById(project_id, {
             relations: { department: true },
@@ -74,6 +78,13 @@ export class UpdateProjectUseCase {
             created_at: updatedProject.created_at,
             updated_at: updatedProject.updated_at,
         };
+
+        await this.activityLogRepository.create({
+            user_id: admin_id,
+            action_type: ActionType.PROJECT_UPDATED,
+            entity_type: EntityType.PROJECT,
+            entity_id: updatedProject.project_id,
+        });
 
         return plainToInstance(ProjectResponseDto, responseData, {
             excludeExtraneousValues: true,

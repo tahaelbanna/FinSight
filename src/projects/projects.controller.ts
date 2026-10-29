@@ -16,7 +16,10 @@ import { UpdateProjectStatusDto } from './dtos/update-project-status.dto';
 import { GetAllProjectsDto } from './dtos/get-all-projects.dto';
 import { ProjectResponseDto } from './dtos/project-response.dto';
 import { PaginatedResult } from 'src/common/data-access';
-import { CurrentUser, Principal } from 'src/auth/decorators/current-user.decorator';
+import {
+    CurrentUser,
+    Principal,
+} from 'src/auth/decorators/current-user.decorator';
 
 @Controller('projects')
 export class ProjectsController {
@@ -26,8 +29,9 @@ export class ProjectsController {
     @AllowRoles(UserRole.ADMIN)
     async create(
         @Body() body: CreateProjectDto,
+        @CurrentUser() principal: Principal,
     ): Promise<ProjectResponseDto> {
-        return this.projectsService.createProject(body);
+        return this.projectsService.createProject(body, principal.user.user_id);
     }
 
     @Get()
@@ -53,16 +57,18 @@ export class ProjectsController {
     async update(
         @Param('project_id') project_id: string,
         @Body() body: UpdateProjectDto,
+        @CurrentUser() principal: Principal,
     ): Promise<ProjectResponseDto> {
-        return this.projectsService.updateProject(project_id, body);
-    }   
+        return this.projectsService.updateProject(project_id, body, principal.user.user_id);
+    }
 
     @Patch(':project_id/status')
     @AllowRoles(UserRole.ADMIN)
     async updateStatus(
         @Param('project_id') project_id: string,
         @Body() body: UpdateProjectStatusDto,
+        @CurrentUser() principal: Principal,
     ): Promise<ProjectResponseDto> {
-        return this.projectsService.updateProjectStatus(project_id, body);
+        return this.projectsService.updateProjectStatus(project_id, body, principal.user.user_id);
     }
 }

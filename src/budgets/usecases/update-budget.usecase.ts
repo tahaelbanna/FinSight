@@ -8,6 +8,8 @@ import { UpdateBudgetDto } from '../dtos/update-budget.dto';
 import { BudgetResponseDto } from '../dtos/budget-response.dto';
 import { calculateBudgetMetrics } from '../utils/budget-calculator.util';
 import { ExpenseMetricsQuery } from 'src/expenses/queries/expense-metrics.query';
+import { ActionType, EntityType } from 'src/common/enums';
+import { ActivityLogRepository } from 'src/activity-logs/repositories/activity-log.repository';
 
 @Injectable()
 export class UpdateBudgetUseCase {
@@ -15,11 +17,13 @@ export class UpdateBudgetUseCase {
         private readonly budgetRepository: BudgetRepository,
         private readonly i18nService: I18nService,
         private readonly expenseMetricsQuery: ExpenseMetricsQuery,
+        private readonly activityLogRepository: ActivityLogRepository,
     ) {}
 
     async execute(
         budget_id: string,
         body: UpdateBudgetDto,
+        user_id: string,
     ): Promise<BudgetResponseDto> {
         const budget = await this.budgetRepository.findById(budget_id);
         if (!budget) {
@@ -107,6 +111,13 @@ export class UpdateBudgetUseCase {
                 : null,
             ...metrics,
         };
+
+        await this.activityLogRepository.create({
+            user_id: user_id,
+            action_type: ActionType.BUDGET_UPDATED,
+            entity_type: EntityType.BUDGET,
+            entity_id: budget_id,
+        });
 
         return plainToInstance(BudgetResponseDto, responseData, {
             excludeExtraneousValues: true,

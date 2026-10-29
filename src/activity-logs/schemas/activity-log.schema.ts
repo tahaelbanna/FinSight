@@ -32,7 +32,7 @@ export class ActivityLog {
     })
     created_at: Date;
 
-    @ManyToOne(() => User, { onDelete: 'RESTRICT' })
+    @ManyToOne(() => User, { createForeignKeyConstraints: false })
     @JoinColumn({ name: 'user_id' })
     user: User;
 }

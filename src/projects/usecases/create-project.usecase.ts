@@ -7,7 +7,8 @@ import { ProjectRepository } from '../repositories/project.repository';
 import { DepartmentRepository } from 'src/departments/repositories/department.repository';
 import { CreateProjectDto } from '../dtos/create-project.dto';
 import { ProjectResponseDto } from '../dtos/project-response.dto';
-import { ProjectStatus } from '../../common/enums';
+import { ActionType, EntityType, ProjectStatus } from '../../common/enums';
+import { ActivityLogRepository } from 'src/activity-logs/repositories/activity-log.repository';
 
 @Injectable()
 export class CreateProjectUseCase {
@@ -15,9 +16,10 @@ export class CreateProjectUseCase {
         private readonly projectRepository: ProjectRepository,
         private readonly departmentRepository: DepartmentRepository,
         private readonly i18nService: I18nService,
+        private readonly activityLogRepository: ActivityLogRepository,
     ) {}
 
-    async execute(body: CreateProjectDto): Promise<ProjectResponseDto> {
+    async execute(body: CreateProjectDto, admin_id: string): Promise<ProjectResponseDto> {
         const startDate = new Date(body.start_date);
         const endDate = new Date(body.end_date);
 
@@ -55,6 +57,13 @@ export class CreateProjectUseCase {
             created_at: newProject.created_at,
             updated_at: newProject.updated_at,
         };
+
+        await this.activityLogRepository.create({
+            user_id: admin_id,
+            action_type: ActionType.PROJECT_CREATED,
+            entity_type: EntityType.PROJECT,
+            entity_id: newProject.project_id,
+        });
 
         return plainToInstance(ProjectResponseDto, responseData, {
             excludeExtraneousValues: true,

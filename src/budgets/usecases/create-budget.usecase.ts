@@ -11,6 +11,8 @@ import { CreateBudgetDto } from '../dtos/create-budget.dto';
 import { BudgetResponseDto } from '../dtos/budget-response.dto';
 import { calculateBudgetMetrics } from '../utils/budget-calculator.util';
 import { ExpenseMetricsQuery } from 'src/expenses/queries/expense-metrics.query';
+import { EntityType, ActionType } from 'src/common/enums';
+import { ActivityLogRepository } from 'src/activity-logs/repositories/activity-log.repository';
 
 @Injectable()
 export class CreateBudgetUseCase {
@@ -21,6 +23,7 @@ export class CreateBudgetUseCase {
         private readonly userRepository: UserRepository,
         private readonly i18nService: I18nService,
         private readonly expenseMetricsQuery: ExpenseMetricsQuery,
+        private readonly activityLogRepository: ActivityLogRepository,
     ) {}
 
     async execute(
@@ -80,8 +83,6 @@ export class CreateBudgetUseCase {
             created_by: user_id,
         });
 
-        // TODO: Activity Log (Logs)
-
         const totalApproved = await this.expenseMetricsQuery.getTotalApprovedByScope(
             newBudget.start_date,
             newBudget.end_date,
@@ -114,6 +115,13 @@ export class CreateBudgetUseCase {
                 full_name: creator.full_name,
             },
         };
+
+        await this.activityLogRepository.create({
+            user_id: user_id,
+            action_type: ActionType.BUDGET_CREATED,
+            entity_type: EntityType.BUDGET,
+            entity_id: newBudget.budget_id,
+        });
 
         return plainToInstance(BudgetResponseDto, responseData, {
             excludeExtraneousValues: true,

@@ -25,8 +25,8 @@ export class UsersService {
         private readonly getOneUserUseCase: GetOneUserUseCase,
     ) {}
 
-    async createUser(body: CreateUserDto): Promise<UserResponseDto> {
-        return this.createUserUsecase.execute(body);
+    async createUser(body: CreateUserDto, admin_id: string): Promise<UserResponseDto> {
+        return this.createUserUsecase.execute(body, admin_id);
     }
 
     async getAllUsers(
@@ -54,8 +54,9 @@ export class UsersService {
     async updateUser(
         body: UpdateUserDto,
         user_id: string,
+        admin_id: string,
     ): Promise<UserResponseDto> {
-        return this.updateUserUsecase.execute(body, user_id);
+        return this.updateUserUsecase.execute(body, user_id, admin_id);
     }
 
     async getOne(query: FindOptionsWhere<User>): Promise<UserAuthResponseDto> {

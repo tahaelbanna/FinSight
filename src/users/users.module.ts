@@ -13,11 +13,13 @@ import { Department } from 'src/departments/schemas/departments.schema';
 import { GetOneUserUseCase } from './usecases/get-one.usercase';
 import { AuthModule } from 'src/auth/auth.module';
 import { forwardRef } from '@nestjs/common';
+import { ActivityLogsModule } from 'src/activity-logs/activity-logs.module';
 
 @Module({
     imports: [
         TypeOrmModule.forFeature([User, Department]),
         forwardRef(() => AuthModule),
+        forwardRef(() => ActivityLogsModule),
     ],
     controllers: [UsersController],
     providers: [

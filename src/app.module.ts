@@ -13,6 +13,7 @@ import { BudgetsModule } from './budgets/budgets.module';
 import { ExpensesModule } from './expenses/expenses.module';
 import { FilesUploadModule } from './files-upload/files-upload.module';
 import { ApprovalsModule } from './approvals/approvals.module';
+import { ActivityLogsModule } from './activity-logs/activity-logs.module';
 @Module({
     imports: [
         CoreModule,
@@ -24,7 +25,8 @@ import { ApprovalsModule } from './approvals/approvals.module';
         BudgetsModule,
         ExpensesModule,
         FilesUploadModule,
-        ApprovalsModule
+        ApprovalsModule,
+        ActivityLogsModule
     ],
     providers: [
         { provide: APP_GUARD, useClass: JwtAuthGuard },

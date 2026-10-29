@@ -24,9 +24,8 @@ export class GetAllBudgetsDto extends PaginationDto {
     @IsDateString()
     date_to?: string;
 
-    // TODO: سيتم تفعيله لاحقاً مع موديول المصروفات
-    // @IsOptional()
-    // @Transform(({ value }) => value === 'true' || value === true)
-    // @IsBoolean()
-    // is_overrun?: boolean; 
+    @IsOptional()
+    @Transform(({ value }) => value === 'true' || value === true)
+    @IsBoolean()
+    is_overrun?: boolean; 
 }

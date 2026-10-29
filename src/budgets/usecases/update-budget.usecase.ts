@@ -6,12 +6,15 @@ import { BadRequestException } from 'src/common/error-handling/custom-exceptions
 import { BudgetRepository } from '../repositories/budget.repository';
 import { UpdateBudgetDto } from '../dtos/update-budget.dto';
 import { BudgetResponseDto } from '../dtos/budget-response.dto';
+import { calculateBudgetMetrics } from '../utils/budget-calculator.util';
+import { ExpenseMetricsQuery } from 'src/expenses/queries/expense-metrics.query';
 
 @Injectable()
 export class UpdateBudgetUseCase {
     constructor(
         private readonly budgetRepository: BudgetRepository,
         private readonly i18nService: I18nService,
+        private readonly expenseMetricsQuery: ExpenseMetricsQuery,
     ) {}
 
     async execute(
@@ -19,7 +22,6 @@ export class UpdateBudgetUseCase {
         body: UpdateBudgetDto,
     ): Promise<BudgetResponseDto> {
         const budget = await this.budgetRepository.findById(budget_id);
-
         if (!budget) {
             throw new NotFoundException(
                 this.i18nService.translate('budgets.BUDGET_NOT_FOUND'),
@@ -39,21 +41,22 @@ export class UpdateBudgetUseCase {
             );
         }
 
-        // TODO: 
-        // if (body.allocated_amount !== undefined) {
-        //     const totalApprovedExpenses =
-        //         await this.expenseRepository.getTotalApprovedByBudgetId(
-        //             budget_id,
-        //         );
-
-        //     if (body.allocated_amount < totalApprovedExpenses) {
-        //         throw new BadRequestException(
-        //             this.i18nService.translate(
-        //                 'budgets.CANNOT_REDUCE_BELOW_EXPENSES',
-        //             ),
-        //         );
-        //     }
-        // }
+        if (body.allocated_amount !== undefined) {
+            const totalApprovedExpenses =
+                await this.expenseMetricsQuery.getTotalApprovedByScope(
+                    budget.start_date,
+                    budget.end_date,
+                    budget.department_id,
+                    budget.project_id,
+                );
+            if (body.allocated_amount < totalApprovedExpenses) {
+                throw new BadRequestException(
+                    this.i18nService.translate(
+                        'budgets.CANNOT_REDUCE_BELOW_EXPENSES',
+                    ),
+                );
+            }
+        }
 
         await this.budgetRepository.updateById(budget_id, {
             allocated_amount: body.allocated_amount ?? budget.allocated_amount,
@@ -63,15 +66,21 @@ export class UpdateBudgetUseCase {
             end_date: body.end_date ? new Date(body.end_date) : budget.end_date,
         });
 
-        // TODO: كتابة التعديل في الـ Activity Log
-
         const updatedBudget = await this.budgetRepository.findById(budget_id, {
-            relations: {
-                department: true,
-                project: true,
-                creator: true,
-            },
+            relations: { department: true, project: true, creator: true },
         });
+
+        const finalTotalApproved =
+            await this.expenseMetricsQuery.getTotalApprovedByScope(
+                updatedBudget.start_date,
+                updatedBudget.end_date,
+                updatedBudget.department_id,
+                updatedBudget.project_id,
+            );
+        const metrics = calculateBudgetMetrics(
+            Number(updatedBudget.allocated_amount),
+            finalTotalApproved,
+        );
 
         const responseData = {
             budget_id: updatedBudget.budget_id,
@@ -96,14 +105,7 @@ export class UpdateBudgetUseCase {
                     full_name: updatedBudget.creator.full_name,
                 }
                 : null,
-
-            // TODO:
-            // approved_expenses: 0,
-            // remaining_budget: Number(updatedBudget.allocated_amount),
-            // utilization_percentage: 0,
-            // budget_variance: Number(updatedBudget.allocated_amount),
-            // utilization_level: 'low',
-            // is_overrun: false,
+            ...metrics,
         };
 
         return plainToInstance(BudgetResponseDto, responseData, {

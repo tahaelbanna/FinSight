@@ -13,6 +13,8 @@
         "start:dev": "nest start --watch",
         "start:debug": "nest start --debug --watch",
         "start:prod": "node dist/main",
+        "seed": "ts-node -r tsconfig-paths/register src/database/seeds/seeder.ts",
+        "seed:reset": "ts-node -r tsconfig-paths/register src/database/seeds/seeder.ts --reset",
         "lint": "oxlint --type-aware src/ test/",
         "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
         "test:watch": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --watch",

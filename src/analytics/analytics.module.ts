@@ -10,9 +10,16 @@ import { UsersModule } from 'src/users/users.module';
 import { ExpensesModule } from 'src/expenses/expenses.module';
 import { BudgetsModule } from 'src/budgets/budgets.module';
 import { ProjectsModule } from 'src/projects/projects.module';
+import { DepartmentsModule } from 'src/departments/departments.module';
 
 @Module({
-    imports: [UsersModule, ExpensesModule, BudgetsModule, ProjectsModule],
+    imports: [
+        UsersModule,
+        ExpensesModule,
+        BudgetsModule,
+        ProjectsModule,
+        DepartmentsModule,
+    ],
     controllers: [AnalyticsController],
     providers: [
         AnalyticsService,

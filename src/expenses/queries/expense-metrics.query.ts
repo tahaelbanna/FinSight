@@ -28,6 +28,7 @@ export class ExpenseMetricsQuery {
             query.andWhere('expense.department_id = :departmentId', {
                 departmentId,
             });
+            query.andWhere('expense.project_id IS NULL');
         }
 
         return query;

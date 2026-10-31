@@ -82,14 +82,16 @@ export class GetSummaryUseCase {
         let totalBudget = 0;
         if (currentUser.role !== UserRole.EMPLOYEE) {
             const budgetQb = this.budgetRepository.createQueryBuilder('budget');
-            if (targetDepartmentId)
-                budgetQb.andWhere('budget.department_id = :deptId', {
-                    deptId: targetDepartmentId,
-                });
-            if (query.project_id)
-                budgetQb.andWhere('budget.project_id = :projId', {
+            if (targetDepartmentId && !query.project_id) {
+                budgetQb.where(
+                    '(budget.department_id = :deptId OR budget.project_id IN (SELECT p.project_id FROM projects p WHERE p.department_id = :deptId))',
+                    { deptId: targetDepartmentId },
+                );
+            } else if (query.project_id) {
+                budgetQb.where('budget.project_id = :projId', {
                     projId: query.project_id,
                 });
+            }
 
             const budgetResult = await budgetQb
                 .select('SUM(budget.allocated_amount)', 'total')

@@ -1,12 +1,27 @@
-import { Expose } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
+
+export class DepartmentComparisonInfo {
+    @Expose()
+    department_id: string;
+
+    @Expose()
+    department_name: string;
+}
 
 export class DepartmentComparisonResponseDto {
-    @Expose() 
-    department_id: string;
-    
-    @Expose() 
-    department_name: string;
-    
-    @Expose() 
-    total: number;
+    @Expose()
+    @Type(() => DepartmentComparisonInfo)
+    department: DepartmentComparisonInfo;
+
+    @Expose()
+    totalApproved: number;
+
+    @Expose()
+    allocatedBudget: number;
+
+    @Expose()
+    utilizationPercentage: number | null;
+
+    @Expose()
+    isOverrun: boolean;
 }

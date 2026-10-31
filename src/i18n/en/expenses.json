@@ -1,0 +1,6 @@
+{
+    "EXPENSE_NOT_FOUND": "Expense not found.",
+    "EXPENSE_NOT_PENDING": "Expense is not pending review.",
+    "EXPENSE_ALREADY_REVIEWED": "Expense has already been reviewed.",
+    "ATTACHMENT_NOT_FOUND": "Attachment not found."
+}

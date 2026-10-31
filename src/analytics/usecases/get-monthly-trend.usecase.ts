@@ -7,11 +7,14 @@ import { GetAnalyticsFilterDto } from '../dtos/get-analytics-filter.dto';
 import { MonthlyTrendResponseDto } from '../dtos/monthly-trend-response.dto';
 import { ExpenseStatus, UserRole } from 'src/common/enums';
 
+import { I18nService } from 'nestjs-i18n';
+
 @Injectable()
 export class GetMonthlyTrendUseCase {
     constructor(
         private readonly userRepository: UserRepository,
         private readonly expenseRepository: ExpenseRepository,
+        private readonly i18nService: I18nService,
     ) {}
 
     async execute(
@@ -19,7 +22,10 @@ export class GetMonthlyTrendUseCase {
         user_id: string,
     ): Promise<MonthlyTrendResponseDto[]> {
         const currentUser = await this.userRepository.findById(user_id);
-        if (!currentUser) throw new UnauthorizedException('User not found');
+        if (!currentUser)
+            throw new UnauthorizedException(
+                this.i18nService.translate('users.USER_NOT_FOUND'),
+            );
 
         const qb = this.expenseRepository
             .createQueryBuilder('expense')

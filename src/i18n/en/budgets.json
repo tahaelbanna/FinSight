@@ -1,0 +1,7 @@
+{
+    "EXACTLY_ONE_SCOPE_REQUIRED": "Budget must be assigned to either a department or a project, but not both.",
+    "END_DATE_MUST_BE_AFTER_START_DATE": "End date must be after start date.",
+    "BUDGET_NOT_FOUND": "Budget not found.",
+    "CANNOT_REDUCE_BELOW_EXPENSES": "Cannot reduce budget below approved expenses.",
+    "FORBIDDEN_BUDGET_ACCESS": "You do not have access to this budget."
+}

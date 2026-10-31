@@ -8,5 +8,10 @@
     "USER_ACTIVATED": "تم تنشيط المستخدم.",
     "INVALID_USER_ID": "معرف المستخدم غير صالح.",
     "INVALID_USER_STATUS": "حالة المستخدم غير صالحة.",
-    "INVALID_USER_ROLE": "دور المستخدم غير صالح."
+    "INVALID_USER_ROLE": "دور المستخدم غير صالح.",
+    "CANNOT_DEACTIVATE_OWN_ACCOUNT": "لا يمكنك إلغاء تنشيط حسابك الخاص.",
+    "USER_ALREADY_ACTIVE": "المستخدم نشط بالفعل.",
+    "USER_ALREADY_DEACTIVATED": "المستخدم معطل بالفعل.",
+    "DEPARTMENT_REQUIRED_FOR_THIS_ROLE": "القسم مطلوب لهذا الدور.",
+    "UNAUTHORIZED_USER": "المستخدم غير مصرح له."
 }

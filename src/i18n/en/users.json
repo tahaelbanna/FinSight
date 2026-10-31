@@ -8,5 +8,10 @@
     "USER_ACTIVATED": "User has been activated.",
     "INVALID_USER_ID": "Invalid user ID.",
     "INVALID_USER_STATUS": "Invalid user status.",
-    "INVALID_USER_ROLE": "Invalid user role."
+    "INVALID_USER_ROLE": "Invalid user role.",
+    "CANNOT_DEACTIVATE_OWN_ACCOUNT": "You cannot deactivate your own account.",
+    "USER_ALREADY_ACTIVE": "User is already active.",
+    "USER_ALREADY_DEACTIVATED": "User is already deactivated.",
+    "DEPARTMENT_REQUIRED_FOR_THIS_ROLE": "Department is required for this role.",
+    "UNAUTHORIZED_USER": "User is not authorized."
 }

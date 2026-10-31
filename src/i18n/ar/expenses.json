@@ -1,0 +1,6 @@
+{
+    "EXPENSE_NOT_FOUND": "المصروف غير موجود.",
+    "EXPENSE_NOT_PENDING": "المصروف ليس قيد المراجعة.",
+    "EXPENSE_ALREADY_REVIEWED": "تمت مراجعة المصروف بالفعل.",
+    "ATTACHMENT_NOT_FOUND": "المرفق غير موجود."
+}

@@ -1,0 +1,7 @@
+{
+    "EXACTLY_ONE_SCOPE_REQUIRED": "يجب تعيين الميزانية إما لقسم أو لمشروع فقط.",
+    "END_DATE_MUST_BE_AFTER_START_DATE": "تاريخ الانتهاء يجب أن يكون بعد تاريخ البدء.",
+    "BUDGET_NOT_FOUND": "الميزانية غير موجودة.",
+    "CANNOT_REDUCE_BELOW_EXPENSES": "لا يمكن تقليل الميزانية إلى أقل من المصروفات المعتمدة.",
+    "FORBIDDEN_BUDGET_ACCESS": "ليس لديك حق الوصول إلى هذه الميزانية."
+}

@@ -1,8 +1,6 @@
-import {
-    Injectable,
-    ForbiddenException,
-    UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { ForbiddenException } from 'src/common/error-handling/custom-exceptions/forbidden.exception';
+import { UnauthorizedException } from 'src/common/error-handling/custom-exceptions/unauthorized.exception';
 import { plainToInstance } from 'class-transformer';
 import { NotFoundException } from 'src/common/error-handling/custom-exceptions/not-found.exception';
 import { BudgetRepository } from '../repositories/budget.repository';
@@ -37,7 +35,10 @@ export class GetBudgetByIdUseCase {
         }
 
         const currentUser = await this.userRepository.findById(user_id);
-        if (!currentUser) throw new UnauthorizedException();
+        if (!currentUser)
+            throw new UnauthorizedException(
+                this.i18nService.translate('users.USER_NOT_FOUND'),
+            );
 
         if (
             currentUser.role !== UserRole.ADMIN &&
@@ -80,24 +81,24 @@ export class GetBudgetByIdUseCase {
             budget_id: budget.budget_id,
             department: budget.department
                 ? {
-                    id: budget.department.department_id,
-                    name: budget.department.department_name,
-                }
+                      id: budget.department.department_id,
+                      name: budget.department.department_name,
+                  }
                 : null,
             project: budget.project
                 ? {
-                    id: budget.project.project_id,
-                    name: budget.project.project_name,
-                }
+                      id: budget.project.project_id,
+                      name: budget.project.project_name,
+                  }
                 : null,
             allocated_amount: Number(budget.allocated_amount),
             start_date: budget.start_date,
             end_date: budget.end_date,
             created_by: budget.creator
                 ? {
-                    user_id: budget.creator.user_id,
-                    full_name: budget.creator.full_name,
-                }
+                      user_id: budget.creator.user_id,
+                      full_name: budget.creator.full_name,
+                  }
                 : null,
             ...metrics,
             recent_expenses: recentExpensesRaw.map((exp) => ({
@@ -107,9 +108,9 @@ export class GetBudgetByIdUseCase {
                 status: exp.status,
                 category: exp.category
                     ? {
-                        category_id: exp.category.category_id,
-                        category_name: exp.category.category_name,
-                    }
+                          category_id: exp.category.category_id,
+                          category_name: exp.category.category_name,
+                      }
                     : null,
             })),
         };

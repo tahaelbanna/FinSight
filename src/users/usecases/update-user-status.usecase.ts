@@ -28,7 +28,9 @@ export class UpdateUserStatusUseCase {
     ): Promise<UserResponseDto> {
         if (currentUserId === user_id && body.is_active === false) {
             throw new BadRequestException(
-                this.i18nService.translate('users.CANNOT_DEACTIVATE_OWN_ACCOUNT'),
+                this.i18nService.translate(
+                    'users.CANNOT_DEACTIVATE_OWN_ACCOUNT',
+                ),
             );
         }
 
@@ -48,10 +50,9 @@ export class UpdateUserStatusUseCase {
             );
         }
 
-        const updatedUser = await this.userRepository.updateById(
-            user_id,
-            { is_active: body.is_active },
-        );
+        const updatedUser = await this.userRepository.updateById(user_id, {
+            is_active: body.is_active,
+        });
 
         if (body.is_active === false) {
             await this.authService.DeleteRefreshTokensForUser(user_id);
@@ -59,7 +60,9 @@ export class UpdateUserStatusUseCase {
 
         await this.activityLogRepository.create({
             user_id: currentUserId,
-            action_type: body.is_active ? ActionType.USER_ACTIVATED : ActionType.USER_DEACTIVATED,
+            action_type: body.is_active
+                ? ActionType.USER_ACTIVATED
+                : ActionType.USER_DEACTIVATED,
             entity_type: EntityType.USER,
             entity_id: user_id,
         });

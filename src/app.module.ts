@@ -15,6 +15,7 @@ import { FilesUploadModule } from './files-upload/files-upload.module';
 import { ApprovalsModule } from './approvals/approvals.module';
 import { ActivityLogsModule } from './activity-logs/activity-logs.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { AnalyticsModule } from './analytics/analytics.module';
 @Module({
     imports: [
         CoreModule,
@@ -28,7 +29,8 @@ import { NotificationsModule } from './notifications/notifications.module';
         FilesUploadModule,
         ApprovalsModule,
         ActivityLogsModule,
-        NotificationsModule
+        NotificationsModule,
+        AnalyticsModule
     ],
     providers: [
         { provide: APP_GUARD, useClass: JwtAuthGuard },

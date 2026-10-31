@@ -82,12 +82,15 @@ export class GetAllBudgetsUseCase {
             ];
         }
 
+        const hasOverrunFilter = query.is_overrun !== undefined;
+
         const result = await this.budgetRepository.findPaginated({
             where: whereCondition,
             relations: { department: true, project: true, creator: true },
-            page: query.page || 1,
-            limit: query.limit || 10,
+            page: hasOverrunFilter ? 1 : query.page || 1,
+            limit: hasOverrunFilter ? 999999 : query.limit || 10,
             order: { created_at: 'DESC' },
+            ignoreLimit: hasOverrunFilter,
         });
 
         const formattedData = await Promise.all(
@@ -103,47 +106,59 @@ export class GetAllBudgetsUseCase {
                     Number(budget.allocated_amount),
                     totalApproved,
                 );
-
                 return {
                     budget_id: budget.budget_id,
                     department: budget.department
                         ? {
-                            id: budget.department.department_id,
-                            name: budget.department.department_name,
-                        }
+                              id: budget.department.department_id,
+                              name: budget.department.department_name,
+                          }
                         : null,
                     project: budget.project
                         ? {
-                            id: budget.project.project_id,
-                            name: budget.project.project_name,
-                        }
+                              id: budget.project.project_id,
+                              name: budget.project.project_name,
+                          }
                         : null,
                     allocated_amount: Number(budget.allocated_amount),
                     start_date: budget.start_date,
                     end_date: budget.end_date,
                     created_by: budget.creator
                         ? {
-                            user_id: budget.creator.user_id,
-                            full_name: budget.creator.full_name,
-                        }
+                              user_id: budget.creator.user_id,
+                              full_name: budget.creator.full_name,
+                          }
                         : null,
-                    ...metrics, 
+                    ...metrics,
                 };
             }),
         );
 
         let finalData = formattedData;
-        if (query.is_overrun !== undefined) {
+        if (hasOverrunFilter) {
             finalData = formattedData.filter(
                 (b) => b.is_overrun === query.is_overrun,
             );
         }
 
+        const page = query.page || 1;
+        const limit = query.limit || 10;
+        const total = finalData.length;
+
+        const paginatedData = hasOverrunFilter
+            ? finalData.slice((page - 1) * limit, page * limit)
+            : finalData;
+
         return {
-            ...result,
-            data: plainToInstance(BudgetResponseDto, finalData, {
+            data: plainToInstance(BudgetResponseDto, paginatedData, {
                 excludeExtraneousValues: true,
             }),
+            meta: {
+                page,
+                limit,
+                total,
+                totalPages: limit > 0 ? Math.ceil(total / limit) : 0,
+            },
         };
     }
 }

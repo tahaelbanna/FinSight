@@ -15,6 +15,9 @@ import { ExpenseStatus, UserRole } from 'src/common/enums';
 import { Expense } from 'src/expenses/schemas/expense.schema';
 import { ActivityLog } from 'src/activity-logs/schemas/activity-log.schema';
 import { ActionType, EntityType } from 'src/common/enums';
+import { Notification } from 'src/notifications/schemas/notification.schema';
+import { NotificationType } from 'src/common/enums';
+
 @Injectable()
 export class ReviewExpenseUseCase {
     constructor(
@@ -92,7 +95,26 @@ export class ReviewExpenseUseCase {
                 entity_type: EntityType.EXPENSE,
                 entity_id: expense_id,
             });
-            // TODO: إرسال إشعار للموظف
+
+            const isApproved = body.decision === ExpenseStatus.APPROVED;
+            const notificationType = isApproved
+                ? NotificationType.EXPENSE_APPROVED
+                : NotificationType.EXPENSE_REJECTED;
+            const notificationTitle = isApproved
+                ? 'Expense Approved'
+                : 'Expense Rejected';
+
+            const notificationBody = isApproved
+                ? `Your expense #${expense_id} was approved`
+                : `Your expense #${expense_id} was rejected: ${body.comment}`;
+
+            await queryRunner.manager.insert(Notification, {
+                user_id: expense.user_id,
+                type: notificationType,
+                expense_id: expense_id,
+                title: notificationTitle,
+                body: notificationBody,
+            });
 
             await queryRunner.commitTransaction();
         } catch (error) {

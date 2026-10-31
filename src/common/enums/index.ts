@@ -6,3 +6,4 @@ export * from './sort-order.enum';
 export * from './expenses-sortby.enum';
 export * from './action-type.enum';
 export * from './entity-type.enum';
+export * from './notification-type.enum';

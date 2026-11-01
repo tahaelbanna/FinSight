@@ -101,9 +101,9 @@ export const EditProjectModal: React.FC<EditProjectModalProps> = ({
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {generalError && <Alert variant="danger">{generalError}</Alert>}
 
-        <div className="bg-slate-50 dark:bg-slate-800/60 p-3 rounded-lg border border-slate-200/80 dark:border-slate-700/80 text-xs">
-          <span className="text-slate-500 font-medium">Department: </span>
-          <span className="font-semibold text-slate-900 dark:text-slate-100">
+        <div className="bg-stone-50 p-3 rounded-lg border border-stone-200 text-xs">
+          <span className="text-stone-500 font-medium">Department: </span>
+          <span className="font-semibold text-stone-900">
             {project.department.department_name}
           </span>
         </div>
@@ -129,7 +129,7 @@ export const EditProjectModal: React.FC<EditProjectModalProps> = ({
           />
         </div>
 
-        <div className="pt-4 flex justify-end gap-3 border-t border-slate-100 dark:border-slate-800">
+        <div className="pt-4 flex justify-end gap-3 border-t border-stone-100">
           <Button type="button" variant="outline" onClick={onClose} disabled={isSubmitting}>
             Cancel
           </Button>

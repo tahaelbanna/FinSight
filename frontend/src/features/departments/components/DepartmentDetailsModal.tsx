@@ -41,19 +41,19 @@ export const DepartmentDetailsModal: React.FC<DepartmentDetailsModalProps> = ({
         </div>
       ) : (
         <div className="space-y-6">
-          <div className="p-4 bg-slate-50 dark:bg-slate-850/60 rounded-xl border border-slate-200/80 dark:border-slate-800 flex items-start justify-between gap-4">
+          <div className="p-4 bg-stone-50 rounded-xl border border-stone-200 flex items-start justify-between gap-4">
             <div className="flex items-start gap-3">
-              <div className="p-3 bg-indigo-100 text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300 rounded-lg">
+              <div className="p-3 bg-indigo-100 text-indigo-700 rounded-lg">
                 <Building className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-slate-900 dark:text-white font-display">
+                <h3 className="text-xl font-bold text-stone-900 font-display">
                   {department.department_name}
                 </h3>
-                <p className="text-sm text-slate-600 dark:text-slate-300 mt-1">
+                <p className="text-sm text-stone-600 mt-1">
                   {department.description}
                 </p>
-                <div className="flex items-center gap-2 text-xs text-slate-500 mt-2">
+                <div className="flex items-center gap-2 text-xs text-stone-500 mt-2">
                   <Calendar className="w-3.5 h-3.5" />
                   <span>Created {formatDate(department.created_at)}</span>
                 </div>
@@ -64,25 +64,25 @@ export const DepartmentDetailsModal: React.FC<DepartmentDetailsModalProps> = ({
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="p-4 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs flex items-center gap-3">
-              <div className="p-2.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+            <div className="p-4 rounded-xl border border-stone-200 bg-white shadow-xs flex items-center gap-3">
+              <div className="p-2.5 rounded-lg bg-stone-100 text-stone-600">
                 <User className="w-5 h-5" />
               </div>
               <div>
-                <span className="text-xs font-medium text-slate-500">Designated Manager</span>
-                <p className="text-sm font-semibold text-slate-900 dark:text-white">
+                <span className="text-xs font-medium text-stone-500">Designated Manager</span>
+                <p className="text-sm font-semibold text-stone-900">
                   {department.manager?.manager_name || 'Unassigned'}
                 </p>
               </div>
             </div>
 
-            <div className="p-4 rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs flex items-center gap-3">
-              <div className="p-2.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+            <div className="p-4 rounded-xl border border-stone-200 bg-white shadow-xs flex items-center gap-3">
+              <div className="p-2.5 rounded-lg bg-stone-100 text-stone-600">
                 <Users className="w-5 h-5" />
               </div>
               <div>
-                <span className="text-xs font-medium text-slate-500">Total Personnel</span>
-                <p className="text-sm font-semibold text-slate-900 dark:text-white">
+                <span className="text-xs font-medium text-stone-500">Total Personnel</span>
+                <p className="text-sm font-semibold text-stone-900">
                   {department.usersCount ?? (department as any).users?.length ?? 0} Members
                 </p>
               </div>
@@ -92,20 +92,20 @@ export const DepartmentDetailsModal: React.FC<DepartmentDetailsModalProps> = ({
           {/* Department Users / Staff if provided */}
           {(department as any).users && (department as any).users.length > 0 && (
             <div>
-              <h4 className="text-sm font-semibold text-slate-900 dark:text-white mb-3">
+              <h4 className="text-sm font-semibold text-stone-900 mb-3">
                 Department Personnel ({(department as any).users.length})
               </h4>
-              <div className="border border-slate-200/80 dark:border-slate-800 rounded-lg overflow-hidden divide-y divide-slate-100 dark:divide-slate-800 max-h-56 overflow-y-auto">
+              <div className="border border-stone-200 rounded-lg overflow-hidden divide-y divide-stone-100 max-h-56 overflow-y-auto">
                 {(department as any).users.map((u: any) => (
                   <div
                     key={u.user_id}
-                    className="p-3 bg-white dark:bg-slate-900 flex items-center justify-between"
+                    className="p-3 bg-white flex items-center justify-between"
                   >
                     <div>
-                      <p className="text-sm font-medium text-slate-900 dark:text-slate-100">
+                      <p className="text-sm font-medium text-stone-900">
                         {u.full_name}
                       </p>
-                      <p className="text-xs text-slate-500">{u.email}</p>
+                      <p className="text-xs text-stone-500">{u.email}</p>
                     </div>
                     <Badge variant="neutral" className="text-[10px] capitalize">
                       {u.role.replace('_', ' ')}

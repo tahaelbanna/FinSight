@@ -109,10 +109,10 @@ export const UsersPage: React.FC = () => {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold font-display text-slate-900 dark:text-white">
+          <h1 className="text-2xl font-bold font-display text-stone-900">
             User Management
           </h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-sm text-stone-500 mt-1">
             Enterprise identity governance, role provisioning, and account lifecycle
           </p>
         </div>
@@ -126,10 +126,10 @@ export const UsersPage: React.FC = () => {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200/80 dark:border-slate-800 shadow-xs space-y-3">
+      <div className="bg-white p-3 rounded-xl border border-stone-200 shadow-xs space-y-3">
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               placeholder="Search users by name or email..."
@@ -138,7 +138,7 @@ export const UsersPage: React.FC = () => {
                 setSearch(e.target.value);
                 setPage(1);
               }}
-              className="w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+              className="w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-stone-200 bg-stone-50/50 text-stone-900 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
             />
           </div>
 
@@ -149,7 +149,8 @@ export const UsersPage: React.FC = () => {
                 setDepartmentFilter(e.target.value);
                 setPage(1);
               }}
-              className="w-full py-2 px-3 text-sm rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+              aria-label="Filter by department"
+              className="w-full py-2 px-3 text-sm rounded-lg border border-stone-200 bg-stone-50/50 text-stone-900 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
             >
               <option value="">All Departments</option>
               {departments.map((d) => (
@@ -174,7 +175,7 @@ export const UsersPage: React.FC = () => {
                 className={`px-3 py-1 text-xs font-semibold rounded-lg capitalize transition-colors ${
                   roleFilter === r
                     ? 'bg-indigo-600 text-white shadow-xs'
-                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+                    : 'text-stone-600 hover:bg-stone-100'
                 }`}
               >
                 {r.replace('_', ' ')}
@@ -192,8 +193,8 @@ export const UsersPage: React.FC = () => {
                 }}
                 className={`px-2.5 py-1 text-[11px] font-medium rounded-md capitalize transition-colors ${
                   statusFilter === s
-                    ? 'bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white'
-                    : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
+                    ? 'bg-stone-200 text-stone-900 font-semibold'
+                    : 'text-stone-500 hover:text-stone-700'
                 }`}
               >
                 {s}
@@ -204,11 +205,11 @@ export const UsersPage: React.FC = () => {
       </div>
 
       {/* Users Table */}
-      <Card className="overflow-hidden border border-slate-200/80 dark:border-slate-800 shadow-xs">
+      <Card className="overflow-hidden border border-stone-200 shadow-xs bg-white">
         {isLoading ? (
           <div className="p-8 text-center">
             <div className="w-8 h-8 border-3 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
-            <p className="text-sm text-slate-500">Loading user accounts...</p>
+            <p className="text-sm text-stone-500">Loading user accounts...</p>
           </div>
         ) : error ? (
           <div className="p-8 text-center text-rose-500">
@@ -216,11 +217,11 @@ export const UsersPage: React.FC = () => {
           </div>
         ) : users.length === 0 ? (
           <div className="p-12 text-center">
-            <Users className="w-12 h-12 text-slate-300 dark:text-slate-700 mx-auto mb-3" />
-            <h3 className="text-base font-semibold text-slate-900 dark:text-white">
+            <Users className="w-12 h-12 text-stone-300 mx-auto mb-3" />
+            <h3 className="text-base font-semibold text-stone-900">
               No users found
             </h3>
-            <p className="text-sm text-slate-500 max-w-sm mx-auto mt-1">
+            <p className="text-sm text-stone-500 max-w-sm mx-auto mt-1">
               There are no user accounts matching the specified filters.
             </p>
           </div>
@@ -228,40 +229,40 @@ export const UsersPage: React.FC = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse text-sm">
               <thead>
-                <tr className="bg-slate-50/75 dark:bg-slate-850 border-b border-slate-200/80 dark:border-slate-800 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                  <th className="py-3 px-4">User</th>
-                  <th className="py-3 px-4">Role</th>
-                  <th className="py-3 px-4">Department</th>
-                  <th className="py-3 px-4">Account Status</th>
-                  <th className="py-3 px-4">Created Date</th>
-                  {isAdmin && <th className="py-3 px-4 text-right">Actions</th>}
+                <tr className="bg-stone-50/75 border-b border-stone-200 text-xs font-semibold text-stone-500 uppercase tracking-wider">
+                  <th scope="col" className="py-3 px-4">User</th>
+                  <th scope="col" className="py-3 px-4">Role</th>
+                  <th scope="col" className="py-3 px-4">Department</th>
+                  <th scope="col" className="py-3 px-4">Account Status</th>
+                  <th scope="col" className="py-3 px-4">Created Date</th>
+                  {isAdmin && <th scope="col" className="py-3 px-4 text-right">Actions</th>}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+              <tbody className="divide-y divide-stone-100">
                 {users.map((u) => (
                   <tr
                     key={u.user_id}
-                    className="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors"
+                    className="hover:bg-stone-50/60 transition-colors"
                   >
                     <td className="py-3.5 px-4">
                       <div>
-                        <p className="font-semibold text-slate-900 dark:text-white">
+                        <p className="font-semibold text-stone-900">
                           {u.full_name}
                         </p>
-                        <p className="text-xs text-slate-500 dark:text-slate-400">{u.email}</p>
+                        <p className="text-xs text-stone-500">{u.email}</p>
                       </div>
                     </td>
 
                     <td className="py-3.5 px-4">{getRoleBadge(u.role)}</td>
 
-                    <td className="py-3.5 px-4 text-xs text-slate-600 dark:text-slate-300">
+                    <td className="py-3.5 px-4 text-xs text-stone-600">
                       {u.department ? (
                         <div className="flex items-center gap-1.5">
-                          <Building className="w-3.5 h-3.5 text-slate-400" />
+                          <Building className="w-3.5 h-3.5 text-stone-400" />
                           <span>{u.department.department_name}</span>
                         </div>
                       ) : (
-                        <span className="text-slate-400">—</span>
+                        <span className="text-stone-400">—</span>
                       )}
                     </td>
 
@@ -273,7 +274,7 @@ export const UsersPage: React.FC = () => {
                       )}
                     </td>
 
-                    <td className="py-3.5 px-4 text-xs text-slate-500 whitespace-nowrap">
+                    <td className="py-3.5 px-4 text-xs text-stone-500 whitespace-nowrap">
                       {formatDate(u.created_at)}
                     </td>
 
@@ -282,8 +283,9 @@ export const UsersPage: React.FC = () => {
                         <div className="flex items-center justify-end gap-1.5">
                           <button
                             onClick={() => setSelectedUserForEdit(u)}
-                            className="p-1.5 text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors"
+                            className="p-1.5 text-stone-500 hover:text-stone-900 hover:bg-stone-100 rounded transition-colors"
                             title="Edit User"
+                            aria-label={`Edit ${u.full_name}`}
                           >
                             <Edit2 className="w-4 h-4" />
                           </button>
@@ -292,10 +294,11 @@ export const UsersPage: React.FC = () => {
                             onClick={() => setUserForStatusToggle(u)}
                             className={`p-1.5 rounded transition-colors ${
                               u.is_active
-                                ? 'text-slate-500 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30'
-                                : 'text-slate-500 hover:text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-950/30'
+                                ? 'text-stone-500 hover:text-rose-600 hover:bg-rose-50'
+                                : 'text-stone-500 hover:text-emerald-600 hover:bg-emerald-50'
                             }`}
                             title={u.is_active ? 'Deactivate User' : 'Activate User'}
+                            aria-label={u.is_active ? `Deactivate ${u.full_name}` : `Activate ${u.full_name}`}
                           >
                             {u.is_active ? (
                               <UserX className="w-4 h-4" />
@@ -314,7 +317,7 @@ export const UsersPage: React.FC = () => {
         )}
 
         {meta && (
-          <div className="p-4 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800">
+          <div className="p-4 bg-white border-t border-stone-100">
             <Pagination
               meta={meta}
               currentPage={page}

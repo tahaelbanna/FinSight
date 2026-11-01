@@ -128,15 +128,15 @@ export const CreateBudgetModal: React.FC<CreateBudgetModalProps> = ({ isOpen, on
 
         {/* Scope selector */}
         <div>
-          <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+          <label className="block text-sm font-medium text-stone-700 mb-2">
             Budget Scope Type
           </label>
           <div className="grid grid-cols-2 gap-3">
             <label
               className={`flex items-center justify-center gap-2 p-3 rounded-lg border cursor-pointer transition-all ${
                 selectedScope === 'department'
-                  ? 'border-indigo-600 bg-indigo-50/50 dark:bg-indigo-950/20 text-indigo-700 dark:text-indigo-400 font-medium ring-1 ring-indigo-500'
-                  : 'border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/40'
+                  ? 'border-indigo-600 bg-indigo-50/50 text-indigo-700 font-medium ring-1 ring-indigo-500'
+                  : 'border-stone-200 text-stone-600 hover:bg-stone-50'
               }`}
             >
               <input
@@ -151,8 +151,8 @@ export const CreateBudgetModal: React.FC<CreateBudgetModalProps> = ({ isOpen, on
             <label
               className={`flex items-center justify-center gap-2 p-3 rounded-lg border cursor-pointer transition-all ${
                 selectedScope === 'project'
-                  ? 'border-indigo-600 bg-indigo-50/50 dark:bg-indigo-950/20 text-indigo-700 dark:text-indigo-400 font-medium ring-1 ring-indigo-500'
-                  : 'border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/40'
+                  ? 'border-indigo-600 bg-indigo-50/50 text-indigo-700 font-medium ring-1 ring-indigo-500'
+                  : 'border-stone-200 text-stone-600 hover:bg-stone-50'
               }`}
             >
               <input
@@ -220,7 +220,7 @@ export const CreateBudgetModal: React.FC<CreateBudgetModalProps> = ({ isOpen, on
           />
         </div>
 
-        <div className="pt-4 flex justify-end gap-3 border-t border-slate-100 dark:border-slate-800">
+        <div className="pt-4 flex justify-end gap-3 border-t border-stone-100">
           <Button type="button" variant="outline" onClick={onClose} disabled={isSubmitting}>
             Cancel
           </Button>

@@ -68,7 +68,7 @@ export const ActivityLogsPage: React.FC = () => {
       case 'user':
         return <User className="w-4 h-4 text-amber-500" />;
       default:
-        return <FileText className="w-4 h-4 text-slate-400" />;
+        return <FileText className="w-4 h-4 text-stone-400" />;
     }
   };
 
@@ -76,16 +76,16 @@ export const ActivityLogsPage: React.FC = () => {
     <div className="space-y-6 max-w-5xl mx-auto">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold font-display text-slate-900 dark:text-white">
+        <h1 className="text-2xl font-bold font-display text-stone-900">
           System Audit Logs
         </h1>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+        <p className="text-sm text-stone-500 mt-1">
           Immutable audit trail tracking company financial events, user provisioning, and governance operations
         </p>
       </div>
 
       {/* Filter Bar */}
-      <div className="bg-white dark:bg-slate-900 p-3 rounded-xl border border-slate-200/80 dark:border-slate-800 shadow-xs flex flex-wrap items-center justify-between gap-3">
+      <div className="bg-white p-3 rounded-xl border border-stone-200 shadow-xs flex flex-wrap items-center justify-between gap-3">
         {/* Entity Type Filter Tabs */}
         <div className="flex flex-wrap items-center gap-1.5">
           {(['all', 'expense', 'budget', 'project', 'department', 'user'] as const).map(
@@ -99,7 +99,7 @@ export const ActivityLogsPage: React.FC = () => {
                 className={`px-3 py-1.5 text-xs font-semibold rounded-lg capitalize transition-colors ${
                   entityFilter === entity
                     ? 'bg-indigo-600 text-white shadow-xs'
-                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+                    : 'text-stone-600 hover:bg-stone-100'
                 }`}
               >
                 {entity === 'all' ? 'All Entities' : entity}
@@ -116,7 +116,8 @@ export const ActivityLogsPage: React.FC = () => {
               setActionFilter(e.target.value as ActionType | 'all');
               setPage(1);
             }}
-            className="w-full py-1.5 px-3 text-xs rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/50 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+            aria-label="Filter by action type"
+            className="w-full py-1.5 px-3 text-xs rounded-lg border border-stone-200 bg-stone-50/50 text-stone-900 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
           >
             <option value="all">All Action Types</option>
             <option value="EXPENSE_SUBMITTED">Expense Submitted</option>
@@ -138,11 +139,11 @@ export const ActivityLogsPage: React.FC = () => {
       </div>
 
       {/* Audit Logs Table */}
-      <Card className="overflow-hidden border border-slate-200/80 dark:border-slate-800 shadow-xs">
+      <Card className="overflow-hidden border border-stone-200 shadow-xs bg-white">
         {isLoading ? (
           <div className="p-8 text-center">
             <div className="w-8 h-8 border-3 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
-            <p className="text-sm text-slate-500">Loading activity trail...</p>
+            <p className="text-sm text-stone-500">Loading activity trail...</p>
           </div>
         ) : error ? (
           <div className="p-8 text-center text-rose-500">
@@ -150,11 +151,11 @@ export const ActivityLogsPage: React.FC = () => {
           </div>
         ) : logs.length === 0 ? (
           <div className="p-12 text-center">
-            <Activity className="w-12 h-12 text-slate-300 dark:text-slate-700 mx-auto mb-3" />
-            <h3 className="text-base font-semibold text-slate-900 dark:text-white">
+            <Activity className="w-12 h-12 text-stone-300 mx-auto mb-3" />
+            <h3 className="text-base font-semibold text-stone-900">
               No activity recorded
             </h3>
-            <p className="text-sm text-slate-500 max-w-sm mx-auto mt-1">
+            <p className="text-sm text-stone-500 max-w-sm mx-auto mt-1">
               There are no audit events matching the selected criteria.
             </p>
           </div>
@@ -162,45 +163,45 @@ export const ActivityLogsPage: React.FC = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse text-sm">
               <thead>
-                <tr className="bg-slate-50/75 dark:bg-slate-850 border-b border-slate-200/80 dark:border-slate-800 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                  <th className="py-3 px-4">Action</th>
-                  <th className="py-3 px-4">Entity</th>
-                  <th className="py-3 px-4">Performing Actor</th>
-                  <th className="py-3 px-4">Target ID</th>
-                  <th className="py-3 px-4 text-right">Timestamp</th>
+                <tr className="bg-stone-50/75 border-b border-stone-200 text-xs font-semibold text-stone-500 uppercase tracking-wider">
+                  <th scope="col" className="py-3 px-4">Action</th>
+                  <th scope="col" className="py-3 px-4">Entity</th>
+                  <th scope="col" className="py-3 px-4">Performing Actor</th>
+                  <th scope="col" className="py-3 px-4">Target ID</th>
+                  <th scope="col" className="py-3 px-4 text-right">Timestamp</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+              <tbody className="divide-y divide-stone-100">
                 {logs.map((log) => (
                   <tr
                     key={log.log_id}
-                    className="hover:bg-slate-50/60 dark:hover:bg-slate-800/30 transition-colors"
+                    className="hover:bg-stone-50/60 transition-colors"
                   >
                     <td className="py-3.5 px-4">{getActionBadge(log.action_type)}</td>
 
                     <td className="py-3.5 px-4">
                       <div className="flex items-center gap-2">
                         {getEntityIcon(log.entity_type)}
-                        <span className="font-medium text-slate-900 dark:text-white capitalize">
+                        <span className="font-medium text-stone-900 capitalize">
                           {log.entity_type}
                         </span>
                       </div>
                     </td>
 
                     <td className="py-3.5 px-4">
-                      <div className="flex items-center gap-1.5 text-xs text-slate-700 dark:text-slate-300">
-                        <User className="w-3.5 h-3.5 text-slate-400" />
+                      <div className="flex items-center gap-1.5 text-xs text-stone-700">
+                        <User className="w-3.5 h-3.5 text-stone-400" />
                         <span className="font-semibold">{log.user?.full_name || 'System'}</span>
                       </div>
                     </td>
 
-                    <td className="py-3.5 px-4 font-mono text-xs text-slate-500 max-w-[140px] truncate">
+                    <td className="py-3.5 px-4 font-mono text-xs text-stone-500 max-w-[140px] truncate">
                       {log.entity_id}
                     </td>
 
-                    <td className="py-3.5 px-4 text-right text-xs text-slate-500 whitespace-nowrap">
+                    <td className="py-3.5 px-4 text-right text-xs text-stone-500 whitespace-nowrap">
                       <div className="flex items-center justify-end gap-1.5">
-                        <Clock className="w-3.5 h-3.5 text-slate-400" />
+                        <Clock className="w-3.5 h-3.5 text-stone-400" />
                         <span>{formatDate(log.created_at)}</span>
                       </div>
                     </td>
@@ -212,7 +213,7 @@ export const ActivityLogsPage: React.FC = () => {
         )}
 
         {meta && (
-          <div className="p-4 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800">
+          <div className="p-4 bg-white border-t border-stone-100">
             <Pagination
               meta={meta}
               currentPage={page}

@@ -68,9 +68,9 @@ export const UpdateProjectStatusModal: React.FC<UpdateProjectStatusModalProps> =
       <form onSubmit={handleSubmit} className="space-y-4">
         {generalError && <Alert variant="danger">{generalError}</Alert>}
 
-        <div className="bg-slate-50 dark:bg-slate-800/60 p-3 rounded-lg border border-slate-200/80 dark:border-slate-700/80">
-          <p className="text-xs text-slate-500 font-medium">Project</p>
-          <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+        <div className="bg-stone-50 p-3 rounded-lg border border-stone-200">
+          <p className="text-xs text-stone-500 font-medium">Project</p>
+          <p className="text-sm font-semibold text-stone-900">
             {project.project_name}
           </p>
         </div>
@@ -82,7 +82,7 @@ export const UpdateProjectStatusModal: React.FC<UpdateProjectStatusModalProps> =
           options={statusOptions}
         />
 
-        <div className="pt-4 flex justify-end gap-3 border-t border-slate-100 dark:border-slate-800">
+        <div className="pt-4 flex justify-end gap-3 border-t border-stone-100">
           <Button type="button" variant="outline" onClick={onClose} disabled={isSubmitting}>
             Cancel
           </Button>

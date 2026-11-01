@@ -102,29 +102,29 @@ export const DashboardPage: React.FC = () => {
               <Layers className="w-4 h-4" />
             </div>
             <div>
-              <p className="text-xs text-stone-500 font-medium">Implementation Phase</p>
-              <h4 className="text-sm font-bold text-stone-900">Phase 2 & 3 Complete</h4>
+              <p className="text-xs text-stone-500 font-medium">Platform Status</p>
+              <h4 className="text-sm font-bold text-stone-900">All Modules Active</h4>
             </div>
           </div>
           <p className="text-xs text-stone-600 leading-relaxed">
-            Foundation, tokens, authentication lifecycle, and navigation shell are fully verified.
+            Expenses, budgets, projects, approvals, analytics, and Power BI reporting are operational.
           </p>
         </Card>
       </div>
 
-      {/* Phased Roadmap Notice */}
+      {/* Core Enterprise Modules */}
       <Card className="p-6 sm:p-8 border-stone-200">
         <div className="flex items-center justify-between mb-6 pb-4 border-b border-stone-100">
           <div>
             <h3 className="text-lg font-bold text-stone-900 font-display">
-              {t('dashboard.futureModulesTitle')}
+              Enterprise Business Modules
             </h3>
             <p className="text-xs text-stone-500 mt-0.5">
-              {t('dashboard.futureModulesDesc')}
+              Access your role-scoped workflows, approvals, and financial analytics
             </p>
           </div>
-          <Badge variant="neutral" size="md">
-            Phase 4 Standby
+          <Badge variant="success" size="md">
+            Operational
           </Badge>
         </div>
 
@@ -143,7 +143,7 @@ export const DashboardPage: React.FC = () => {
               to="/expenses"
               className="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-600 hover:text-indigo-800"
             >
-              <span>Explore module shell</span>
+              <span>Manage Expenses</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
@@ -162,7 +162,7 @@ export const DashboardPage: React.FC = () => {
               to="/budgets"
               className="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-600 hover:text-indigo-800"
             >
-              <span>Explore module shell</span>
+              <span>View Allocations</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
@@ -171,7 +171,7 @@ export const DashboardPage: React.FC = () => {
             <div>
               <div className="flex items-center gap-2 mb-2 text-stone-800 font-semibold text-sm">
                 <LineChart className="w-4 h-4 text-indigo-600" />
-                <span>Analytics & Power BI</span>
+                <span>Analytics & Reporting</span>
               </div>
               <p className="text-xs text-stone-600 leading-relaxed mb-4">
                 Native Recharts visualizations tied to verified backend DTOs and dedicated Power BI embedding.
@@ -181,7 +181,7 @@ export const DashboardPage: React.FC = () => {
               to="/analytics"
               className="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-600 hover:text-indigo-800"
             >
-              <span>Explore module shell</span>
+              <span>Open Analytics</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>

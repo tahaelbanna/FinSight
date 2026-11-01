@@ -111,6 +111,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
     item.roles.includes(userRole)
   );
 
+  React.useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   return (
     <>
       {/* Mobile Backdrop */}
@@ -124,6 +135,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
       {/* Sidebar Container */}
       <aside
+        aria-label="Sidebar navigation"
         className={cn(
           'fixed inset-y-0 left-0 z-50 w-64 bg-[#111322] text-stone-300 flex flex-col border-r border-[#1E223D] transition-transform duration-200 ease-in-out',
           'lg:translate-x-0 lg:static lg:z-auto',

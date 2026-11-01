@@ -103,9 +103,9 @@ export const EditBudgetModal: React.FC<EditBudgetModalProps> = ({ budget, isOpen
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {generalError && <Alert variant="danger">{generalError}</Alert>}
 
-        <div className="bg-slate-50 dark:bg-slate-800/60 p-3 rounded-lg border border-slate-200/80 dark:border-slate-700/80">
-          <p className="text-xs text-slate-500 font-medium">Budget Target</p>
-          <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">{scopeLabel}</p>
+        <div className="bg-stone-50 p-3 rounded-lg border border-stone-200">
+          <p className="text-xs text-stone-500 font-medium">Budget Target</p>
+          <p className="text-sm font-semibold text-stone-900">{scopeLabel}</p>
         </div>
 
         <Input
@@ -131,7 +131,7 @@ export const EditBudgetModal: React.FC<EditBudgetModalProps> = ({ budget, isOpen
           />
         </div>
 
-        <div className="pt-4 flex justify-end gap-3 border-t border-slate-100 dark:border-slate-800">
+        <div className="pt-4 flex justify-end gap-3 border-t border-stone-100">
           <Button type="button" variant="outline" onClick={onClose} disabled={isSubmitting}>
             Cancel
           </Button>

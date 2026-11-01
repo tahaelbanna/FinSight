@@ -56,13 +56,13 @@ export const ApprovalsPage: React.FC = () => {
           <table className="w-full text-start text-xs border-collapse">
             <thead>
               <tr className="bg-stone-50/70 border-b border-stone-200/80 text-[11px] font-bold uppercase tracking-wider text-stone-500">
-                <th className="py-3 px-4 text-start">Date</th>
-                <th className="py-3 px-4 text-start">Submitter</th>
-                <th className="py-3 px-4 text-start">Category</th>
-                <th className="py-3 px-4 text-start">Scope</th>
-                <th className="py-3 px-4 text-end">Claim Amount</th>
-                <th className="py-3 px-4 text-center">Receipts</th>
-                <th className="py-3 px-4 text-end">Action</th>
+                <th scope="col" className="py-3 px-4 text-start">Date</th>
+                <th scope="col" className="py-3 px-4 text-start">Submitter</th>
+                <th scope="col" className="py-3 px-4 text-start">Category</th>
+                <th scope="col" className="py-3 px-4 text-start">Scope</th>
+                <th scope="col" className="py-3 px-4 text-end">Claim Amount</th>
+                <th scope="col" className="py-3 px-4 text-center">Receipts</th>
+                <th scope="col" className="py-3 px-4 text-end">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-stone-100">

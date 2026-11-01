@@ -112,9 +112,9 @@ export const EditUserModal: React.FC<EditUserModalProps> = ({ user, isOpen, onCl
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {generalError && <Alert variant="danger">{generalError}</Alert>}
 
-        <div className="bg-slate-50 dark:bg-slate-800/60 p-3 rounded-lg border border-slate-200/80 dark:border-slate-700/80 text-xs">
-          <span className="text-slate-500 font-medium">Account Email: </span>
-          <span className="font-semibold text-slate-900 dark:text-slate-100">{user.email}</span>
+        <div className="bg-stone-50 p-3 rounded-lg border border-stone-200 text-xs">
+          <span className="text-stone-500 font-medium">Account Email: </span>
+          <span className="font-semibold text-stone-900">{user.email}</span>
         </div>
 
         <Input
@@ -148,7 +148,7 @@ export const EditUserModal: React.FC<EditUserModalProps> = ({ user, isOpen, onCl
           />
         )}
 
-        <div className="pt-4 flex justify-end gap-3 border-t border-slate-100 dark:border-slate-800">
+        <div className="pt-4 flex justify-end gap-3 border-t border-stone-100">
           <Button type="button" variant="outline" onClick={onClose} disabled={isSubmitting}>
             Cancel
           </Button>

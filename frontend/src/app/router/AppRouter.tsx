@@ -10,12 +10,12 @@ import { DepartmentsPage } from '@/features/departments/DepartmentsPage';
 import { UsersPage } from '@/features/users/UsersPage';
 import { NotificationsPage } from '@/features/notifications/NotificationsPage';
 import { ActivityLogsPage } from '@/features/activity-logs/ActivityLogsPage';
+import { AnalyticsPage } from '@/features/analytics/AnalyticsPage';
+import { PowerBIPage } from '@/features/power-bi/PowerBIPage';
 import { MainLayout } from '@/app/layouts/MainLayout';
 import { ProtectedRoute } from '@/components/layout/ProtectedRoute';
 import { RoleGuard } from '@/components/layout/RoleGuard';
-import { ModulePlaceholder } from '@/components/layout/ModulePlaceholder';
 import { NotFoundPage } from '@/components/layout/NotFoundPage';
-import { LineChart, BarChart3 } from 'lucide-react';
 
 export const AppRouter: React.FC = () => {
   return (
@@ -63,40 +63,12 @@ export const AppRouter: React.FC = () => {
             {/* Notifications (All Roles) */}
             <Route path="/notifications" element={<NotificationsPage />} />
 
-            {/* Native Analytics (Phase 5 Placeholder) */}
-            <Route
-              path="/analytics"
-              element={
-                <ModulePlaceholder
-                  title="Native Analytics"
-                  phase="Phase 5"
-                  description="Interactive data visualizations built on the five verified analytics DTOs."
-                  icon={LineChart}
-                  apiEndpoints={[
-                    'GET /api/v1/analytics/summary',
-                    'GET /api/v1/analytics/monthly-trend',
-                    'GET /api/v1/analytics/category-breakdown',
-                    'GET /api/v1/analytics/department-comparison',
-                    'GET /api/v1/analytics/project-performance',
-                  ]}
-                />
-              }
-            />
+            {/* Native Analytics (Phase 5) */}
+            <Route path="/analytics" element={<AnalyticsPage />} />
 
-            {/* Dedicated Power BI Dashboard (Phase 6 Placeholder) */}
+            {/* Dedicated Power BI Dashboard (Phase 6) */}
             <Route element={<RoleGuard allowedRoles={['admin', 'finance_officer', 'manager']} />}>
-              <Route
-                path="/power-bi"
-                element={
-                  <ModulePlaceholder
-                    title="Power BI Dashboard"
-                    phase="Phase 6"
-                    description="Dedicated executive Power BI report embedding container."
-                    icon={BarChart3}
-                    apiEndpoints={['VITE_POWER_BI_EMBED_URL (iframe embedding)']}
-                  />
-                }
-              />
+              <Route path="/power-bi" element={<PowerBIPage />} />
             </Route>
           </Route>
         </Route>

@@ -5,6 +5,7 @@ import { useI18n } from '@/i18n';
 import { Menu, LogOut, Bell, ShieldCheck } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
+import { useUnreadNotificationsCount } from '@/features/notifications/hooks/useNotifications';
 
 interface TopbarProps {
   onToggleSidebar: () => void;
@@ -29,6 +30,8 @@ export const Topbar: React.FC<TopbarProps> = ({ onToggleSidebar }) => {
   const { t } = useI18n();
   const location = useLocation();
   const navigate = useNavigate();
+
+  const { data: unreadCount = 0 } = useUnreadNotificationsCount();
 
   const titleKey = ROUTE_TITLES[location.pathname] || 'nav.dashboard';
 
@@ -74,7 +77,11 @@ export const Topbar: React.FC<TopbarProps> = ({ onToggleSidebar }) => {
           aria-label="Notifications"
         >
           <Bell className="w-5 h-5" />
-          <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-indigo-600 ring-2 ring-white" />
+          {unreadCount > 0 && (
+            <span className="absolute top-1 right-1 flex items-center justify-center min-w-[18px] h-[18px] px-1 text-[10px] font-bold text-white bg-indigo-600 rounded-full ring-2 ring-white">
+              {unreadCount > 99 ? '99+' : unreadCount}
+            </span>
+          )}
         </button>
 
         <div className="h-5 w-[1px] bg-stone-200 mx-1" aria-hidden="true" />

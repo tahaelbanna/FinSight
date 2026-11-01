@@ -2,23 +2,20 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { LoginPage } from '@/features/auth/LoginPage';
 import { DashboardPage } from '@/features/dashboard/DashboardPage';
+import { ExpensesPage } from '@/features/expenses/ExpensesPage';
+import { ApprovalsPage } from '@/features/approvals/ApprovalsPage';
+import { BudgetsPage } from '@/features/budgets/BudgetsPage';
+import { ProjectsPage } from '@/features/projects/ProjectsPage';
+import { DepartmentsPage } from '@/features/departments/DepartmentsPage';
+import { UsersPage } from '@/features/users/UsersPage';
+import { NotificationsPage } from '@/features/notifications/NotificationsPage';
+import { ActivityLogsPage } from '@/features/activity-logs/ActivityLogsPage';
 import { MainLayout } from '@/app/layouts/MainLayout';
 import { ProtectedRoute } from '@/components/layout/ProtectedRoute';
 import { RoleGuard } from '@/components/layout/RoleGuard';
 import { ModulePlaceholder } from '@/components/layout/ModulePlaceholder';
 import { NotFoundPage } from '@/components/layout/NotFoundPage';
-import {
-  Receipt,
-  CheckSquare,
-  Wallet,
-  FolderKanban,
-  Building2,
-  Users,
-  LineChart,
-  BarChart3,
-  Bell,
-  ScrollText,
-} from 'lucide-react';
+import { LineChart, BarChart3 } from 'lucide-react';
 
 export const AppRouter: React.FC = () => {
   return (
@@ -35,99 +32,38 @@ export const AppRouter: React.FC = () => {
             <Route path="/dashboard" element={<DashboardPage />} />
 
             {/* Expenses (All Roles) */}
-            <Route
-              path="/expenses"
-              element={
-                <ModulePlaceholder
-                  title="Expenses"
-                  phase="Phase 4"
-                  description="Submit expenses, upload receipts, and track approval states."
-                  icon={Receipt}
-                  apiEndpoints={[
-                    'GET /api/v1/expenses',
-                    'POST /api/v1/expenses (multipart)',
-                    'GET /api/v1/expenses/categories',
-                  ]}
-                />
-              }
-            />
+            <Route path="/expenses" element={<ExpensesPage />} />
 
             {/* Approvals (Manager Only) */}
             <Route element={<RoleGuard allowedRoles={['manager']} />}>
-              <Route
-                path="/approvals"
-                element={
-                  <ModulePlaceholder
-                    title="Expense Approvals"
-                    phase="Phase 4"
-                    description="Review, approve, or reject employee expenses for your department."
-                    icon={CheckSquare}
-                    apiEndpoints={[
-                      'GET /api/v1/approvals/pending',
-                      'PATCH /api/v1/approvals/expenses/:id/review',
-                    ]}
-                  />
-                }
-              />
+              <Route path="/approvals" element={<ApprovalsPage />} />
             </Route>
 
             {/* Budgets (Admin, Finance Officer, Manager) */}
             <Route element={<RoleGuard allowedRoles={['admin', 'finance_officer', 'manager']} />}>
-              <Route
-                path="/budgets"
-                element={
-                  <ModulePlaceholder
-                    title="Budgets & Allocations"
-                    phase="Phase 4"
-                    description="Manage OpEx department allocations and CapEx project budgets."
-                    icon={Wallet}
-                    apiEndpoints={[
-                      'GET /api/v1/budgets',
-                      'POST /api/v1/budgets',
-                      'PATCH /api/v1/budgets/:id',
-                    ]}
-                  />
-                }
-              />
+              <Route path="/budgets" element={<BudgetsPage />} />
             </Route>
 
             {/* Projects (All Roles) */}
-            <Route
-              path="/projects"
-              element={
-                <ModulePlaceholder
-                  title="Projects"
-                  phase="Phase 4"
-                  description="View and manage corporate projects and status lifecycles."
-                  icon={FolderKanban}
-                  apiEndpoints={[
-                    'GET /api/v1/projects',
-                    'POST /api/v1/projects',
-                    'PATCH /api/v1/projects/:id/status',
-                  ]}
-                />
-              }
-            />
+            <Route path="/projects" element={<ProjectsPage />} />
 
             {/* Departments (All Roles) */}
-            <Route
-              path="/departments"
-              element={
-                <ModulePlaceholder
-                  title="Departments"
-                  phase="Phase 4"
-                  description="View and manage corporate departments and assigned managers."
-                  icon={Building2}
-                  apiEndpoints={[
-                    'GET /api/v1/departments',
-                    'POST /api/v1/departments',
-                    'PATCH /api/v1/departments/:id',
-                  ]}
-                />
-              }
-            />
+            <Route path="/departments" element={<DepartmentsPage />} />
 
-            {/* Native Analytics (All Roles) */}
+            {/* User Management (Admin Only) */}
+            <Route element={<RoleGuard allowedRoles={['admin']} />}>
+              <Route path="/users" element={<UsersPage />} />
+            </Route>
+
+            {/* Audit Logs (Admin, Finance Officer, Manager) */}
+            <Route element={<RoleGuard allowedRoles={['admin', 'finance_officer', 'manager']} />}>
+              <Route path="/activity-logs" element={<ActivityLogsPage />} />
+            </Route>
+
+            {/* Notifications (All Roles) */}
+            <Route path="/notifications" element={<NotificationsPage />} />
+
+            {/* Native Analytics (Phase 5 Placeholder) */}
             <Route
               path="/analytics"
               element={
@@ -147,7 +83,7 @@ export const AppRouter: React.FC = () => {
               }
             />
 
-            {/* Dedicated Power BI Dashboard (Admin, Finance Officer, Manager) */}
+            {/* Dedicated Power BI Dashboard (Phase 6 Placeholder) */}
             <Route element={<RoleGuard allowedRoles={['admin', 'finance_officer', 'manager']} />}>
               <Route
                 path="/power-bi"
@@ -162,60 +98,6 @@ export const AppRouter: React.FC = () => {
                 }
               />
             </Route>
-
-            {/* User Management (Admin Only) */}
-            <Route element={<RoleGuard allowedRoles={['admin']} />}>
-              <Route
-                path="/users"
-                element={
-                  <ModulePlaceholder
-                    title="User Management"
-                    phase="Phase 4"
-                    description="Provision organization users and assign roles. No public registration."
-                    icon={Users}
-                    apiEndpoints={[
-                      'GET /api/v1/users',
-                      'POST /api/v1/users',
-                      'PATCH /api/v1/users/:user_id',
-                      'PATCH /api/v1/users/:user_id/status',
-                    ]}
-                  />
-                }
-              />
-            </Route>
-
-            {/* Audit Logs (Admin Only) */}
-            <Route element={<RoleGuard allowedRoles={['admin']} />}>
-              <Route
-                path="/activity-logs"
-                element={
-                  <ModulePlaceholder
-                    title="Audit Logs"
-                    phase="Phase 4"
-                    description="Track system administrative actions and financial audit trails."
-                    icon={ScrollText}
-                    apiEndpoints={['GET /api/v1/activity-logs']}
-                  />
-                }
-              />
-            </Route>
-
-            {/* Notifications (All Roles) */}
-            <Route
-              path="/notifications"
-              element={
-                <ModulePlaceholder
-                  title="Notifications"
-                  phase="Phase 4"
-                  description="In-app notification feed for expense review events and status updates."
-                  icon={Bell}
-                  apiEndpoints={[
-                    'GET /api/v1/notifications',
-                    'PATCH /api/v1/notifications/:id/read',
-                  ]}
-                />
-              }
-            />
           </Route>
         </Route>
 

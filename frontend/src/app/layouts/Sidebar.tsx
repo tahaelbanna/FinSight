@@ -91,7 +91,7 @@ const NAV_ITEMS: NavItemConfig[] = [
     nameKey: 'nav.activityLogs',
     path: '/activity-logs',
     icon: ScrollText,
-    roles: ['admin'],
+    roles: ['admin', 'manager', 'finance_officer'],
   },
   {
     nameKey: 'nav.notifications',

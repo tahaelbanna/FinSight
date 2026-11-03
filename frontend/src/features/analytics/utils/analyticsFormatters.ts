@@ -18,7 +18,9 @@ export function formatCurrency(amount: number | null | undefined, compact: boole
     return `${sign}$${Math.round(abs).toLocaleString()}`;
   }
 
-  return `$${Number(amount).toLocaleString(undefined, {
+  const abs = Math.abs(amount);
+  const sign = amount < 0 ? '-' : '';
+  return `${sign}$${Number(abs).toLocaleString(undefined, {
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   })}`;

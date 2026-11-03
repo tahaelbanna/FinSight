@@ -34,6 +34,7 @@ const createFileValidators = (
 export const createParseFilePipe = (
     maxSize: FileSizeType,
     fileTypes: NonEmptyArray<FileType>,
+    fileIsRequired: boolean = false,
 ): ParseFilePipe =>
     new ParseFilePipe({
         validators: createFileValidators(maxSize, fileTypes),
@@ -41,5 +42,5 @@ export const createParseFilePipe = (
         exceptionFactory: (error: string) => {
             throw new UnprocessableEntityException(error);
         },
-        fileIsRequired: true,
+        fileIsRequired,
     });

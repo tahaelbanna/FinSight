@@ -9,6 +9,8 @@ import { GetActivityLogsDto } from '../dtos/get-activity-logs.dto';
 import { ActivityLogResponseDto } from '../dtos/activity-log-response.dto';
 import { UserRole, EntityType } from 'src/common/enums';
 
+import { resolveCurrentUser } from 'src/common/utils/resolve-current-user.util';
+
 @Injectable()
 export class GetAllActivityLogsUseCase {
     constructor(
@@ -20,9 +22,15 @@ export class GetAllActivityLogsUseCase {
     async execute(
         query: GetActivityLogsDto,
         user_id: string,
+        role?: UserRole,
     ): Promise<PaginatedResult<ActivityLogResponseDto>> {
-        const currentUser = await this.userRepository.findById(user_id);
-        if (!currentUser || currentUser.role === UserRole.EMPLOYEE) {
+        const currentUser = await resolveCurrentUser(
+            this.userRepository,
+            user_id,
+            role,
+            this.i18nService.translate('auth.FORBIDDEN'),
+        );
+        if (currentUser.role === UserRole.EMPLOYEE) {
             throw new UnauthorizedException(
                 this.i18nService.translate('auth.FORBIDDEN'),
             );

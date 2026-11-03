@@ -76,9 +76,9 @@ export const MonthlyTrendChart: React.FC<MonthlyTrendChartProps> = ({
       {chartData.length === 0 ? (
         <div className="h-72 flex flex-col items-center justify-center text-center p-6 bg-stone-50/50 rounded-xl border border-dashed border-stone-200">
           <AlertCircle className="w-8 h-8 text-stone-400 mb-2" />
-          <p className="text-sm font-semibold text-stone-700">No Expense Records</p>
+          <p className="text-sm font-semibold text-stone-700">No Approved Expenses in Window</p>
           <p className="text-xs text-stone-500 max-w-sm mt-1">
-            No approved expenses were recorded for the selected filter criteria and date window.
+            Zero approved expenditures were recorded in this date range. Under Accounting Model B, pending submissions in the review pipeline are not counted toward realized spend.
           </p>
         </div>
       ) : (

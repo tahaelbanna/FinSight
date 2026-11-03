@@ -72,7 +72,7 @@ export const ExecutiveSummaryCards: React.FC<ExecutiveSummaryCardsProps> = ({
           </Badge>
         </div>
         <p className="text-xs font-semibold text-stone-500 uppercase tracking-wider">
-          Total Budget
+          Authorized Budget
         </p>
         <p className="text-xl sm:text-2xl font-extrabold text-stone-900 tracking-tight mt-1 font-display">
           {formatCurrency(totalBudget)}
@@ -82,7 +82,7 @@ export const ExecutiveSummaryCards: React.FC<ExecutiveSummaryCardsProps> = ({
         </p>
       </Card>
 
-      {/* 2. Approved Expenses */}
+      {/* 2. Approved Expenses (Period Spend) */}
       <Card className="p-5 bg-white border border-stone-200/90 shadow-2xs hover:shadow-xs transition-shadow">
         <div className="flex items-center justify-between mb-2">
           <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
@@ -93,7 +93,7 @@ export const ExecutiveSummaryCards: React.FC<ExecutiveSummaryCardsProps> = ({
           </Badge>
         </div>
         <p className="text-xs font-semibold text-stone-500 uppercase tracking-wider">
-          Approved Expenses
+          Period Spend
         </p>
         <p className="text-xl sm:text-2xl font-extrabold text-emerald-900 tracking-tight mt-1 font-display">
           {formatCurrency(approved)}
@@ -154,7 +154,7 @@ export const ExecutiveSummaryCards: React.FC<ExecutiveSummaryCardsProps> = ({
           {formatCurrency(remaining)}
         </p>
         <p className="text-[11px] text-stone-400 mt-1.5">
-          {isEmployee ? 'Department level tracking' : 'Allocated minus approved'}
+          {isEmployee ? 'Department level tracking' : 'Authorized minus period spend'}
         </p>
       </Card>
 

@@ -11,6 +11,8 @@ import { DepartmentComparisonResponseDto } from './dtos/department-comparison-re
 import { CategoryBreakdownResponseDto } from './dtos/category-breakdown-response.dto';
 import { ProjectPerformanceResponseDto } from './dtos/project-performance-response.dto';
 
+import { UserRole } from 'src/common/enums';
+
 @Injectable()
 export class AnalyticsService {
     constructor(
@@ -24,35 +26,40 @@ export class AnalyticsService {
     async getSummary(
         query: GetAnalyticsFilterDto,
         user_id: string,
+        role?: UserRole,
     ): Promise<AnalyticsSummaryResponseDto> {
-        return this.getSummaryUseCase.execute(query, user_id);
+        return this.getSummaryUseCase.execute(query, user_id, role);
     }
 
     async getMonthlyTrend(
         query: GetAnalyticsFilterDto,
         user_id: string,
+        role?: UserRole,
     ): Promise<MonthlyTrendResponseDto[]> {
-        return this.getMonthlyTrendUseCase.execute(query, user_id);
+        return this.getMonthlyTrendUseCase.execute(query, user_id, role);
     }
 
     async getDepartmentComparison(
         query: GetAnalyticsFilterDto,
         user_id: string,
+        role?: UserRole,
     ): Promise<DepartmentComparisonResponseDto[]> {
-        return this.getDepartmentComparisonUseCase.execute(query, user_id);
+        return this.getDepartmentComparisonUseCase.execute(query, user_id, role);
     }
 
     async getCategoryBreakdown(
         query: GetAnalyticsFilterDto,
         user_id: string,
+        role?: UserRole,
     ): Promise<CategoryBreakdownResponseDto[]> {
-        return this.getCategoryBreakdownUseCase.execute(query, user_id);
+        return this.getCategoryBreakdownUseCase.execute(query, user_id, role);
     }
 
     async getProjectPerformance(
         query: GetAnalyticsFilterDto,
         user_id: string,
+        role?: UserRole,
     ): Promise<ProjectPerformanceResponseDto[]> {
-        return this.getProjectPerformanceUseCase.execute(query, user_id);
+        return this.getProjectPerformanceUseCase.execute(query, user_id, role);
     }
 }

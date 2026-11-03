@@ -10,6 +10,7 @@ import { CreateBudgetUseCase } from './usecases/create-budget.usecase';
 import { GetAllBudgetsUseCase } from './usecases/get-all-budgets.usecase';
 import { GetBudgetByIdUseCase } from './usecases/get-budget-by-id.usecase';
 import { UpdateBudgetUseCase } from './usecases/update-budget.usecase';
+import { GetBudgetSummaryUseCase } from './usecases/get-budget-summary.usecase';
 
 import { DepartmentsModule } from 'src/departments/departments.module';
 import { ProjectsModule } from 'src/projects/projects.module';
@@ -33,6 +34,7 @@ import { ActivityLogsModule } from 'src/activity-logs/activity-logs.module';
         GetAllBudgetsUseCase,
         GetBudgetByIdUseCase,
         UpdateBudgetUseCase,
+        GetBudgetSummaryUseCase,
     ],
     controllers: [BudgetsController],
     exports: [BudgetsService, BudgetRepository],

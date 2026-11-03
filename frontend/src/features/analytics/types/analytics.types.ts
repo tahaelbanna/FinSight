@@ -15,10 +15,15 @@ export interface AnalyticsFilterParams {
  * AnalyticsSummaryResponseDto
  */
 export interface AnalyticsSummary {
+  /** Full authorized budget allocation (not prorated by date filters) */
   total_budget: number;
+  /** Period approved spend matching active date filters */
   total_approved_expenses: number;
+  /** Period pending claim submissions */
   total_pending_expenses: number;
+  /** Remaining balance: authorized budget minus period approved spend */
   remaining_budget: number;
+  /** Utilization percentage of authorized budget by period approved spend */
   utilization_percentage: number;
 }
 

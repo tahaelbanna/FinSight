@@ -25,7 +25,7 @@ export const ExpenseDetailsModal: React.FC<ExpenseDetailsModalProps> = ({
   expenseId,
   onClose,
 }) => {
-  const { data: expense, isLoading } = useExpenseDetails(expenseId);
+  const { data: expense, isLoading, error } = useExpenseDetails(expenseId);
 
   return (
     <Modal
@@ -35,10 +35,14 @@ export const ExpenseDetailsModal: React.FC<ExpenseDetailsModalProps> = ({
       subtitle={expense ? `ID: ${expense.expense_id}` : undefined}
       maxWidth="lg"
     >
-      {isLoading || !expense ? (
+      {isLoading ? (
         <div className="py-12 flex flex-col items-center justify-center gap-3 text-stone-500">
-          <Receipt className="w-8 h-8 animate-pulse text-indigo-500" />
+          <div className="w-8 h-8 border-3 border-indigo-600 border-t-transparent rounded-full animate-spin" />
           <p className="text-xs font-medium">Loading expense details...</p>
+        </div>
+      ) : error || !expense ? (
+        <div className="py-8 text-center text-rose-500">
+          Failed to load expense details. Please try again.
         </div>
       ) : (
         <div className="space-y-5">

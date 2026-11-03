@@ -3,12 +3,18 @@ import type { ApiResponse, PaginatedResponse } from '@/types/api.types';
 import { normalizePaginatedResponse } from '@/types/api.types';
 import type {
   BudgetItem,
+  BudgetSummaryResponse,
   CreateBudgetPayload,
   GetAllBudgetsParams,
   UpdateBudgetPayload,
 } from '../types/budgets.types';
 
 export const budgetsService = {
+  async getSummary(): Promise<BudgetSummaryResponse> {
+    const response = await apiClient.get<ApiResponse<BudgetSummaryResponse>>('/budgets/summary');
+    return response.data.data;
+  },
+
   async getAll(params: GetAllBudgetsParams = {}): Promise<PaginatedResponse<BudgetItem>> {
     const response = await apiClient.get('/budgets', {
       params,

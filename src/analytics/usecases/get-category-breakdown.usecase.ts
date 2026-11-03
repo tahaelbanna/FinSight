@@ -8,6 +8,8 @@ import { CategoryBreakdownResponseDto } from '../dtos/category-breakdown-respons
 import { ExpenseStatus, UserRole } from 'src/common/enums';
 import { I18nService } from 'nestjs-i18n';
 
+import { resolveCurrentUser } from 'src/common/utils/resolve-current-user.util';
+
 @Injectable()
 export class GetCategoryBreakdownUseCase {
     constructor(
@@ -19,12 +21,14 @@ export class GetCategoryBreakdownUseCase {
     async execute(
         query: GetAnalyticsFilterDto,
         user_id: string,
+        role?: UserRole,
     ): Promise<CategoryBreakdownResponseDto[]> {
-        const currentUser = await this.userRepository.findById(user_id);
-        if (!currentUser)
-            throw new UnauthorizedException(
-                this.i18nService.translate('users.USER_NOT_FOUND'),
-            );
+        const currentUser = await resolveCurrentUser(
+            this.userRepository,
+            user_id,
+            role,
+            this.i18nService.translate('users.USER_NOT_FOUND'),
+        );
 
         const qb = this.expenseRepository
             .createQueryBuilder('expense')

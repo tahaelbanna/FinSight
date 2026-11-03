@@ -22,7 +22,11 @@ export class AnalyticsController {
         @Query() query: GetAnalyticsFilterDto,
         @CurrentUser() principal: Principal,
     ): Promise<AnalyticsSummaryResponseDto> {
-        return this.analyticsService.getSummary(query, principal.user.user_id);
+        return this.analyticsService.getSummary(
+            query,
+            principal.user.user_id,
+            principal.role,
+        );
     }
 
     @Get('monthly-trend')
@@ -33,6 +37,7 @@ export class AnalyticsController {
         return this.analyticsService.getMonthlyTrend(
             query,
             principal.user.user_id,
+            principal.role,
         );
     }
 
@@ -44,6 +49,7 @@ export class AnalyticsController {
         return this.analyticsService.getCategoryBreakdown(
             query,
             principal.user.user_id,
+            principal.role,
         );
     }
 
@@ -56,6 +62,7 @@ export class AnalyticsController {
         return this.analyticsService.getDepartmentComparison(
             query,
             principal.user.user_id,
+            principal.role,
         );
     }
 
@@ -68,6 +75,7 @@ export class AnalyticsController {
         return this.analyticsService.getProjectPerformance(
             query,
             principal.user.user_id,
+            principal.role,
         );
     }
 }

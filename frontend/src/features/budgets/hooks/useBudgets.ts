@@ -12,7 +12,15 @@ export const BUDGET_QUERY_KEYS = {
   list: (params: GetAllBudgetsParams) => [...BUDGET_QUERY_KEYS.lists(), params] as const,
   details: () => [...BUDGET_QUERY_KEYS.all, 'detail'] as const,
   detail: (id: string) => [...BUDGET_QUERY_KEYS.details(), id] as const,
+  summary: () => [...BUDGET_QUERY_KEYS.all, 'summary'] as const,
 };
+
+export function useBudgetSummary() {
+  return useQuery({
+    queryKey: BUDGET_QUERY_KEYS.summary(),
+    queryFn: () => budgetsService.getSummary(),
+  });
+}
 
 export function useBudgets(params: GetAllBudgetsParams = {}) {
   return useQuery({

@@ -40,7 +40,7 @@ export class ProjectsController {
         @CurrentUser() principal: Principal,
     ): Promise<PaginatedResult<ProjectResponseDto>> {
         const userId = principal.user.user_id;
-        return this.projectsService.getAllProjects(query, userId);
+        return this.projectsService.getAllProjects(query, userId, principal.role);
     }
 
     @Get(':project_id')
@@ -49,7 +49,7 @@ export class ProjectsController {
         @CurrentUser() principal: Principal,
     ): Promise<ProjectResponseDto> {
         const userId = principal.user.user_id;
-        return this.projectsService.getProjectById(project_id, userId);
+        return this.projectsService.getProjectById(project_id, userId, principal.role);
     }
 
     @Patch(':project_id')

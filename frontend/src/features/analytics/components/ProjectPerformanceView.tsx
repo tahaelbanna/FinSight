@@ -84,8 +84,8 @@ export const ProjectPerformanceView: React.FC<ProjectPerformanceViewProps> = ({
             <thead className="bg-stone-50 border-b border-stone-200 text-stone-600 font-semibold">
               <tr>
                 <th className="py-2.5 px-3.5">Project Name</th>
-                <th className="py-2.5 px-3.5">Allocated CapEx</th>
-                <th className="py-2.5 px-3.5">Total Spent</th>
+                <th className="py-2.5 px-3.5">Authorized CapEx</th>
+                <th className="py-2.5 px-3.5">Period Spend</th>
                 <th className="py-2.5 px-3.5">Remaining Balance</th>
                 <th className="py-2.5 px-3.5">Utilization</th>
                 <th className="py-2.5 px-3.5 text-right">Status</th>

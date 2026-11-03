@@ -11,6 +11,7 @@ import { Project } from '../schemas/project.schema';
 import { UserRole } from 'src/common/enums';
 import { I18nService } from 'nestjs-i18n';
 import { ForbiddenException } from 'src/common/error-handling/custom-exceptions/forbidden.exception';
+import { resolveCurrentUser } from 'src/common/utils/resolve-current-user.util';
 
 @Injectable()
 export class GetAllProjectsUseCase {
@@ -23,16 +24,21 @@ export class GetAllProjectsUseCase {
     async execute(
         query: GetAllProjectsDto,
         user_id: string,
+        role?: UserRole,
     ): Promise<PaginatedResult<ProjectResponseDto>> {
-        const currentUser = await this.userRepository.findById(user_id);
-
-        if (!currentUser) {
-            throw new UnauthorizedException(this.i18nService.translate('users.UNAUTHORIZED_USER'));
-        }
+        const currentUser = await resolveCurrentUser(
+            this.userRepository,
+            user_id,
+            role,
+            this.i18nService.translate('users.UNAUTHORIZED_USER'),
+        );
 
         const baseWhere: FindOptionsWhere<Project> = {};
 
-        if (currentUser.role === UserRole.ADMIN) {
+        if (
+            currentUser.role === UserRole.ADMIN ||
+            currentUser.role === UserRole.FINANCE_OFFICER
+        ) {
             if (query.department_id) {
                 baseWhere.department_id = query.department_id;
             }

@@ -84,7 +84,7 @@ export const DepartmentComparisonView: React.FC<DepartmentComparisonViewProps> =
             </h3>
           </div>
           <p className="text-xs text-stone-500 mt-1">
-            Model B Consolidated comparison: OpEx & CapEx budget allocations against approved expenses
+            Model B Consolidated comparison: Authorized OpEx & CapEx budget allocations against approved period spend
           </p>
         </div>
       </div>
@@ -139,13 +139,13 @@ export const DepartmentComparisonView: React.FC<DepartmentComparisonViewProps> =
                             {row.name}
                           </p>
                           <div className="flex justify-between gap-4 pt-1">
-                            <span className="text-stone-400">Allocated Budget:</span>
+                            <span className="text-stone-400">Authorized Budget:</span>
                             <span className="font-semibold text-white">
                               {formatCurrency(row.allocated)}
                             </span>
                           </div>
                           <div className="flex justify-between gap-4">
-                            <span className="text-stone-400">Approved Spend:</span>
+                            <span className="text-stone-400">Period Spend:</span>
                             <span className="font-semibold text-indigo-300">
                               {formatCurrency(row.approved)}
                             </span>
@@ -175,14 +175,14 @@ export const DepartmentComparisonView: React.FC<DepartmentComparisonViewProps> =
                   wrapperStyle={{ paddingBottom: '12px', fontSize: '11px' }}
                 />
                 <Bar
-                  name="Allocated Budget"
+                  name="Authorized Budget"
                   dataKey="allocated"
                   fill="#CBD5E1"
                   radius={[4, 4, 0, 0]}
                   maxBarSize={36}
                 />
                 <Bar
-                  name="Approved Spend"
+                  name="Period Spend"
                   dataKey="approved"
                   fill={ANALYTICS_COLORS.electricIndigo}
                   radius={[4, 4, 0, 0]}
@@ -198,8 +198,8 @@ export const DepartmentComparisonView: React.FC<DepartmentComparisonViewProps> =
               <thead className="bg-stone-50 border-b border-stone-200 text-stone-600 font-semibold">
                 <tr>
                   <th className="py-2.5 px-3.5">Department</th>
-                  <th className="py-2.5 px-3.5">Allocated Budget</th>
-                  <th className="py-2.5 px-3.5">Approved Spend</th>
+                  <th className="py-2.5 px-3.5">Authorized Budget</th>
+                  <th className="py-2.5 px-3.5">Period Spend</th>
                   <th className="py-2.5 px-3.5">Utilization</th>
                   <th className="py-2.5 px-3.5 text-right">Status</th>
                 </tr>

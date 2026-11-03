@@ -19,6 +19,8 @@ import { I18nService } from 'nestjs-i18n';
 import { calculateBudgetMetrics } from '../utils/budget-calculator.util';
 import { ExpenseMetricsQuery } from 'src/expenses/queries/expense-metrics.query';
 
+import { resolveCurrentUser } from 'src/common/utils/resolve-current-user.util';
+
 @Injectable()
 export class GetAllBudgetsUseCase {
     constructor(
@@ -31,13 +33,14 @@ export class GetAllBudgetsUseCase {
     async execute(
         query: GetAllBudgetsDto,
         user_id: string,
+        role?: UserRole,
     ): Promise<PaginatedResult<BudgetResponseDto>> {
-        const currentUser = await this.userRepository.findById(user_id);
-        if (!currentUser) {
-            throw new UnauthorizedException(
-                this.i18nService.translate('users.USER_NOT_FOUND'),
-            );
-        }
+        const currentUser = await resolveCurrentUser(
+            this.userRepository,
+            user_id,
+            role,
+            this.i18nService.translate('users.USER_NOT_FOUND'),
+        );
 
         const commonFilters: FindOptionsWhere<Budget> = {};
         if (query.date_from) {

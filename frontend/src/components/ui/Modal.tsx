@@ -46,13 +46,13 @@ export const Modal: React.FC<ModalProps> = ({
         aria-hidden="true"
       />
 
-      {/* Modal Dialog */}
-      <div className="flex min-h-full items-center justify-center p-4 sm:p-6 text-center">
+      {/* Modal Dialog Container */}
+      <div className="relative z-10 flex min-h-full items-center justify-center p-4 sm:p-6 text-center pointer-events-none">
         <div
           role="dialog"
           aria-modal="true"
           className={cn(
-            'w-full transform overflow-hidden rounded-2xl bg-white text-start shadow-xl transition-all border border-stone-200/80 duration-150 animate-in zoom-in-95',
+            'pointer-events-auto relative w-full transform overflow-hidden rounded-2xl bg-white text-start shadow-xl transition-all border border-stone-200/80 duration-150 animate-in zoom-in-95',
             maxWidth === 'sm' && 'max-w-sm',
             maxWidth === 'md' && 'max-w-md',
             maxWidth === 'lg' && 'max-w-lg',

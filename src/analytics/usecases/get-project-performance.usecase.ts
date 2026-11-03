@@ -9,6 +9,7 @@ import { ProjectPerformanceResponseDto } from '../dtos/project-performance-respo
 import { ExpenseStatus, UserRole } from 'src/common/enums';
 import { FindOptionsWhere } from 'typeorm';
 import { Project } from 'src/projects/schemas/project.schema';
+import { resolveCurrentUser } from 'src/common/utils/resolve-current-user.util';
 
 @Injectable()
 export class GetProjectPerformanceUseCase {
@@ -22,10 +23,16 @@ export class GetProjectPerformanceUseCase {
     async execute(
         query: GetAnalyticsFilterDto,
         user_id: string,
+        role?: UserRole,
     ): Promise<ProjectPerformanceResponseDto[]> {
-        const currentUser = await this.userRepository.findById(user_id);
+        const currentUser = await resolveCurrentUser(
+            this.userRepository,
+            user_id,
+            role,
+            this.i18nService.translate('auth.FORBIDDEN'),
+        );
 
-        if (!currentUser || currentUser.role === UserRole.EMPLOYEE) {
+        if (currentUser.role === UserRole.EMPLOYEE) {
             throw new ForbiddenException(
                 this.i18nService.translate('auth.FORBIDDEN'),
             );
@@ -50,9 +57,13 @@ export class GetProjectPerformanceUseCase {
 
         const formatted = await Promise.all(
             projects.map(async (project) => {
-                const allocated_budget = project.budgets.reduce(
-                    (sum, b) => sum + Number(b.allocated_amount),
-                    0,
+                const allocated_budget = Number(
+                    (project.budgets || [])
+                        .reduce(
+                            (sum, b) => sum + Number(b.allocated_amount),
+                            0,
+                        )
+                        .toFixed(2),
                 );
 
                 const expenseQb = this.expenseRepository

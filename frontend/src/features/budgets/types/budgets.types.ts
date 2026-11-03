@@ -64,3 +64,19 @@ export interface UpdateBudgetPayload {
   start_date?: string;
   end_date?: string;
 }
+
+export interface BudgetAllocationMetric {
+  total_budget: number;
+  total_approved_spend: number;
+  remaining_budget: number;
+  utilization_percentage: number;
+  total_budgets_count: number;
+  is_overrun?: boolean;
+}
+
+export interface BudgetSummaryResponse {
+  all_allocations: BudgetAllocationMetric;
+  department_opex: BudgetAllocationMetric;
+  project_capex: BudgetAllocationMetric;
+}
+

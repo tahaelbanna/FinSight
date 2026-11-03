@@ -12,6 +12,7 @@ import { GetAllExpensesDto } from './dtos/get-all-expenses.dto';
 import { MulterFile } from 'src/files-upload/types/file-type.types';
 import { PaginatedResult } from 'src/common/data-access';
 import { ExpenseAttachment } from './schemas/expense-attachment.schema';
+import { UserRole } from 'src/common/enums';
 
 @Injectable()
 export class ExpensesService {
@@ -38,15 +39,17 @@ export class ExpensesService {
     async getAllExpenses(
         query: GetAllExpensesDto,
         user_id: string,
+        role?: UserRole,
     ): Promise<PaginatedResult<ExpenseResponseDto>> {
-        return this.getAllExpensesUseCase.execute(query, user_id);
+        return this.getAllExpensesUseCase.execute(query, user_id, role);
     }
 
     async getExpenseById(
         expense_id: string,
         user_id: string,
+        role?: UserRole,
     ): Promise<ExpenseResponseDto> {
-        return this.getExpenseByIdUseCase.execute(expense_id, user_id);
+        return this.getExpenseByIdUseCase.execute(expense_id, user_id, role);
     }
 
     async downloadAttachment(

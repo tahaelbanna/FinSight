@@ -9,6 +9,8 @@ import { GetAnalyticsFilterDto } from '../dtos/get-analytics-filter.dto';
 import { AnalyticsSummaryResponseDto } from '../dtos/analytics-summary-response.dto';
 import { ExpenseStatus, UserRole } from 'src/common/enums';
 
+import { resolveCurrentUser } from 'src/common/utils/resolve-current-user.util';
+
 @Injectable()
 export class GetSummaryUseCase {
     constructor(
@@ -21,12 +23,14 @@ export class GetSummaryUseCase {
     async execute(
         query: GetAnalyticsFilterDto,
         user_id: string,
+        role?: UserRole,
     ): Promise<AnalyticsSummaryResponseDto> {
-        const currentUser = await this.userRepository.findById(user_id);
-        if (!currentUser)
-            throw new UnauthorizedException(
-                this.i18nService.translate('users.USER_NOT_FOUND'),
-            );
+        const currentUser = await resolveCurrentUser(
+            this.userRepository,
+            user_id,
+            role,
+            this.i18nService.translate('users.USER_NOT_FOUND'),
+        );
 
         let targetDepartmentId = query.department_id;
         let targetUserId = null;
@@ -93,14 +97,16 @@ export class GetSummaryUseCase {
                 });
             }
 
+            // Full authorized budget allocation for relevant scope (Model B OpEx + CapEx)
+            // Date filters filter actual approved period spending, not the authorized budget.
             const budgetResult = await budgetQb
-                .select('SUM(budget.allocated_amount)', 'total')
+                .select('COALESCE(SUM(budget.allocated_amount), 0)', 'total')
                 .getRawOne();
             totalBudget = Number(budgetResult?.total || 0);
         }
 
         const remainingBudget =
-            totalBudget > 0 ? totalBudget - totalApproved : 0;
+            totalBudget > 0 ? Number((totalBudget - totalApproved).toFixed(2)) : 0;
         const utilizationPercentage =
             totalBudget > 0
                 ? Number(((totalApproved / totalBudget) * 100).toFixed(2))

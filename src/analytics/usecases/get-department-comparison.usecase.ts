@@ -11,70 +11,7 @@ import { ExpenseStatus, UserRole } from 'src/common/enums';
 import { I18nService } from 'nestjs-i18n';
 import { Budget } from 'src/budgets/schemas/budget.schema';
 import { In } from 'typeorm';
-
-function parseDateToUtcDays(dateInput: string | Date): number {
-    if (typeof dateInput === 'string') {
-        const parts = dateInput.split('T')[0].split('-');
-        if (parts.length === 3) {
-            const year = parseInt(parts[0], 10);
-            const month = parseInt(parts[1], 10) - 1;
-            const day = parseInt(parts[2], 10);
-            return Math.floor(Date.UTC(year, month, day) / 86400000);
-        }
-    }
-    const d = new Date(dateInput);
-    return Math.floor(
-        Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()) / 86400000,
-    );
-}
-
-function calculateProratedBudget(
-    budget: Budget,
-    dateFrom?: string,
-    dateTo?: string,
-): number {
-    const budgetStart = parseDateToUtcDays(budget.start_date);
-    const budgetEnd = parseDateToUtcDays(budget.end_date);
-    const totalBudgetDays = budgetEnd - budgetStart + 1;
-    if (totalBudgetDays <= 0) return 0;
-
-    const amount = Number(budget.allocated_amount);
-
-    // Case 4: No date filters
-    if (!dateFrom && !dateTo) {
-        return amount;
-    }
-
-    // Case 1: Both date_from and date_to
-    if (dateFrom && dateTo) {
-        const filterStart = parseDateToUtcDays(dateFrom);
-        const filterEnd = parseDateToUtcDays(dateTo);
-        const overlapStart = Math.max(budgetStart, filterStart);
-        const overlapEnd = Math.min(budgetEnd, filterEnd);
-        const overlapDays = Math.max(0, overlapEnd - overlapStart + 1);
-        return overlapDays > 0 ? (amount * overlapDays) / totalBudgetDays : 0;
-    }
-
-    // Case 2: date_from only
-    if (dateFrom && !dateTo) {
-        const filterStart = parseDateToUtcDays(dateFrom);
-        const overlapStart = Math.max(budgetStart, filterStart);
-        const overlapEnd = budgetEnd;
-        const overlapDays = Math.max(0, overlapEnd - overlapStart + 1);
-        return overlapDays > 0 ? (amount * overlapDays) / totalBudgetDays : 0;
-    }
-
-    // Case 3: date_to only
-    if (!dateFrom && dateTo) {
-        const filterEnd = parseDateToUtcDays(dateTo);
-        const overlapStart = budgetStart;
-        const overlapEnd = Math.min(budgetEnd, filterEnd);
-        const overlapDays = Math.max(0, overlapEnd - overlapStart + 1);
-        return overlapDays > 0 ? (amount * overlapDays) / totalBudgetDays : 0;
-    }
-
-    return amount;
-}
+import { resolveCurrentUser } from 'src/common/utils/resolve-current-user.util';
 
 @Injectable()
 export class GetDepartmentComparisonUseCase {
@@ -89,9 +26,15 @@ export class GetDepartmentComparisonUseCase {
     async execute(
         query: GetAnalyticsFilterDto,
         user_id: string,
+        role?: UserRole,
     ): Promise<DepartmentComparisonResponseDto[]> {
-        const currentUser = await this.userRepository.findById(user_id);
-        if (!currentUser || currentUser.role === UserRole.EMPLOYEE) {
+        const currentUser = await resolveCurrentUser(
+            this.userRepository,
+            user_id,
+            role,
+            this.i18nService.translate('auth.FORBIDDEN'),
+        );
+        if (currentUser.role === UserRole.EMPLOYEE) {
             throw new ForbiddenException(
                 this.i18nService.translate('auth.FORBIDDEN'),
             );
@@ -209,17 +152,13 @@ export class GetDepartmentComparisonUseCase {
         // Compute metrics per department
         const formatted = departments.map((dept) => {
             const deptBudgets = budgetsByDeptMap.get(dept.department_id) || [];
-            let totalProratedBudget = 0;
+            let totalAuthorizedBudget = 0;
             for (const b of deptBudgets) {
-                totalProratedBudget += calculateProratedBudget(
-                    b,
-                    query.date_from,
-                    query.date_to,
-                );
+                totalAuthorizedBudget += Number(b.allocated_amount);
             }
 
             const totalApproved = approvedByDeptMap.get(dept.department_id) || 0;
-            const allocatedBudget = Number(totalProratedBudget.toFixed(2));
+            const allocatedBudget = Number(totalAuthorizedBudget.toFixed(2));
             const approvedSpending = Number(totalApproved.toFixed(2));
 
             const utilizationPercentage =

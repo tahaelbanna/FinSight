@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
-import { useBudgets } from './hooks/useBudgets';
+import { useBudgets, useBudgetSummary } from './hooks/useBudgets';
 import type { BudgetItem } from './types/budgets.types';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
@@ -9,6 +9,7 @@ import { Pagination } from '@/components/ui/Pagination';
 import { CreateBudgetModal } from './components/CreateBudgetModal';
 import { EditBudgetModal } from './components/EditBudgetModal';
 import { BudgetDetailsModal } from './components/BudgetDetailsModal';
+import { BudgetAllocationCards } from './components/BudgetAllocationCards';
 import {
   Plus,
   Building,
@@ -29,6 +30,8 @@ export const BudgetsPage: React.FC = () => {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [selectedBudgetForEdit, setSelectedBudgetForEdit] = useState<BudgetItem | null>(null);
   const [selectedBudgetIdForDetails, setSelectedBudgetIdForDetails] = useState<string | null>(null);
+
+  const { data: summary, isLoading: isSummaryLoading } = useBudgetSummary();
 
   const { data, isLoading, error } = useBudgets({
     page,
@@ -76,6 +79,17 @@ export const BudgetsPage: React.FC = () => {
           </Button>
         )}
       </div>
+
+      {/* Model B Allocation Cards */}
+      <BudgetAllocationCards
+        summary={summary}
+        isLoading={isSummaryLoading}
+        activeScope={scopeFilter}
+        onSelectScope={(scope) => {
+          setScopeFilter(scope);
+          setPage(1);
+        }}
+      />
 
       {/* Scope and Status Filters */}
       <div className="flex flex-wrap items-center justify-between gap-3 bg-white p-2.5 rounded-xl border border-stone-200/80 shadow-xs">

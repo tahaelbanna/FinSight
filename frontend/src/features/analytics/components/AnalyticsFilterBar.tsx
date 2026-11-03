@@ -44,6 +44,10 @@ export const AnalyticsFilterBar: React.FC<AnalyticsFilterBarProps> = ({
   });
   const projects = projData?.data || [];
 
+  const [activePreset, setActivePreset] = React.useState<
+    'all' | '2025' | '2024' | 'last6mo' | 'custom'
+  >('all');
+
   const hasActiveFilters = Boolean(
     filters.department_id ||
     filters.project_id ||
@@ -69,6 +73,7 @@ export const AnalyticsFilterBar: React.FC<AnalyticsFilterBarProps> = ({
   };
 
   const handleDateChange = (field: 'date_from' | 'date_to', value: string) => {
+    setActivePreset('custom');
     onFilterChange({
       ...filters,
       [field]: value || undefined,
@@ -76,6 +81,7 @@ export const AnalyticsFilterBar: React.FC<AnalyticsFilterBarProps> = ({
   };
 
   const applyPreset = (preset: 'all' | '2025' | '2024' | 'last6mo') => {
+    setActivePreset(preset);
     if (preset === 'all') {
       onFilterChange({
         ...filters,
@@ -105,14 +111,30 @@ export const AnalyticsFilterBar: React.FC<AnalyticsFilterBarProps> = ({
 
     if (preset === 'last6mo') {
       const now = new Date();
-      const sixMonthsAgo = new Date();
-      sixMonthsAgo.setMonth(now.getMonth() - 6);
+      const year = now.getFullYear();
+      const month = now.getMonth(); // 0 to 11
+      const day = now.getDate();
+
+      // Trailing 6 calendar months window (current month + 5 preceding months)
+      // e.g. on November 1: 2026-06-01 to 2026-11-01 (exactly 6 calendar months: Jun, Jul, Aug, Sep, Oct, Nov)
+      const startYear = month >= 5 ? year : year - 1;
+      const startMonth = month >= 5 ? month - 5 : month + 7;
+
+      const pad = (n: number) => String(n).padStart(2, '0');
+      const dateFrom = `${startYear}-${pad(startMonth + 1)}-01`;
+      const dateTo = `${year}-${pad(month + 1)}-${pad(day)}`;
+
       onFilterChange({
         ...filters,
-        date_from: sixMonthsAgo.toISOString().split('T')[0],
-        date_to: now.toISOString().split('T')[0],
+        date_from: dateFrom,
+        date_to: dateTo,
       });
     }
+  };
+
+  const handleReset = () => {
+    setActivePreset('all');
+    onReset();
   };
 
   return (
@@ -174,7 +196,11 @@ export const AnalyticsFilterBar: React.FC<AnalyticsFilterBarProps> = ({
             <button
               type="button"
               onClick={() => applyPreset('last6mo')}
-              className="px-2.5 py-1 text-xs font-medium rounded-lg text-stone-600 hover:bg-stone-100 transition-colors"
+              className={`px-2.5 py-1 text-xs font-medium rounded-lg transition-colors ${
+                activePreset === 'last6mo'
+                  ? 'bg-indigo-600 text-white font-semibold'
+                  : 'text-stone-600 hover:bg-stone-100'
+              }`}
             >
               Recent 6M
             </button>
@@ -183,7 +209,7 @@ export const AnalyticsFilterBar: React.FC<AnalyticsFilterBarProps> = ({
               <Button
                 variant="outline"
                 size="sm"
-                onClick={onReset}
+                onClick={handleReset}
                 className="ml-2 h-7 px-2.5 text-xs text-rose-600 border-rose-200 hover:bg-rose-50 hover:border-rose-300"
               >
                 <RotateCcw className="w-3 h-3 mr-1" />
@@ -192,6 +218,16 @@ export const AnalyticsFilterBar: React.FC<AnalyticsFilterBarProps> = ({
             )}
           </div>
         </div>
+
+        {/* Informative Guidance Banner for Recent 6M */}
+        {activePreset === 'last6mo' && (
+          <div className="flex items-center gap-2 p-2.5 rounded-xl bg-amber-50/80 border border-amber-200/90 text-xs text-amber-900">
+            <span className="font-bold text-amber-800 shrink-0">Pipeline Window:</span>
+            <span className="text-[11px] leading-relaxed">
+              Expenses in this 6-month window ($1.49M across 420 claims) are currently in Pending status awaiting review. Under Accounting Model B, pending claims are tracked in the Pending Approval pipeline and do not appear as realized expenditure until approved.
+            </span>
+          </div>
+        )}
 
         {/* Filter Controls Row */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">

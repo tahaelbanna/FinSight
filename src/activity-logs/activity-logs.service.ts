@@ -4,6 +4,8 @@ import { GetActivityLogsDto } from './dtos/get-activity-logs.dto';
 import { ActivityLogResponseDto } from './dtos/activity-log-response.dto';
 import { PaginatedResult } from 'src/common/data-access';
 
+import { UserRole } from 'src/common/enums';
+
 @Injectable()
 export class ActivityLogsService {
     constructor(
@@ -13,7 +15,8 @@ export class ActivityLogsService {
     async getAllActivityLogs(
         query: GetActivityLogsDto,
         user_id: string,
+        role?: UserRole,
     ): Promise<PaginatedResult<ActivityLogResponseDto>> {
-        return this.getAllActivityLogsUseCase.execute(query, user_id);
+        return this.getAllActivityLogsUseCase.execute(query, user_id, role);
     }
 }

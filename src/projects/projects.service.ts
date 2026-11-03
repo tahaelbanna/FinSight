@@ -10,6 +10,7 @@ import { GetAllProjectsDto } from './dtos/get-all-projects.dto';
 import { UpdateProjectStatusDto } from './dtos/update-project-status.dto';
 import { ProjectResponseDto } from './dtos/project-response.dto';
 import { PaginatedResult } from '../common/data-access';
+import { UserRole } from 'src/common/enums';
 
 @Injectable()
 export class ProjectsService {
@@ -28,12 +29,17 @@ export class ProjectsService {
     async getAllProjects(
         query: GetAllProjectsDto,
         user_id: string,
+        role?: UserRole,
     ): Promise<PaginatedResult<ProjectResponseDto>> {
-        return this.getAllProjectsUseCase.execute(query, user_id);
+        return this.getAllProjectsUseCase.execute(query, user_id, role);
     }
 
-    async getProjectById(projectId: string, user_id: string,): Promise<ProjectResponseDto> {
-        return this.getProjectByIdUseCase.execute(projectId, user_id);
+    async getProjectById(
+        projectId: string,
+        user_id: string,
+        role?: UserRole,
+    ): Promise<ProjectResponseDto> {
+        return this.getProjectByIdUseCase.execute(projectId, user_id, role);
     }
 
     async updateProject(

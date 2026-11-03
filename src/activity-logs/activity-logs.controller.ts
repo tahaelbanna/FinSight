@@ -17,6 +17,10 @@ export class ActivityLogsController {
         @Query() query: GetActivityLogsDto,
         @CurrentUser() principal: Principal,
     ): Promise<PaginatedResult<ActivityLogResponseDto>> {
-        return this.activityLogsService.getAllActivityLogs(query, principal.user.user_id);
+        return this.activityLogsService.getAllActivityLogs(
+            query,
+            principal.user.user_id,
+            principal.role,
+        );
     }
 }

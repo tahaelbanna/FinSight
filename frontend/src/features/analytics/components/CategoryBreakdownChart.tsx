@@ -74,9 +74,9 @@ export const CategoryBreakdownChart: React.FC<CategoryBreakdownChartProps> = ({
       {enrichedData.length === 0 ? (
         <div className="h-72 flex flex-col items-center justify-center text-center p-6 bg-stone-50/50 rounded-xl border border-dashed border-stone-200">
           <AlertCircle className="w-8 h-8 text-stone-400 mb-2" />
-          <p className="text-sm font-semibold text-stone-700">No Category Data</p>
+          <p className="text-sm font-semibold text-stone-700">No Category Breakdown Available</p>
           <p className="text-xs text-stone-500 max-w-sm mt-1">
-            No expenses with approved categories found for this period.
+            Zero approved expenditures found for this period. Pending claims in the review queue will populate categories upon manager approval.
           </p>
         </div>
       ) : (

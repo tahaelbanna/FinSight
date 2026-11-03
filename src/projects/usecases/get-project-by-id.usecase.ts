@@ -9,6 +9,8 @@ import { UserRepository } from 'src/users/repositories/users.repository';
 import { I18nService } from 'nestjs-i18n';
 import { UserRole } from 'src/common/enums';
 
+import { resolveCurrentUser } from 'src/common/utils/resolve-current-user.util';
+
 @Injectable()
 export class GetProjectByIdUseCase {
     constructor(
@@ -17,7 +19,11 @@ export class GetProjectByIdUseCase {
         private readonly i18nService: I18nService,
     ) {}
 
-    async execute(project_id: string, user_id: string): Promise<ProjectResponseDto> {
+    async execute(
+        project_id: string,
+        user_id: string,
+        role?: UserRole,
+    ): Promise<ProjectResponseDto> {
         const project = await this.projectRepository.findById(project_id, {
             relations: {
                 department: true,
@@ -30,12 +36,17 @@ export class GetProjectByIdUseCase {
             );
         }
 
-        const currentUser = await this.userRepository.findById(user_id);
-        if (!currentUser) {
-            throw new UnauthorizedException(this.i18nService.translate('users.UNAUTHORIZED_USER'));
-        }
+        const currentUser = await resolveCurrentUser(
+            this.userRepository,
+            user_id,
+            role,
+            this.i18nService.translate('users.UNAUTHORIZED_USER'),
+        );
 
-        if (currentUser.role !== UserRole.ADMIN) {
+        if (
+            currentUser.role !== UserRole.ADMIN &&
+            currentUser.role !== UserRole.FINANCE_OFFICER
+        ) {
             if (project.department_id !== currentUser.department_id) {
                 throw new ForbiddenException(
                     this.i18nService.translate('projects.FORBIDDEN_DEPARTMENT_ACCESS'),

@@ -17,10 +17,21 @@ import { CreateBudgetDto } from './dtos/create-budget.dto';
 import { UpdateBudgetDto } from './dtos/update-budget.dto';
 import { GetAllBudgetsDto } from './dtos/get-all-budgets.dto';
 import { BudgetResponseDto } from './dtos/budget-response.dto';
+import { BudgetSummaryResponseDto } from './dtos/budget-summary-response.dto';
 
 @Controller('budgets')
 export class BudgetsController {
     constructor(private readonly budgetsService: BudgetsService) {}
+
+    @Get('summary')
+    async getSummary(
+        @CurrentUser() principal: Principal,
+    ): Promise<BudgetSummaryResponseDto> {
+        return this.budgetsService.getSummary(
+            principal.user.user_id,
+            principal.role,
+        );
+    }
 
     @Post()
     @AllowRoles(UserRole.FINANCE_OFFICER)
@@ -36,7 +47,11 @@ export class BudgetsController {
         @Query() query: GetAllBudgetsDto,
         @CurrentUser() principal: Principal,
     ): Promise<PaginatedResult<BudgetResponseDto>> {
-        return this.budgetsService.getAll(query, principal.user.user_id);
+        return this.budgetsService.getAll(
+            query,
+            principal.user.user_id,
+            principal.role,
+        );
     }
 
     @Get(':budget_id')
@@ -44,7 +59,11 @@ export class BudgetsController {
         @Param('budget_id') budget_id: string,
         @CurrentUser() principal: Principal,
     ): Promise<BudgetResponseDto> {
-        return this.budgetsService.getOneById(budget_id, principal.user.user_id);
+        return this.budgetsService.getOneById(
+            budget_id,
+            principal.user.user_id,
+            principal.role,
+        );
     }
 
     @Patch(':budget_id')

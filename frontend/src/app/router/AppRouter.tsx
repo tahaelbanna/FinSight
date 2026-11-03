@@ -1,11 +1,12 @@
 import React, { Suspense, lazy } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { MainLayout } from '@/app/layouts/MainLayout';
 import { ProtectedRoute } from '@/components/layout/ProtectedRoute';
 import { RoleGuard } from '@/components/layout/RoleGuard';
 import { NotFoundPage } from '@/components/layout/NotFoundPage';
 
 // Lazy-loaded route chunks for performance and code-splitting
+const LandingPage = lazy(() => import('@/features/landing/LandingPage').then(m => ({ default: m.LandingPage })));
 const LoginPage = lazy(() => import('@/features/auth/LoginPage').then(m => ({ default: m.LoginPage })));
 const DashboardPage = lazy(() => import('@/features/dashboard/DashboardPage').then(m => ({ default: m.DashboardPage })));
 const ExpensesPage = lazy(() => import('@/features/expenses/ExpensesPage').then(m => ({ default: m.ExpensesPage })));
@@ -35,14 +36,15 @@ export const AppRouter: React.FC = () => {
     <BrowserRouter>
       <Suspense fallback={<PageLoadingFallback />}>
         <Routes>
+          {/* Public Landing Route */}
+          <Route path="/" element={<LandingPage />} />
+
           {/* Public Login Route */}
           <Route path="/login" element={<LoginPage />} />
 
           {/* Authenticated Root */}
           <Route element={<ProtectedRoute />}>
             <Route element={<MainLayout />}>
-              {/* Index redirects to Dashboard */}
-              <Route index element={<Navigate to="/dashboard" replace />} />
               <Route path="/dashboard" element={<DashboardPage />} />
 
               {/* Expenses (All Roles) */}

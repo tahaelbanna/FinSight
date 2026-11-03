@@ -59,13 +59,15 @@ export const PowerBIEmbedContainer: React.FC<PowerBIEmbedContainerProps> = ({
     return map;
   }, [onLoaded, onRendered, onError]);
 
+  const EmbedComponent = PowerBIEmbed as any;
+
   return (
     <div className="w-full h-[720px] rounded-2xl overflow-hidden border border-stone-200/90 bg-white shadow-2xs">
-      <PowerBIEmbed
+      <EmbedComponent
         embedConfig={embedConfig}
         eventHandlers={eventHandlersMap}
         cssClassName="w-full h-full min-h-[680px]"
-        getEmbeddedComponent={(embeddedReport) => {
+        getEmbeddedComponent={(embeddedReport: any) => {
           if (embeddedReport && (embeddedReport as Report).fullscreen) {
             onReportReady?.(embeddedReport as Report);
           }

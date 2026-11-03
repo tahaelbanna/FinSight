@@ -48,7 +48,11 @@ export class ExpensesController {
         @Query() query: GetAllExpensesDto,
         @CurrentUser() principal: Principal,
     ): Promise<PaginatedResult<ExpenseResponseDto>> {
-        return this.expensesService.getAllExpenses(query, principal.user.user_id);
+        return this.expensesService.getAllExpenses(
+            query,
+            principal.user.user_id,
+            principal.role,
+        );
     }
 
     @Get(':expense_id')
@@ -56,7 +60,11 @@ export class ExpensesController {
         @Param('expense_id') expense_id: string,
         @CurrentUser() principal: Principal,
     ): Promise<ExpenseResponseDto> {
-        return this.expensesService.getExpenseById(expense_id, principal.user.user_id);
+        return this.expensesService.getExpenseById(
+            expense_id,
+            principal.user.user_id,
+            principal.role,
+        );
     }
 
     @Get(':expense_id/attachments/:attachment_id')

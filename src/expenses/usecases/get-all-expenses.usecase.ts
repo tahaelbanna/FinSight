@@ -17,6 +17,8 @@ import { ExpenseSortBy, SortOrder } from 'src/common/enums';
 import { Expense } from '../schemas/expense.schema';
 import { UserRole } from 'src/common/enums';
 
+import { resolveCurrentUser } from 'src/common/utils/resolve-current-user.util';
+
 @Injectable()
 export class GetAllExpensesUseCase {
     constructor(
@@ -28,13 +30,14 @@ export class GetAllExpensesUseCase {
     async execute(
         query: GetAllExpensesDto,
         user_id: string,
+        role?: UserRole,
     ): Promise<PaginatedResult<ExpenseResponseDto>> {
-        const currentUser = await this.userRepository.findById(user_id);
-        if (!currentUser) {
-            throw new UnauthorizedException(
-                this.i18nService.translate('users.USER_NOT_FOUND'),
-            );
-        }
+        const currentUser = await resolveCurrentUser(
+            this.userRepository,
+            user_id,
+            role,
+            this.i18nService.translate('users.USER_NOT_FOUND'),
+        );
 
         const where: FindOptionsWhere<Expense> = {};
 

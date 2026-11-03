@@ -52,7 +52,7 @@ export const Modal: React.FC<ModalProps> = ({
           role="dialog"
           aria-modal="true"
           className={cn(
-            'pointer-events-auto relative w-full transform overflow-hidden rounded-2xl bg-white text-start shadow-xl transition-all border border-stone-200/80 duration-150 animate-in zoom-in-95',
+            'pointer-events-auto relative w-full transform overflow-hidden rounded-2xl bg-white dark:bg-[#151A2D] text-start shadow-xl transition-all border border-stone-200/80 dark:border-stone-800 duration-150 animate-in zoom-in-95',
             maxWidth === 'sm' && 'max-w-sm',
             maxWidth === 'md' && 'max-w-md',
             maxWidth === 'lg' && 'max-w-lg',
@@ -61,14 +61,14 @@ export const Modal: React.FC<ModalProps> = ({
           )}
         >
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-stone-100 px-6 py-4.5 bg-stone-50/50">
+          <div className="flex items-center justify-between border-b border-stone-100 dark:border-stone-800 px-6 py-4.5 bg-stone-50/50 dark:bg-stone-900/40">
             <div>
-              <h3 className="text-lg font-bold text-stone-900 font-display">{title}</h3>
-              {subtitle && <p className="text-xs text-stone-500 mt-0.5">{subtitle}</p>}
+              <h3 className="text-lg font-bold text-stone-900 dark:text-stone-100 font-display">{title}</h3>
+              {subtitle && <p className="text-xs text-stone-500 dark:text-stone-400 mt-0.5">{subtitle}</p>}
             </div>
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors"
+              className="p-1.5 rounded-lg text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors"
               aria-label="Close modal"
             >
               <X className="w-5 h-5" />
@@ -76,7 +76,7 @@ export const Modal: React.FC<ModalProps> = ({
           </div>
 
           {/* Body */}
-          <div className="p-6">{children}</div>
+          <div className="p-6 text-stone-900 dark:text-stone-100">{children}</div>
         </div>
       </div>
     </div>

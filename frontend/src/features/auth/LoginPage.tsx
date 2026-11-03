@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { useI18n } from '@/i18n';
 import { loginSchema, type LoginFormData } from './auth.schema';
@@ -10,7 +10,8 @@ import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { Alert } from '@/components/feedback/Alert';
 import { Card } from '@/components/ui/Card';
-import { Lock, Mail, TrendingUp } from 'lucide-react';
+import { ThemeToggle } from '@/components/ui/ThemeToggle';
+import { Lock, Mail, TrendingUp, ArrowLeft } from 'lucide-react';
 
 export const LoginPage: React.FC = () => {
   const { login, isAuthenticated } = useAuth();
@@ -69,27 +70,42 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#F7F6F3] flex flex-col justify-center items-center px-4 py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#F7F6F3] dark:bg-[#0B0E1B] text-stone-900 dark:text-stone-100 flex flex-col justify-center items-center px-4 py-12 sm:px-6 lg:px-8 relative transition-colors duration-200">
+      {/* Top Bar Actions */}
+      <div className="absolute top-4 left-4 sm:top-6 sm:left-6">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-stone-600 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 px-3 py-1.5 rounded-xl border border-stone-200/80 dark:border-stone-800 bg-white/80 dark:bg-stone-900/80 transition-colors"
+        >
+          <ArrowLeft className="w-3.5 h-3.5" />
+          <span>Home</span>
+        </Link>
+      </div>
+
+      <div className="absolute top-4 right-4 sm:top-6 sm:right-6">
+        <ThemeToggle size="sm" />
+      </div>
+
       {/* Brand Header */}
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center mb-8">
-        <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-indigo-600 text-white shadow-md shadow-indigo-600/20 mb-4">
+        <Link to="/" className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-indigo-600 text-white shadow-md shadow-indigo-600/20 mb-4 hover:scale-105 transition-transform">
           <TrendingUp className="w-6 h-6 stroke-[2.5]" />
-        </div>
-        <h1 className="text-3xl font-extrabold text-stone-900 tracking-tight font-display">
+        </Link>
+        <h1 className="text-3xl font-extrabold text-stone-900 dark:text-stone-100 tracking-tight font-display">
           FinSight
         </h1>
-        <p className="mt-1 text-sm text-stone-500 font-medium">
+        <p className="mt-1 text-sm text-stone-500 dark:text-stone-400 font-medium">
           {t('common.appTagline')}
         </p>
       </div>
 
       {/* Main Login Card */}
-      <Card variant="elevated" className="sm:mx-auto sm:w-full sm:max-w-md p-8 sm:p-10 border-stone-200/80">
+      <Card variant="elevated" className="sm:mx-auto sm:w-full sm:max-w-md p-8 sm:p-10 border-stone-200/80 dark:border-stone-800">
         <div className="mb-6 text-center">
-          <h2 className="text-xl font-bold text-stone-900 font-display">
+          <h2 className="text-xl font-bold text-stone-900 dark:text-stone-100 font-display">
             {t('auth.loginTitle')}
           </h2>
-          <p className="mt-1 text-xs text-stone-500">
+          <p className="mt-1 text-xs text-stone-500 dark:text-stone-400">
             {t('auth.loginSubtitle')}
           </p>
         </div>
@@ -136,16 +152,16 @@ export const LoginPage: React.FC = () => {
           </div>
         </form>
 
-        <div className="mt-8 pt-6 border-t border-stone-100 text-center">
-          <p className="text-xs text-stone-400">
+        <div className="mt-8 pt-6 border-t border-stone-100 dark:border-stone-800 text-center">
+          <p className="text-xs text-stone-400 dark:text-stone-500">
             Internal enterprise system. Access is strictly managed by your System Administrator.
           </p>
         </div>
       </Card>
 
       {/* Security notice footer */}
-      <div className="mt-8 text-center text-xs text-stone-400">
-        &copy; {new Date().getFullYear()} FinSight Systems. All rights reserved.
+      <div className="mt-8 text-center text-xs text-stone-400 dark:text-stone-500">
+        &copy; {new Date().getFullYear()} FinSight. All rights reserved.
       </div>
     </div>
   );

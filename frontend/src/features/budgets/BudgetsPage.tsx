@@ -64,10 +64,10 @@ export const BudgetsPage: React.FC = () => {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold font-display text-stone-900">
+          <h1 className="text-2xl font-bold font-display text-stone-900 dark:text-stone-100">
             Budgets Management
           </h1>
-          <p className="text-sm text-stone-500 mt-1">
+          <p className="text-sm text-stone-500 dark:text-stone-400 mt-1">
             Department operational budgets (OpEx) &amp; project capital investments (CapEx)
           </p>
         </div>
@@ -92,17 +92,17 @@ export const BudgetsPage: React.FC = () => {
       />
 
       {/* Scope and Status Filters */}
-      <div className="flex flex-wrap items-center justify-between gap-3 bg-white p-2.5 rounded-xl border border-stone-200/80 shadow-xs">
+      <div className="flex flex-wrap items-center justify-between gap-3 bg-white dark:bg-[#151A2D] p-2.5 rounded-xl border border-stone-200/80 dark:border-stone-800 shadow-xs">
         <div className="flex items-center gap-1.5">
           <button
             onClick={() => {
               setScopeFilter('all');
               setPage(1);
             }}
-            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors ${
+            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
               scopeFilter === 'all'
                 ? 'bg-indigo-600 text-white shadow-xs'
-                : 'text-stone-600 hover:bg-stone-100 hover:text-stone-900'
+                : 'text-stone-600 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-800 hover:text-stone-900 dark:hover:text-stone-100'
             }`}
           >
             All Allocations
@@ -112,10 +112,10 @@ export const BudgetsPage: React.FC = () => {
               setScopeFilter('department');
               setPage(1);
             }}
-            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5 ${
+            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer ${
               scopeFilter === 'department'
                 ? 'bg-indigo-600 text-white shadow-xs'
-                : 'text-stone-600 hover:bg-stone-100 hover:text-stone-900'
+                : 'text-stone-600 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-800 hover:text-stone-900 dark:hover:text-stone-100'
             }`}
           >
             <Building className="w-3.5 h-3.5" />
@@ -126,10 +126,10 @@ export const BudgetsPage: React.FC = () => {
               setScopeFilter('project');
               setPage(1);
             }}
-            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5 ${
+            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5 cursor-pointer ${
               scopeFilter === 'project'
                 ? 'bg-indigo-600 text-white shadow-xs'
-                : 'text-stone-600 hover:bg-stone-100 hover:text-stone-900'
+                : 'text-stone-600 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-800 hover:text-stone-900 dark:hover:text-stone-100'
             }`}
           >
             <Briefcase className="w-3.5 h-3.5" />
@@ -138,7 +138,7 @@ export const BudgetsPage: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-2">
-          <label className="flex items-center gap-2 text-xs font-medium text-stone-600 cursor-pointer select-none">
+          <label className="flex items-center gap-2 text-xs font-medium text-stone-600 dark:text-stone-400 cursor-pointer select-none">
             <input
               type="checkbox"
               checked={isOverrunFilter === true}
@@ -146,7 +146,7 @@ export const BudgetsPage: React.FC = () => {
                 setIsOverrunFilter(e.target.checked ? true : undefined);
                 setPage(1);
               }}
-              className="rounded border-stone-300 text-indigo-600 focus:ring-indigo-500 w-4 h-4"
+              className="rounded border-stone-300 dark:border-stone-700 text-indigo-600 focus:ring-indigo-500 w-4 h-4"
             />
             <span>Overrun Only</span>
           </label>
@@ -154,23 +154,23 @@ export const BudgetsPage: React.FC = () => {
       </div>
 
       {/* Budgets Table */}
-      <Card className="overflow-hidden border border-stone-200 shadow-xs bg-white">
+      <Card className="overflow-hidden border border-stone-200 dark:border-stone-800 shadow-xs bg-white dark:bg-[#151A2D]">
         {isLoading ? (
           <div className="p-8 text-center">
             <div className="w-8 h-8 border-3 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
-            <p className="text-sm text-stone-500">Loading budget allocations...</p>
+            <p className="text-sm text-stone-500 dark:text-stone-400">Loading budget allocations...</p>
           </div>
         ) : error ? (
-          <div className="p-8 text-center text-rose-500">
+          <div className="p-8 text-center text-rose-500 dark:text-rose-400">
             Failed to load budgets. Please check permissions or network connection.
           </div>
         ) : budgets.length === 0 ? (
           <div className="p-12 text-center">
-            <PieChart className="w-12 h-12 text-stone-300 mx-auto mb-3" />
-            <h3 className="text-base font-semibold text-stone-900">
+            <PieChart className="w-12 h-12 text-stone-300 dark:text-stone-600 mx-auto mb-3" />
+            <h3 className="text-base font-semibold text-stone-900 dark:text-stone-100">
               No budgets found
             </h3>
-            <p className="text-sm text-stone-500 max-w-sm mx-auto mt-1">
+            <p className="text-sm text-stone-500 dark:text-stone-400 max-w-sm mx-auto mt-1">
               There are no budgets matching the current scope and filter criteria.
             </p>
           </div>
@@ -178,7 +178,7 @@ export const BudgetsPage: React.FC = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse text-sm">
               <thead>
-                <tr className="bg-stone-50/75 border-b border-stone-200 text-xs font-semibold text-stone-500 uppercase tracking-wider">
+                <tr className="bg-stone-50/75 dark:bg-stone-900/60 border-b border-stone-200 dark:border-stone-800 text-xs font-semibold text-stone-500 dark:text-stone-400 uppercase tracking-wider">
                   <th scope="col" className="py-3 px-4">Target &amp; Model</th>
                   <th scope="col" className="py-3 px-4">Period</th>
                   <th scope="col" className="py-3 px-4">Allocated</th>
@@ -188,7 +188,7 @@ export const BudgetsPage: React.FC = () => {
                   <th scope="col" className="py-3 px-4 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-stone-100">
+              <tbody className="divide-y divide-stone-100 dark:divide-stone-800">
                 {budgets.map((b) => {
                   const isOpEx = Boolean(b.department);
                   const targetName = b.department?.name || b.project?.name || 'Unassigned';
@@ -197,14 +197,14 @@ export const BudgetsPage: React.FC = () => {
                   return (
                     <tr
                       key={b.budget_id}
-                      className="hover:bg-stone-50/60 transition-colors"
+                      className="hover:bg-stone-50/60 dark:hover:bg-stone-800/40 transition-colors"
                     >
                       <td className="py-3.5 px-4">
-                        <div className="font-semibold text-stone-900 flex items-center gap-1.5">
+                        <div className="font-semibold text-stone-900 dark:text-stone-100 flex items-center gap-1.5">
                           {isOpEx ? (
-                            <Building className="w-4 h-4 text-stone-400" />
+                            <Building className="w-4 h-4 text-stone-400 dark:text-stone-500" />
                           ) : (
-                            <Briefcase className="w-4 h-4 text-stone-400" />
+                            <Briefcase className="w-4 h-4 text-stone-400 dark:text-stone-500" />
                           )}
                           <span>{targetName}</span>
                         </div>
@@ -215,15 +215,15 @@ export const BudgetsPage: React.FC = () => {
                         </div>
                       </td>
 
-                      <td className="py-3.5 px-4 text-xs text-stone-600 whitespace-nowrap">
+                      <td className="py-3.5 px-4 text-xs text-stone-600 dark:text-stone-400 whitespace-nowrap">
                         {formatDate(b.start_date)} – {formatDate(b.end_date)}
                       </td>
 
-                      <td className="py-3.5 px-4 font-semibold text-stone-900">
+                      <td className="py-3.5 px-4 font-semibold text-stone-900 dark:text-stone-100">
                         {formatCurrency(b.allocated_amount)}
                       </td>
 
-                      <td className="py-3.5 px-4 font-semibold text-indigo-600">
+                      <td className="py-3.5 px-4 font-semibold text-indigo-600 dark:text-indigo-400">
                         {formatCurrency(b.approved_expenses)}
                       </td>
 
@@ -231,8 +231,8 @@ export const BudgetsPage: React.FC = () => {
                         <span
                           className={
                             b.remaining_budget < 0
-                              ? 'text-rose-600'
-                              : 'text-emerald-600'
+                              ? 'text-rose-600 dark:text-rose-400'
+                              : 'text-emerald-600 dark:text-emerald-400'
                           }
                         >
                           {formatCurrency(b.remaining_budget)}
@@ -241,7 +241,7 @@ export const BudgetsPage: React.FC = () => {
 
                       <td className="py-3.5 px-4">
                         <div className="flex items-center justify-between text-xs mb-1">
-                          <span className="font-semibold text-stone-700">
+                          <span className="font-semibold text-stone-700 dark:text-stone-300">
                             {Number(b.utilization_percentage).toFixed(1)}%
                           </span>
                           {b.is_overrun && (
@@ -250,7 +250,7 @@ export const BudgetsPage: React.FC = () => {
                             </Badge>
                           )}
                         </div>
-                        <div className="w-full bg-stone-200 rounded-full h-1.5 overflow-hidden">
+                        <div className="w-full bg-stone-200 dark:bg-stone-700 rounded-full h-1.5 overflow-hidden">
                           <div
                             className={`h-1.5 rounded-full ${
                               b.is_overrun
@@ -268,7 +268,7 @@ export const BudgetsPage: React.FC = () => {
                         <div className="flex items-center justify-end gap-1.5">
                           <button
                             onClick={() => setSelectedBudgetIdForDetails(b.budget_id)}
-                            className="p-1.5 text-stone-500 hover:text-indigo-600 hover:bg-indigo-50 rounded transition-colors"
+                            className="p-1.5 text-stone-500 dark:text-stone-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 rounded transition-colors"
                             title="View Details"
                             aria-label={`View details for budget ${targetName}`}
                           >
@@ -277,7 +277,7 @@ export const BudgetsPage: React.FC = () => {
                           {isFinanceOfficer && (
                             <button
                               onClick={() => setSelectedBudgetForEdit(b)}
-                              className="p-1.5 text-stone-500 hover:text-stone-900 hover:bg-stone-100 rounded transition-colors"
+                              className="p-1.5 text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 hover:bg-stone-100 dark:hover:bg-stone-800 rounded transition-colors"
                               title="Edit Budget"
                               aria-label={`Edit budget for ${targetName}`}
                             >
@@ -295,7 +295,7 @@ export const BudgetsPage: React.FC = () => {
         )}
 
         {meta && (
-          <div className="p-4 bg-white border-t border-stone-100">
+          <div className="p-4 bg-white dark:bg-[#151A2D] border-t border-stone-100 dark:border-stone-800">
             <Pagination
               meta={meta}
               currentPage={page}

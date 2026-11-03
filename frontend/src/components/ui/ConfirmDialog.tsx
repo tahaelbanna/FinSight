@@ -32,25 +32,25 @@ export const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
         <div className="flex items-start gap-3">
           <div className="shrink-0 mt-0.5">
             {variant === 'danger' && (
-              <div className="w-9 h-9 rounded-xl bg-red-50 text-red-600 flex items-center justify-center border border-red-100">
+              <div className="w-9 h-9 rounded-xl bg-red-50 dark:bg-red-950/40 text-red-600 dark:text-red-400 flex items-center justify-center border border-red-100 dark:border-red-900/60">
                 <AlertCircle className="w-5 h-5" />
               </div>
             )}
             {variant === 'warning' && (
-              <div className="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-100">
+              <div className="w-9 h-9 rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 flex items-center justify-center border border-amber-100 dark:border-amber-900/60">
                 <AlertTriangle className="w-5 h-5" />
               </div>
             )}
             {variant === 'primary' && (
-              <div className="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center border border-indigo-100">
+              <div className="w-9 h-9 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center border border-indigo-100 dark:border-indigo-900/60">
                 <Info className="w-5 h-5" />
               </div>
             )}
           </div>
-          <p className="text-sm text-stone-600 leading-relaxed pt-1">{message}</p>
+          <p className="text-sm text-stone-600 dark:text-stone-300 leading-relaxed pt-1">{message}</p>
         </div>
 
-        <div className="flex items-center justify-end gap-2.5 pt-4 border-t border-stone-100">
+        <div className="flex items-center justify-end gap-2.5 pt-4 border-t border-stone-100 dark:border-stone-800">
           <Button variant="outline" size="sm" onClick={onClose} disabled={isLoading}>
             {cancelLabel}
           </Button>

@@ -36,11 +36,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           variant === 'primary' &&
             'bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white shadow-sm focus-visible:ring-indigo-500',
           variant === 'secondary' &&
-            'bg-indigo-50 hover:bg-indigo-100 text-indigo-900 border border-indigo-200/60 focus-visible:ring-indigo-400',
+            'bg-indigo-50 hover:bg-indigo-100 text-indigo-900 border border-indigo-200/60 dark:bg-indigo-950/50 dark:hover:bg-indigo-900/60 dark:text-indigo-200 dark:border-indigo-800/60 focus-visible:ring-indigo-400',
           variant === 'outline' &&
-            'border border-stone-300 bg-white hover:bg-stone-50 text-stone-700 focus-visible:ring-stone-400',
+            'border border-stone-300 dark:border-stone-700 bg-white dark:bg-stone-900/60 hover:bg-stone-50 dark:hover:bg-stone-800 text-stone-700 dark:text-stone-200 focus-visible:ring-stone-400',
           variant === 'ghost' &&
-            'hover:bg-stone-100 text-stone-700 focus-visible:ring-stone-400',
+            'hover:bg-stone-100 dark:hover:bg-stone-800 text-stone-700 dark:text-stone-300 focus-visible:ring-stone-400',
           variant === 'danger' &&
             'bg-red-600 hover:bg-red-700 active:bg-red-800 text-white shadow-sm focus-visible:ring-red-500',
           // Sizes

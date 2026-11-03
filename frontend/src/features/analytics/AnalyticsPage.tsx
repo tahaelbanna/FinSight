@@ -84,7 +84,7 @@ export const AnalyticsPage: React.FC = () => {
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-stone-200/80">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-stone-200/80 dark:border-stone-800">
         <div>
           <div className="flex items-center gap-2 mb-1.5">
             <Badge variant="indigo" size="md">
@@ -92,14 +92,14 @@ export const AnalyticsPage: React.FC = () => {
               Native Analytics
             </Badge>
             <Badge variant="neutral" size="md">
-              <ShieldCheck className="w-3.5 h-3.5 mr-1 text-stone-500" />
+              <ShieldCheck className="w-3.5 h-3.5 mr-1 text-stone-500 dark:text-stone-400" />
               <span className="capitalize">{user?.role?.replace('_', ' ')} Scope</span>
             </Badge>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-stone-900 tracking-tight font-display">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-stone-900 dark:text-stone-100 tracking-tight font-display">
             Financial Analytics & Reporting
           </h1>
-          <p className="mt-1 text-xs sm:text-sm text-stone-600 max-w-2xl">
+          <p className="mt-1 text-xs sm:text-sm text-stone-600 dark:text-stone-400 max-w-2xl">
             Live enterprise financial intelligence adhering to Model B OpEx & CapEx accounting standards.
           </p>
         </div>
@@ -110,10 +110,10 @@ export const AnalyticsPage: React.FC = () => {
             size="sm"
             onClick={handleRefresh}
             disabled={isRefreshing}
-            className="h-9 px-3.5 text-xs text-stone-700 bg-white hover:bg-stone-50 shadow-2xs"
+            className="h-9 px-3.5 text-xs text-stone-700 dark:text-stone-200 shadow-2xs"
           >
             <RefreshCw
-              className={`w-3.5 h-3.5 mr-1.5 ${isRefreshing ? 'animate-spin text-indigo-600' : ''}`}
+              className={`w-3.5 h-3.5 mr-1.5 ${isRefreshing ? 'animate-spin text-indigo-600 dark:text-indigo-400' : ''}`}
             />
             {isRefreshing ? 'Syncing...' : 'Refresh Data'}
           </Button>
@@ -168,9 +168,9 @@ export const AnalyticsPage: React.FC = () => {
 
       {/* Employee Context Notice */}
       {isEmployee && (
-        <div className="p-4 rounded-2xl bg-indigo-50/60 border border-indigo-100 flex items-center justify-between text-xs text-indigo-900">
+        <div className="p-4 rounded-2xl bg-indigo-50/60 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900/60 flex items-center justify-between text-xs text-indigo-900 dark:text-indigo-200">
           <div className="flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-indigo-600 shrink-0" />
+            <ShieldCheck className="w-4 h-4 text-indigo-600 dark:text-indigo-400 shrink-0" />
             <span>
               You are viewing personal submission metrics. Department comparison and project portfolio allocations are available to department managers and finance officers.
             </span>

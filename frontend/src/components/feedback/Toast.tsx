@@ -72,17 +72,17 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             role="alert"
             className={cn(
               'pointer-events-auto flex items-start gap-3 p-4 rounded-xl border shadow-lg transition-all duration-200 animate-in slide-in-from-top-2',
-              toast.type === 'error' && 'bg-red-50/95 border-red-200 text-red-900',
-              toast.type === 'success' && 'bg-emerald-50/95 border-emerald-200 text-emerald-900',
-              toast.type === 'warning' && 'bg-amber-50/95 border-amber-200 text-amber-900',
-              toast.type === 'info' && 'bg-indigo-50/95 border-indigo-200 text-indigo-900'
+              toast.type === 'error' && 'bg-red-50/95 dark:bg-[#201318] border-red-200 dark:border-red-900/60 text-red-900 dark:text-red-200',
+              toast.type === 'success' && 'bg-emerald-50/95 dark:bg-[#102018] border-emerald-200 dark:border-emerald-900/60 text-emerald-900 dark:text-emerald-200',
+              toast.type === 'warning' && 'bg-amber-50/95 dark:bg-[#221c10] border-amber-200 dark:border-amber-900/60 text-amber-900 dark:text-amber-200',
+              toast.type === 'info' && 'bg-indigo-50/95 dark:bg-[#14182e] border-indigo-200 dark:border-indigo-900/60 text-indigo-900 dark:text-indigo-200'
             )}
           >
             <div className="shrink-0 mt-0.5">
-              {toast.type === 'error' && <AlertCircle className="w-5 h-5 text-red-600" />}
-              {toast.type === 'success' && <CheckCircle2 className="w-5 h-5 text-emerald-600" />}
-              {toast.type === 'warning' && <AlertTriangle className="w-5 h-5 text-amber-600" />}
-              {toast.type === 'info' && <Info className="w-5 h-5 text-indigo-600" />}
+              {toast.type === 'error' && <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400" />}
+              {toast.type === 'success' && <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />}
+              {toast.type === 'warning' && <AlertTriangle className="w-5 h-5 text-amber-600 dark:text-amber-400" />}
+              {toast.type === 'info' && <Info className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />}
             </div>
             <div className="flex-1 min-w-0">
               {toast.title && <h4 className="text-sm font-semibold mb-0.5">{toast.title}</h4>}
@@ -90,7 +90,7 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             </div>
             <button
               onClick={() => dismissToast(toast.id)}
-              className="shrink-0 p-1 rounded-lg opacity-60 hover:opacity-100 hover:bg-black/5 transition-opacity"
+              className="shrink-0 p-1 rounded-lg opacity-60 hover:opacity-100 hover:bg-black/5 dark:hover:bg-white/10 transition-opacity"
               aria-label="Dismiss notification"
             >
               <X className="w-4 h-4" />

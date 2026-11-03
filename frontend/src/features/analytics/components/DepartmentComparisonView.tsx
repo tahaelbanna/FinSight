@@ -34,16 +34,16 @@ export const DepartmentComparisonView: React.FC<DepartmentComparisonViewProps> =
 
   if (isEmployee) {
     return (
-      <Card className="p-6 bg-white border border-stone-200/90 shadow-2xs">
+      <Card className="p-6 bg-white dark:bg-[#151A2D] border border-stone-200/90 dark:border-stone-800 shadow-2xs">
         <div className="flex items-center gap-2 mb-2">
-          <div className="w-8 h-8 rounded-lg bg-stone-100 text-stone-500 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-lg bg-stone-100 dark:bg-stone-800 text-stone-500 dark:text-stone-400 flex items-center justify-center">
             <Building2 className="w-4 h-4" />
           </div>
-          <h3 className="text-base font-bold text-stone-900 tracking-tight font-display">
+          <h3 className="text-base font-bold text-stone-900 dark:text-stone-100 tracking-tight font-display">
             Department Financial Comparison
           </h3>
         </div>
-        <p className="text-xs text-stone-500">
+        <p className="text-xs text-stone-500 dark:text-stone-400">
           Organization-wide department budget comparison is reserved for Management and Finance Officers.
         </p>
       </Card>
@@ -52,12 +52,12 @@ export const DepartmentComparisonView: React.FC<DepartmentComparisonViewProps> =
 
   if (isLoading) {
     return (
-      <Card className="p-6 bg-white border border-stone-200/90 shadow-2xs h-96 flex flex-col justify-between">
+      <Card className="p-6 bg-white dark:bg-[#151A2D] border border-stone-200/90 dark:border-stone-800 shadow-2xs h-96 flex flex-col justify-between">
         <div className="space-y-2">
-          <div className="w-48 h-4 bg-stone-100 rounded-sm animate-pulse" />
-          <div className="w-72 h-3 bg-stone-100 rounded-sm animate-pulse" />
+          <div className="w-48 h-4 bg-stone-100 dark:bg-stone-800 rounded-sm animate-pulse" />
+          <div className="w-72 h-3 bg-stone-100 dark:bg-stone-800 rounded-sm animate-pulse" />
         </div>
-        <div className="w-full h-64 bg-stone-50 rounded-xl animate-pulse" />
+        <div className="w-full h-64 bg-stone-50 dark:bg-stone-800/40 rounded-xl animate-pulse" />
       </Card>
     );
   }
@@ -71,29 +71,29 @@ export const DepartmentComparisonView: React.FC<DepartmentComparisonViewProps> =
   }));
 
   return (
-    <Card className="p-6 bg-white border border-stone-200/90 shadow-2xs">
+    <Card className="p-6 bg-white dark:bg-[#151A2D] border border-stone-200/90 dark:border-stone-800 shadow-2xs">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6">
         <div>
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
+            <div className="w-7 h-7 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
               <Building2 className="w-4 h-4" />
             </div>
-            <h3 className="text-base font-bold text-stone-900 tracking-tight font-display">
+            <h3 className="text-base font-bold text-stone-900 dark:text-stone-100 tracking-tight font-display">
               Department Budget vs. Actual Spend
             </h3>
           </div>
-          <p className="text-xs text-stone-500 mt-1">
+          <p className="text-xs text-stone-500 dark:text-stone-400 mt-1">
             Model B Consolidated comparison: Authorized OpEx & CapEx budget allocations against approved period spend
           </p>
         </div>
       </div>
 
       {chartData.length === 0 ? (
-        <div className="h-64 flex flex-col items-center justify-center text-center p-6 bg-stone-50/50 rounded-xl border border-dashed border-stone-200">
+        <div className="h-64 flex flex-col items-center justify-center text-center p-6 bg-stone-50/50 dark:bg-stone-900/30 rounded-xl border border-dashed border-stone-200 dark:border-stone-800">
           <AlertCircle className="w-8 h-8 text-stone-400 mb-2" />
-          <p className="text-sm font-semibold text-stone-700">No Department Data</p>
-          <p className="text-xs text-stone-500 max-w-sm mt-1">
+          <p className="text-sm font-semibold text-stone-700 dark:text-stone-300">No Department Data</p>
+          <p className="text-xs text-stone-500 dark:text-stone-400 max-w-sm mt-1">
             No department records found matching active query filters.
           </p>
         </div>
@@ -109,13 +109,14 @@ export const DepartmentComparisonView: React.FC<DepartmentComparisonViewProps> =
                 <CartesianGrid
                   strokeDasharray="3 3"
                   vertical={false}
-                  stroke="#E2E8F0"
+                  stroke="#334155"
+                  className="stroke-stone-200 dark:stroke-stone-800"
                 />
                 <XAxis
                   dataKey="name"
                   tickLine={false}
-                  axisLine={{ stroke: '#CBD5E1' }}
-                  tick={{ fill: '#64748B', fontSize: 11 }}
+                  axisLine={{ stroke: '#64748B' }}
+                  tick={{ fill: '#94A3B8', fontSize: 11 }}
                   dy={8}
                   interval={0}
                   tickFormatter={(val) =>
@@ -124,8 +125,8 @@ export const DepartmentComparisonView: React.FC<DepartmentComparisonViewProps> =
                 />
                 <YAxis
                   tickLine={false}
-                  axisLine={{ stroke: '#CBD5E1' }}
-                  tick={{ fill: '#64748B', fontSize: 11 }}
+                  axisLine={{ stroke: '#64748B' }}
+                  tick={{ fill: '#94A3B8', fontSize: 11 }}
                   tickFormatter={(val) => formatCurrency(val, true)}
                   width={55}
                 />
@@ -177,7 +178,7 @@ export const DepartmentComparisonView: React.FC<DepartmentComparisonViewProps> =
                 <Bar
                   name="Authorized Budget"
                   dataKey="allocated"
-                  fill="#CBD5E1"
+                  fill="#94A3B8"
                   radius={[4, 4, 0, 0]}
                   maxBarSize={36}
                 />
@@ -193,9 +194,9 @@ export const DepartmentComparisonView: React.FC<DepartmentComparisonViewProps> =
           </div>
 
           {/* Department Comparison Data Table */}
-          <div className="overflow-x-auto rounded-xl border border-stone-200">
+          <div className="overflow-x-auto rounded-xl border border-stone-200 dark:border-stone-800">
             <table className="w-full text-left text-xs">
-              <thead className="bg-stone-50 border-b border-stone-200 text-stone-600 font-semibold">
+              <thead className="bg-stone-50 dark:bg-stone-900/60 border-b border-stone-200 dark:border-stone-800 text-stone-600 dark:text-stone-400 font-semibold">
                 <tr>
                   <th className="py-2.5 px-3.5">Department</th>
                   <th className="py-2.5 px-3.5">Authorized Budget</th>
@@ -204,19 +205,19 @@ export const DepartmentComparisonView: React.FC<DepartmentComparisonViewProps> =
                   <th className="py-2.5 px-3.5 text-right">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-stone-100">
+              <tbody className="divide-y divide-stone-100 dark:divide-stone-800">
                 {data.map((item) => (
                   <tr
                     key={item.department.department_id}
-                    className="hover:bg-stone-50/60 transition-colors"
+                    className="hover:bg-stone-50/60 dark:hover:bg-stone-800/40 transition-colors"
                   >
-                    <td className="py-2.5 px-3.5 font-semibold text-stone-900">
+                    <td className="py-2.5 px-3.5 font-semibold text-stone-900 dark:text-stone-100">
                       {item.department.department_name}
                     </td>
-                    <td className="py-2.5 px-3.5 text-stone-700">
+                    <td className="py-2.5 px-3.5 text-stone-700 dark:text-stone-300">
                       {formatCurrency(item.allocatedBudget)}
                     </td>
-                    <td className="py-2.5 px-3.5 font-semibold text-indigo-900">
+                    <td className="py-2.5 px-3.5 font-semibold text-indigo-900 dark:text-indigo-400">
                       {formatCurrency(item.totalApproved)}
                     </td>
                     <td className="py-2.5 px-3.5">
@@ -224,12 +225,12 @@ export const DepartmentComparisonView: React.FC<DepartmentComparisonViewProps> =
                         <div className="flex items-center gap-2">
                           <span
                             className={`font-bold ${
-                              item.isOverrun ? 'text-rose-600' : 'text-stone-800'
+                              item.isOverrun ? 'text-rose-600 dark:text-rose-400' : 'text-stone-800 dark:text-stone-200'
                             }`}
                           >
                             {formatPercentage(item.utilizationPercentage)}
                           </span>
-                          <div className="w-16 bg-stone-100 rounded-full h-1.5 overflow-hidden hidden sm:block">
+                          <div className="w-16 bg-stone-100 dark:bg-stone-800 rounded-full h-1.5 overflow-hidden hidden sm:block">
                             <div
                               className={`h-full rounded-full ${
                                 item.isOverrun
@@ -248,7 +249,7 @@ export const DepartmentComparisonView: React.FC<DepartmentComparisonViewProps> =
                           </div>
                         </div>
                       ) : (
-                        <span className="text-stone-400 italic">Unbudgeted</span>
+                        <span className="text-stone-400 dark:text-stone-500 italic">Unbudgeted</span>
                       )}
                     </td>
                     <td className="py-2.5 px-3.5 text-right">

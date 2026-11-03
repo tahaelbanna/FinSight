@@ -30,13 +30,13 @@ export const ExecutiveSummaryCards: React.FC<ExecutiveSummaryCardsProps> = ({
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
         {[...Array(5)].map((_, i) => (
-          <Card key={i} className="p-5 animate-pulse bg-white border border-stone-200">
+          <Card key={i} className="p-5 animate-pulse bg-white dark:bg-[#151A2D] border border-stone-200 dark:border-stone-800">
             <div className="flex items-center justify-between mb-3">
-              <div className="w-9 h-9 rounded-xl bg-stone-100" />
-              <div className="w-12 h-5 rounded-md bg-stone-100" />
+              <div className="w-9 h-9 rounded-xl bg-stone-100 dark:bg-stone-800" />
+              <div className="w-12 h-5 rounded-md bg-stone-100 dark:bg-stone-800" />
             </div>
-            <div className="w-20 h-3 rounded-sm bg-stone-100 mb-2" />
-            <div className="w-28 h-6 rounded-md bg-stone-100" />
+            <div className="w-20 h-3 rounded-sm bg-stone-100 dark:bg-stone-800 mb-2" />
+            <div className="w-28 h-6 rounded-md bg-stone-100 dark:bg-stone-800" />
           </Card>
         ))}
       </div>
@@ -62,77 +62,77 @@ export const ExecutiveSummaryCards: React.FC<ExecutiveSummaryCardsProps> = ({
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
       {/* 1. Total Allocated Budget */}
-      <Card className="p-5 bg-white border border-stone-200/90 shadow-2xs hover:shadow-xs transition-shadow">
+      <Card className="p-5 bg-white dark:bg-[#151A2D] border border-stone-200/90 dark:border-stone-800 shadow-2xs hover:shadow-xs transition-shadow">
         <div className="flex items-center justify-between mb-2">
-          <div className="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
+          <div className="w-9 h-9 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
             <Wallet className="w-4 h-4" />
           </div>
           <Badge variant="indigo" size="sm" className="text-[10px]">
             {isEmployee ? 'Dept Managed' : 'Consolidated'}
           </Badge>
         </div>
-        <p className="text-xs font-semibold text-stone-500 uppercase tracking-wider">
+        <p className="text-xs font-semibold text-stone-500 dark:text-stone-400 uppercase tracking-wider">
           Authorized Budget
         </p>
-        <p className="text-xl sm:text-2xl font-extrabold text-stone-900 tracking-tight mt-1 font-display">
+        <p className="text-xl sm:text-2xl font-extrabold text-stone-900 dark:text-stone-100 tracking-tight mt-1 font-display">
           {formatCurrency(totalBudget)}
         </p>
-        <p className="text-[11px] text-stone-400 mt-1.5 line-clamp-1">
+        <p className="text-[11px] text-stone-400 dark:text-stone-500 mt-1.5 line-clamp-1">
           {isEmployee ? 'Company scope allocated by managers' : 'Model B OpEx & CapEx Combined'}
         </p>
       </Card>
 
       {/* 2. Approved Expenses (Period Spend) */}
-      <Card className="p-5 bg-white border border-stone-200/90 shadow-2xs hover:shadow-xs transition-shadow">
+      <Card className="p-5 bg-white dark:bg-[#151A2D] border border-stone-200/90 dark:border-stone-800 shadow-2xs hover:shadow-xs transition-shadow">
         <div className="flex items-center justify-between mb-2">
-          <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+          <div className="w-9 h-9 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
             <CheckCircle2 className="w-4 h-4" />
           </div>
           <Badge variant="success" size="sm" className="text-[10px]">
             Realized
           </Badge>
         </div>
-        <p className="text-xs font-semibold text-stone-500 uppercase tracking-wider">
+        <p className="text-xs font-semibold text-stone-500 dark:text-stone-400 uppercase tracking-wider">
           Period Spend
         </p>
-        <p className="text-xl sm:text-2xl font-extrabold text-emerald-900 tracking-tight mt-1 font-display">
+        <p className="text-xl sm:text-2xl font-extrabold text-emerald-900 dark:text-emerald-400 tracking-tight mt-1 font-display">
           {formatCurrency(approved)}
         </p>
-        <p className="text-[11px] text-stone-400 mt-1.5 flex items-center gap-1">
-          <TrendingUp className="w-3 h-3 text-emerald-600" />
+        <p className="text-[11px] text-stone-400 dark:text-stone-500 mt-1.5 flex items-center gap-1">
+          <TrendingUp className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
           <span>Settled & Audited Claims</span>
         </p>
       </Card>
 
       {/* 3. Pending Expenses */}
-      <Card className="p-5 bg-white border border-stone-200/90 shadow-2xs hover:shadow-xs transition-shadow">
+      <Card className="p-5 bg-white dark:bg-[#151A2D] border border-stone-200/90 dark:border-stone-800 shadow-2xs hover:shadow-xs transition-shadow">
         <div className="flex items-center justify-between mb-2">
-          <div className="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+          <div className="w-9 h-9 rounded-xl bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 flex items-center justify-center">
             <Clock className="w-4 h-4" />
           </div>
           <Badge variant="warning" size="sm" className="text-[10px]">
             Pipeline
           </Badge>
         </div>
-        <p className="text-xs font-semibold text-stone-500 uppercase tracking-wider">
+        <p className="text-xs font-semibold text-stone-500 dark:text-stone-400 uppercase tracking-wider">
           Pending Approval
         </p>
-        <p className="text-xl sm:text-2xl font-extrabold text-amber-900 tracking-tight mt-1 font-display">
+        <p className="text-xl sm:text-2xl font-extrabold text-amber-900 dark:text-amber-400 tracking-tight mt-1 font-display">
           {formatCurrency(pending)}
         </p>
-        <p className="text-[11px] text-stone-400 mt-1.5">
+        <p className="text-[11px] text-stone-400 dark:text-stone-500 mt-1.5">
           Submitted claims awaiting review
         </p>
       </Card>
 
       {/* 4. Remaining Budget */}
-      <Card className="p-5 bg-white border border-stone-200/90 shadow-2xs hover:shadow-xs transition-shadow">
+      <Card className="p-5 bg-white dark:bg-[#151A2D] border border-stone-200/90 dark:border-stone-800 shadow-2xs hover:shadow-xs transition-shadow">
         <div className="flex items-center justify-between mb-2">
           <div
             className={`w-9 h-9 rounded-xl flex items-center justify-center ${
               remaining < 0
-                ? 'bg-rose-50 text-rose-600'
-                : 'bg-indigo-50 text-indigo-600'
+                ? 'bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400'
+                : 'bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400'
             }`}
           >
             <PiggyBank className="w-4 h-4" />
@@ -143,29 +143,29 @@ export const ExecutiveSummaryCards: React.FC<ExecutiveSummaryCardsProps> = ({
             </Badge>
           )}
         </div>
-        <p className="text-xs font-semibold text-stone-500 uppercase tracking-wider">
+        <p className="text-xs font-semibold text-stone-500 dark:text-stone-400 uppercase tracking-wider">
           Remaining Balance
         </p>
         <p
           className={`text-xl sm:text-2xl font-extrabold tracking-tight mt-1 font-display ${
-            remaining < 0 ? 'text-rose-600' : 'text-stone-900'
+            remaining < 0 ? 'text-rose-600 dark:text-rose-400' : 'text-stone-900 dark:text-stone-100'
           }`}
         >
           {formatCurrency(remaining)}
         </p>
-        <p className="text-[11px] text-stone-400 mt-1.5">
+        <p className="text-[11px] text-stone-400 dark:text-stone-500 mt-1.5">
           {isEmployee ? 'Department level tracking' : 'Authorized minus period spend'}
         </p>
       </Card>
 
       {/* 5. Budget Utilization */}
-      <Card className="p-5 bg-white border border-stone-200/90 shadow-2xs hover:shadow-xs transition-shadow">
+      <Card className="p-5 bg-white dark:bg-[#151A2D] border border-stone-200/90 dark:border-stone-800 shadow-2xs hover:shadow-xs transition-shadow">
         <div className="flex items-center justify-between mb-2">
           <div
             className={`w-9 h-9 rounded-xl flex items-center justify-center ${
               isOverrun
-                ? 'bg-rose-50 text-rose-600'
-                : 'bg-indigo-50 text-indigo-600'
+                ? 'bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400'
+                : 'bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400'
             }`}
           >
             {isOverrun ? (
@@ -178,19 +178,19 @@ export const ExecutiveSummaryCards: React.FC<ExecutiveSummaryCardsProps> = ({
             {isOverrun ? 'Overrun' : totalBudget === 0 ? 'Unbudgeted' : 'Rate'}
           </Badge>
         </div>
-        <p className="text-xs font-semibold text-stone-500 uppercase tracking-wider">
+        <p className="text-xs font-semibold text-stone-500 dark:text-stone-400 uppercase tracking-wider">
           Utilization
         </p>
         <p
           className={`text-xl sm:text-2xl font-extrabold tracking-tight mt-1 font-display ${
-            isOverrun ? 'text-rose-600' : 'text-stone-900'
+            isOverrun ? 'text-rose-600 dark:text-rose-400' : 'text-stone-900 dark:text-stone-100'
           }`}
         >
           {totalBudget === 0 ? '0.0%' : formatPercentage(utilization)}
         </p>
 
         {/* Mini Utilization Bar */}
-        <div className="w-full bg-stone-100 rounded-full h-1.5 overflow-hidden mt-2">
+        <div className="w-full bg-stone-100 dark:bg-stone-800 rounded-full h-1.5 overflow-hidden mt-2">
           <div
             className={`h-full rounded-full transition-all duration-300 ${
               isOverrun

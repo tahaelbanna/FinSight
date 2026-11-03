@@ -109,10 +109,10 @@ export const UsersPage: React.FC = () => {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold font-display text-stone-900">
+          <h1 className="text-2xl font-bold font-display text-stone-900 dark:text-stone-100">
             User Management
           </h1>
-          <p className="text-sm text-stone-500 mt-1">
+          <p className="text-sm text-stone-500 dark:text-stone-400 mt-1">
             Enterprise identity governance, role provisioning, and account lifecycle
           </p>
         </div>
@@ -126,10 +126,10 @@ export const UsersPage: React.FC = () => {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white p-3 rounded-xl border border-stone-200 shadow-xs space-y-3">
+      <div className="bg-white dark:bg-[#151A2D] p-3 rounded-xl border border-stone-200 dark:border-stone-800 shadow-xs space-y-3">
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
-            <Search className="w-4 h-4 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-stone-400 dark:text-stone-500 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               placeholder="Search users by name or email..."
@@ -138,7 +138,7 @@ export const UsersPage: React.FC = () => {
                 setSearch(e.target.value);
                 setPage(1);
               }}
-              className="w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-stone-200 bg-stone-50/50 text-stone-900 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+              className="w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-stone-200 dark:border-stone-700 bg-stone-50/50 dark:bg-stone-900/60 text-stone-900 dark:text-stone-100 placeholder:text-stone-400 dark:placeholder:text-stone-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
             />
           </div>
 
@@ -150,11 +150,11 @@ export const UsersPage: React.FC = () => {
                 setPage(1);
               }}
               aria-label="Filter by department"
-              className="w-full py-2 px-3 text-sm rounded-lg border border-stone-200 bg-stone-50/50 text-stone-900 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+              className="w-full py-2 px-3 text-sm rounded-lg border border-stone-200 dark:border-stone-700 bg-stone-50/50 dark:bg-stone-900/60 text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
             >
-              <option value="">All Departments</option>
+              <option value="" className="dark:bg-stone-900">All Departments</option>
               {departments.map((d) => (
-                <option key={d.department_id} value={d.department_id}>
+                <option key={d.department_id} value={d.department_id} className="dark:bg-stone-900">
                   {d.department_name}
                 </option>
               ))}
@@ -172,10 +172,10 @@ export const UsersPage: React.FC = () => {
                   setRoleFilter(r);
                   setPage(1);
                 }}
-                className={`px-3 py-1 text-xs font-semibold rounded-lg capitalize transition-colors ${
+                className={`px-3 py-1 text-xs font-semibold rounded-lg capitalize transition-colors cursor-pointer ${
                   roleFilter === r
                     ? 'bg-indigo-600 text-white shadow-xs'
-                    : 'text-stone-600 hover:bg-stone-100'
+                    : 'text-stone-600 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-800'
                 }`}
               >
                 {r.replace('_', ' ')}
@@ -191,10 +191,10 @@ export const UsersPage: React.FC = () => {
                   setStatusFilter(s);
                   setPage(1);
                 }}
-                className={`px-2.5 py-1 text-[11px] font-medium rounded-md capitalize transition-colors ${
+                className={`px-2.5 py-1 text-[11px] font-medium rounded-md capitalize transition-colors cursor-pointer ${
                   statusFilter === s
-                    ? 'bg-stone-200 text-stone-900 font-semibold'
-                    : 'text-stone-500 hover:text-stone-700'
+                    ? 'bg-stone-200 dark:bg-stone-700 text-stone-900 dark:text-stone-100 font-semibold'
+                    : 'text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200'
                 }`}
               >
                 {s}
@@ -205,23 +205,23 @@ export const UsersPage: React.FC = () => {
       </div>
 
       {/* Users Table */}
-      <Card className="overflow-hidden border border-stone-200 shadow-xs bg-white">
+      <Card className="overflow-hidden border border-stone-200 dark:border-stone-800 shadow-xs bg-white dark:bg-[#151A2D]">
         {isLoading ? (
           <div className="p-8 text-center">
             <div className="w-8 h-8 border-3 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
-            <p className="text-sm text-stone-500">Loading user accounts...</p>
+            <p className="text-sm text-stone-500 dark:text-stone-400">Loading user accounts...</p>
           </div>
         ) : error ? (
-          <div className="p-8 text-center text-rose-500">
+          <div className="p-8 text-center text-rose-500 dark:text-rose-400">
             Failed to load users. Access is restricted to System Administrators.
           </div>
         ) : users.length === 0 ? (
           <div className="p-12 text-center">
-            <Users className="w-12 h-12 text-stone-300 mx-auto mb-3" />
-            <h3 className="text-base font-semibold text-stone-900">
+            <Users className="w-12 h-12 text-stone-300 dark:text-stone-600 mx-auto mb-3" />
+            <h3 className="text-base font-semibold text-stone-900 dark:text-stone-100">
               No users found
             </h3>
-            <p className="text-sm text-stone-500 max-w-sm mx-auto mt-1">
+            <p className="text-sm text-stone-500 dark:text-stone-400 max-w-sm mx-auto mt-1">
               There are no user accounts matching the specified filters.
             </p>
           </div>
@@ -229,7 +229,7 @@ export const UsersPage: React.FC = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse text-sm">
               <thead>
-                <tr className="bg-stone-50/75 border-b border-stone-200 text-xs font-semibold text-stone-500 uppercase tracking-wider">
+                <tr className="bg-stone-50/75 dark:bg-stone-900/60 border-b border-stone-200 dark:border-stone-800 text-xs font-semibold text-stone-500 dark:text-stone-400 uppercase tracking-wider">
                   <th scope="col" className="py-3 px-4">User</th>
                   <th scope="col" className="py-3 px-4">Role</th>
                   <th scope="col" className="py-3 px-4">Department</th>
@@ -238,31 +238,31 @@ export const UsersPage: React.FC = () => {
                   {isAdmin && <th scope="col" className="py-3 px-4 text-right">Actions</th>}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-stone-100">
+              <tbody className="divide-y divide-stone-100 dark:divide-stone-800">
                 {users.map((u) => (
                   <tr
                     key={u.user_id}
-                    className="hover:bg-stone-50/60 transition-colors"
+                    className="hover:bg-stone-50/60 dark:hover:bg-stone-800/40 transition-colors"
                   >
                     <td className="py-3.5 px-4">
                       <div>
-                        <p className="font-semibold text-stone-900">
+                        <p className="font-semibold text-stone-900 dark:text-stone-100">
                           {u.full_name}
                         </p>
-                        <p className="text-xs text-stone-500">{u.email}</p>
+                        <p className="text-xs text-stone-500 dark:text-stone-400">{u.email}</p>
                       </div>
                     </td>
 
                     <td className="py-3.5 px-4">{getRoleBadge(u.role)}</td>
 
-                    <td className="py-3.5 px-4 text-xs text-stone-600">
+                    <td className="py-3.5 px-4 text-xs text-stone-600 dark:text-stone-400">
                       {u.department ? (
                         <div className="flex items-center gap-1.5">
-                          <Building className="w-3.5 h-3.5 text-stone-400" />
+                          <Building className="w-3.5 h-3.5 text-stone-400 dark:text-stone-500" />
                           <span>{u.department.department_name}</span>
                         </div>
                       ) : (
-                        <span className="text-stone-400">—</span>
+                        <span className="text-stone-400 dark:text-stone-500">—</span>
                       )}
                     </td>
 
@@ -274,7 +274,7 @@ export const UsersPage: React.FC = () => {
                       )}
                     </td>
 
-                    <td className="py-3.5 px-4 text-xs text-stone-500 whitespace-nowrap">
+                    <td className="py-3.5 px-4 text-xs text-stone-500 dark:text-stone-400 whitespace-nowrap">
                       {formatDate(u.created_at)}
                     </td>
 
@@ -283,7 +283,7 @@ export const UsersPage: React.FC = () => {
                         <div className="flex items-center justify-end gap-1.5">
                           <button
                             onClick={() => setSelectedUserForEdit(u)}
-                            className="p-1.5 text-stone-500 hover:text-stone-900 hover:bg-stone-100 rounded transition-colors"
+                            className="p-1.5 text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 hover:bg-stone-100 dark:hover:bg-stone-800 rounded transition-colors"
                             title="Edit User"
                             aria-label={`Edit ${u.full_name}`}
                           >
@@ -294,8 +294,8 @@ export const UsersPage: React.FC = () => {
                             onClick={() => setUserForStatusToggle(u)}
                             className={`p-1.5 rounded transition-colors ${
                               u.is_active
-                                ? 'text-stone-500 hover:text-rose-600 hover:bg-rose-50'
-                                : 'text-stone-500 hover:text-emerald-600 hover:bg-emerald-50'
+                                ? 'text-stone-500 dark:text-stone-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40'
+                                : 'text-stone-500 dark:text-stone-400 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/40'
                             }`}
                             title={u.is_active ? 'Deactivate User' : 'Activate User'}
                             aria-label={u.is_active ? `Deactivate ${u.full_name}` : `Activate ${u.full_name}`}
@@ -317,7 +317,7 @@ export const UsersPage: React.FC = () => {
         )}
 
         {meta && (
-          <div className="p-4 bg-white border-t border-stone-100">
+          <div className="p-4 bg-white dark:bg-[#151A2D] border-t border-stone-100 dark:border-stone-800">
             <Pagination
               meta={meta}
               currentPage={page}

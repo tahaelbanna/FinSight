@@ -47,12 +47,12 @@ export const ExpenseDetailsModal: React.FC<ExpenseDetailsModalProps> = ({
       ) : (
         <div className="space-y-5">
           {/* Top Status & Amount Banner */}
-          <div className="p-4 rounded-xl bg-stone-50 border border-stone-200/80 flex items-center justify-between">
+          <div className="p-4 rounded-xl bg-stone-50 dark:bg-stone-900/60 border border-stone-200/80 dark:border-stone-800 flex items-center justify-between">
             <div>
-              <p className="text-xs uppercase tracking-wider font-semibold text-stone-500">
+              <p className="text-xs uppercase tracking-wider font-semibold text-stone-500 dark:text-stone-400">
                 Amount Incurred
               </p>
-              <h2 className="text-2xl font-extrabold text-stone-900 font-display">
+              <h2 className="text-2xl font-extrabold text-stone-900 dark:text-stone-100 font-display">
                 ${Number(expense.amount).toLocaleString('en-US', { minimumFractionDigits: 2 })}
               </h2>
             </div>
@@ -78,69 +78,69 @@ export const ExpenseDetailsModal: React.FC<ExpenseDetailsModalProps> = ({
 
           {/* Details Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-            <div className="p-3 rounded-xl border border-stone-100 bg-white space-y-1">
-              <span className="text-stone-400 font-medium flex items-center gap-1.5">
+            <div className="p-3 rounded-xl border border-stone-100 dark:border-stone-800 bg-white dark:bg-stone-900/40 space-y-1">
+              <span className="text-stone-400 dark:text-stone-500 font-medium flex items-center gap-1.5">
                 <User className="w-3.5 h-3.5" /> Submitter
               </span>
-              <p className="font-semibold text-stone-900">{expense.submitted_by.full_name}</p>
+              <p className="font-semibold text-stone-900 dark:text-stone-100">{expense.submitted_by.full_name}</p>
             </div>
 
-            <div className="p-3 rounded-xl border border-stone-100 bg-white space-y-1">
-              <span className="text-stone-400 font-medium flex items-center gap-1.5">
+            <div className="p-3 rounded-xl border border-stone-100 dark:border-stone-800 bg-white dark:bg-stone-900/40 space-y-1">
+              <span className="text-stone-400 dark:text-stone-500 font-medium flex items-center gap-1.5">
                 <Building2 className="w-3.5 h-3.5" /> Department
               </span>
-              <p className="font-semibold text-stone-900">{expense.department.department_name}</p>
+              <p className="font-semibold text-stone-900 dark:text-stone-100">{expense.department.department_name}</p>
             </div>
 
-            <div className="p-3 rounded-xl border border-stone-100 bg-white space-y-1">
-              <span className="text-stone-400 font-medium flex items-center gap-1.5">
+            <div className="p-3 rounded-xl border border-stone-100 dark:border-stone-800 bg-white dark:bg-stone-900/40 space-y-1">
+              <span className="text-stone-400 dark:text-stone-500 font-medium flex items-center gap-1.5">
                 <Calendar className="w-3.5 h-3.5" /> Expense Date
               </span>
-              <p className="font-semibold text-stone-900">
+              <p className="font-semibold text-stone-900 dark:text-stone-100">
                 {new Date(expense.expense_date).toLocaleDateString()}
               </p>
             </div>
 
-            <div className="p-3 rounded-xl border border-stone-100 bg-white space-y-1">
-              <span className="text-stone-400 font-medium flex items-center gap-1.5">
+            <div className="p-3 rounded-xl border border-stone-100 dark:border-stone-800 bg-white dark:bg-stone-900/40 space-y-1">
+              <span className="text-stone-400 dark:text-stone-500 font-medium flex items-center gap-1.5">
                 <Receipt className="w-3.5 h-3.5" /> Category
               </span>
-              <p className="font-semibold text-stone-900">{expense.category.category_name}</p>
+              <p className="font-semibold text-stone-900 dark:text-stone-100">{expense.category.category_name}</p>
             </div>
 
             {expense.project && (
-              <div className="p-3 rounded-xl border border-stone-100 bg-white space-y-1 sm:col-span-2">
-                <span className="text-stone-400 font-medium flex items-center gap-1.5">
+              <div className="p-3 rounded-xl border border-stone-100 dark:border-stone-800 bg-white dark:bg-stone-900/40 space-y-1 sm:col-span-2">
+                <span className="text-stone-400 dark:text-stone-500 font-medium flex items-center gap-1.5">
                   <FolderKanban className="w-3.5 h-3.5" /> Linked CapEx Project
                 </span>
-                <p className="font-semibold text-stone-900">{expense.project.project_name}</p>
+                <p className="font-semibold text-stone-900 dark:text-stone-100">{expense.project.project_name}</p>
               </div>
             )}
           </div>
 
           {/* Description */}
-          <div className="p-3.5 rounded-xl border border-stone-200/70 bg-white space-y-1 text-xs">
-            <span className="text-stone-400 font-medium uppercase tracking-wider text-[10px]">
+          <div className="p-3.5 rounded-xl border border-stone-200/70 dark:border-stone-800 bg-white dark:bg-stone-900/40 space-y-1 text-xs">
+            <span className="text-stone-400 dark:text-stone-500 font-medium uppercase tracking-wider text-[10px]">
               Justification & Business Notes
             </span>
-            <p className="text-stone-700 leading-relaxed whitespace-pre-wrap">
+            <p className="text-stone-700 dark:text-stone-300 leading-relaxed whitespace-pre-wrap">
               {expense.description}
             </p>
           </div>
 
           {/* Reviewer Details (if reviewed) */}
           {expense.reviewed_at && (
-            <div className="p-3.5 rounded-xl border border-stone-200/80 bg-stone-50 space-y-2 text-xs">
+            <div className="p-3.5 rounded-xl border border-stone-200/80 dark:border-stone-800 bg-stone-50 dark:bg-stone-900/60 space-y-2 text-xs">
               <div className="flex items-center justify-between">
-                <span className="font-semibold text-stone-800">
+                <span className="font-semibold text-stone-800 dark:text-stone-200">
                   Reviewed by: {expense.reviewer?.full_name || 'Department Manager'}
                 </span>
-                <span className="text-stone-400">
+                <span className="text-stone-400 dark:text-stone-500">
                   {new Date(expense.reviewed_at).toLocaleString()}
                 </span>
               </div>
               {expense.review_comment && (
-                <p className="text-stone-600 bg-white p-2.5 rounded-lg border border-stone-200/60 italic">
+                <p className="text-stone-600 dark:text-stone-300 bg-white dark:bg-stone-800/80 p-2.5 rounded-lg border border-stone-200/60 dark:border-stone-700 italic">
                   "{expense.review_comment}"
                 </p>
               )}
@@ -149,21 +149,21 @@ export const ExpenseDetailsModal: React.FC<ExpenseDetailsModalProps> = ({
 
           {/* Attachments */}
           <div className="space-y-2 pt-1">
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-stone-600">
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-stone-600 dark:text-stone-400">
               Receipt Attachments ({expense.attachments.length})
             </h4>
             {expense.attachments.length === 0 ? (
-              <p className="text-xs text-stone-400 italic">No files attached to this expense.</p>
+              <p className="text-xs text-stone-400 dark:text-stone-500 italic">No files attached to this expense.</p>
             ) : (
               <div className="space-y-1.5">
                 {expense.attachments.map((att) => (
                   <div
                     key={att.attachment_id}
-                    className="flex items-center justify-between p-2.5 rounded-xl border border-stone-200/70 bg-white hover:bg-stone-50 transition-colors"
+                    className="flex items-center justify-between p-2.5 rounded-xl border border-stone-200/70 dark:border-stone-800 bg-white dark:bg-stone-900/40 hover:bg-stone-50 dark:hover:bg-stone-800/60 transition-colors"
                   >
                     <div className="flex items-center gap-2 min-w-0">
-                      <FileText className="w-4 h-4 text-indigo-600 shrink-0" />
-                      <span className="text-xs font-medium text-stone-800 truncate">
+                      <FileText className="w-4 h-4 text-indigo-600 dark:text-indigo-400 shrink-0" />
+                      <span className="text-xs font-medium text-stone-800 dark:text-stone-200 truncate">
                         {att.file_name}
                       </span>
                     </div>
@@ -172,7 +172,7 @@ export const ExpenseDetailsModal: React.FC<ExpenseDetailsModalProps> = ({
                       target="_blank"
                       rel="noopener noreferrer"
                       download={att.file_name}
-                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium text-indigo-600 hover:text-indigo-800 hover:bg-indigo-50 transition-colors"
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 transition-colors"
                     >
                       <Download className="w-3.5 h-3.5" />
                       <span>Download</span>
@@ -184,7 +184,7 @@ export const ExpenseDetailsModal: React.FC<ExpenseDetailsModalProps> = ({
           </div>
 
           {/* Footer Close */}
-          <div className="flex justify-end pt-3 border-t border-stone-100">
+          <div className="flex justify-end pt-3 border-t border-stone-100 dark:border-stone-800">
             <Button variant="outline" size="sm" onClick={onClose}>
               Close
             </Button>

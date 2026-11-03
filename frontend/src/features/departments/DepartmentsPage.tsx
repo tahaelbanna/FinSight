@@ -66,10 +66,10 @@ export const DepartmentsPage: React.FC = () => {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold font-display text-stone-900">
+          <h1 className="text-2xl font-bold font-display text-stone-900 dark:text-stone-100">
             Departments
           </h1>
-          <p className="text-sm text-stone-500 mt-1">
+          <p className="text-sm text-stone-500 dark:text-stone-400 mt-1">
             Organizational business units, leadership assignments, and OpEx cost centers
           </p>
         </div>
@@ -83,9 +83,9 @@ export const DepartmentsPage: React.FC = () => {
       </div>
 
       {/* Search Bar */}
-      <div className="bg-white p-3 rounded-xl border border-stone-200 shadow-xs flex items-center gap-3">
+      <div className="bg-white dark:bg-[#151A2D] p-3 rounded-xl border border-stone-200 dark:border-stone-800 shadow-xs flex items-center gap-3">
         <div className="relative flex-1">
-          <Search className="w-4 h-4 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-stone-400 dark:text-stone-500 absolute left-3 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             placeholder="Search departments by name..."
@@ -94,29 +94,29 @@ export const DepartmentsPage: React.FC = () => {
               setSearch(e.target.value);
               setPage(1);
             }}
-            className="w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-stone-200 bg-stone-50/50 text-stone-900 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+            className="w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-stone-200 dark:border-stone-700 bg-stone-50/50 dark:bg-stone-900/60 text-stone-900 dark:text-stone-100 placeholder:text-stone-400 dark:placeholder:text-stone-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
           />
         </div>
       </div>
 
       {/* Departments Table */}
-      <Card className="overflow-hidden border border-stone-200 shadow-xs bg-white">
+      <Card className="overflow-hidden border border-stone-200 dark:border-stone-800 shadow-xs bg-white dark:bg-[#151A2D]">
         {isLoading ? (
           <div className="p-8 text-center">
             <div className="w-8 h-8 border-3 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
-            <p className="text-sm text-stone-500">Loading departments...</p>
+            <p className="text-sm text-stone-500 dark:text-stone-400">Loading departments...</p>
           </div>
         ) : error ? (
-          <div className="p-8 text-center text-rose-500">
+          <div className="p-8 text-center text-rose-500 dark:text-rose-400">
             Failed to load departments. Please try refreshing.
           </div>
         ) : departments.length === 0 ? (
           <div className="p-12 text-center">
-            <Building className="w-12 h-12 text-stone-300 mx-auto mb-3" />
-            <h3 className="text-base font-semibold text-stone-900">
+            <Building className="w-12 h-12 text-stone-300 dark:text-stone-600 mx-auto mb-3" />
+            <h3 className="text-base font-semibold text-stone-900 dark:text-stone-100">
               No departments found
             </h3>
-            <p className="text-sm text-stone-500 max-w-sm mx-auto mt-1">
+            <p className="text-sm text-stone-500 dark:text-stone-400 max-w-sm mx-auto mt-1">
               There are no departments matching your search criteria.
             </p>
           </div>
@@ -124,7 +124,7 @@ export const DepartmentsPage: React.FC = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse text-sm">
               <thead>
-                <tr className="bg-stone-50/75 border-b border-stone-200 text-xs font-semibold text-stone-500 uppercase tracking-wider">
+                <tr className="bg-stone-50/75 dark:bg-stone-900/60 border-b border-stone-200 dark:border-stone-800 text-xs font-semibold text-stone-500 dark:text-stone-400 uppercase tracking-wider">
                   <th scope="col" className="py-3 px-4">Department</th>
                   <th scope="col" className="py-3 px-4">Description</th>
                   <th scope="col" className="py-3 px-4">Manager</th>
@@ -132,33 +132,33 @@ export const DepartmentsPage: React.FC = () => {
                   <th scope="col" className="py-3 px-4 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-stone-100">
+              <tbody className="divide-y divide-stone-100 dark:divide-stone-800">
                 {departments.map((d) => (
                   <tr
                     key={d.department_id}
-                    className="hover:bg-stone-50/60 transition-colors"
+                    className="hover:bg-stone-50/60 dark:hover:bg-stone-800/40 transition-colors"
                   >
                     <td className="py-3.5 px-4">
-                      <div className="font-semibold text-stone-900 flex items-center gap-2">
-                        <Building className="w-4 h-4 text-indigo-500" />
+                      <div className="font-semibold text-stone-900 dark:text-stone-100 flex items-center gap-2">
+                        <Building className="w-4 h-4 text-indigo-500 dark:text-indigo-400" />
                         <span>{d.department_name}</span>
                       </div>
                     </td>
 
-                    <td className="py-3.5 px-4 text-xs text-stone-600 max-w-xs truncate">
+                    <td className="py-3.5 px-4 text-xs text-stone-600 dark:text-stone-400 max-w-xs truncate">
                       {d.description}
                     </td>
 
                     <td className="py-3.5 px-4">
-                      <div className="flex items-center gap-1.5 text-xs text-stone-900">
-                        <User className="w-3.5 h-3.5 text-stone-400" />
+                      <div className="flex items-center gap-1.5 text-xs text-stone-900 dark:text-stone-100">
+                        <User className="w-3.5 h-3.5 text-stone-400 dark:text-stone-500" />
                         <span>{d.manager?.manager_name || 'Unassigned'}</span>
                       </div>
                     </td>
 
                     <td className="py-3.5 px-4">
-                      <div className="flex items-center gap-1.5 text-xs text-stone-600">
-                        <Users className="w-3.5 h-3.5 text-stone-400" />
+                      <div className="flex items-center gap-1.5 text-xs text-stone-600 dark:text-stone-400">
+                        <Users className="w-3.5 h-3.5 text-stone-400 dark:text-stone-500" />
                         <span>{d.usersCount ?? 0} members</span>
                       </div>
                     </td>
@@ -167,7 +167,7 @@ export const DepartmentsPage: React.FC = () => {
                       <div className="flex items-center justify-end gap-1.5">
                         <button
                           onClick={() => setSelectedDeptIdForDetails(d.department_id)}
-                          className="p-1.5 text-stone-500 hover:text-indigo-600 hover:bg-indigo-50 rounded transition-colors"
+                          className="p-1.5 text-stone-500 dark:text-stone-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 rounded transition-colors"
                           title="View Details"
                           aria-label={`View details for ${d.department_name}`}
                         >
@@ -178,7 +178,7 @@ export const DepartmentsPage: React.FC = () => {
                           <>
                             <button
                               onClick={() => setSelectedDeptForEdit(d)}
-                              className="p-1.5 text-stone-500 hover:text-stone-900 hover:bg-stone-100 rounded transition-colors"
+                              className="p-1.5 text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 hover:bg-stone-100 dark:hover:bg-stone-800 rounded transition-colors"
                               title="Edit Department"
                               aria-label={`Edit ${d.department_name}`}
                             >
@@ -186,7 +186,7 @@ export const DepartmentsPage: React.FC = () => {
                             </button>
                             <button
                               onClick={() => setDeptToDelete(d)}
-                              className="p-1.5 text-stone-500 hover:text-rose-600 hover:bg-rose-50 rounded transition-colors"
+                              className="p-1.5 text-stone-500 dark:text-stone-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded transition-colors"
                               title="Delete Department"
                               aria-label={`Delete ${d.department_name}`}
                             >
@@ -204,7 +204,7 @@ export const DepartmentsPage: React.FC = () => {
         )}
 
         {meta && (
-          <div className="p-4 bg-white border-t border-stone-100">
+          <div className="p-4 bg-white dark:bg-[#151A2D] border-t border-stone-100 dark:border-stone-800">
             <Pagination
               meta={meta}
               currentPage={page}

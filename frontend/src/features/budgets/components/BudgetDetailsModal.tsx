@@ -55,27 +55,27 @@ export const BudgetDetailsModal: React.FC<BudgetDetailsModalProps> = ({
       ) : (
         <div className="space-y-6">
           {/* Header Card */}
-          <div className="p-4 bg-stone-50 rounded-xl border border-stone-200 flex flex-wrap items-center justify-between gap-4">
+          <div className="p-4 bg-stone-50 dark:bg-stone-900/60 rounded-xl border border-stone-200 dark:border-stone-800 flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <div
                 className={`p-3 rounded-lg ${
                   isOpEx
-                    ? 'bg-blue-100 text-blue-700'
-                    : 'bg-emerald-100 text-emerald-700'
+                    ? 'bg-blue-100 dark:bg-blue-950/60 text-blue-700 dark:text-blue-400'
+                    : 'bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-400'
                 }`}
               >
                 {isOpEx ? <Building className="w-5 h-5" /> : <Briefcase className="w-5 h-5" />}
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h3 className="text-lg font-bold text-stone-900 font-display">
+                  <h3 className="text-lg font-bold text-stone-900 dark:text-stone-100 font-display">
                     {scopeName}
                   </h3>
                   <Badge variant={isOpEx ? 'info' : 'success'}>
                     {isOpEx ? 'Department OpEx' : 'Project CapEx'}
                   </Badge>
                 </div>
-                <div className="flex items-center gap-2 text-xs text-stone-500 mt-1">
+                <div className="flex items-center gap-2 text-xs text-stone-500 dark:text-stone-400 mt-1">
                   <Calendar className="w-3.5 h-3.5" />
                   <span>
                     {formatDate(budget.start_date)} – {formatDate(budget.end_date)}
@@ -89,33 +89,33 @@ export const BudgetDetailsModal: React.FC<BudgetDetailsModalProps> = ({
 
           {/* Key Metrics Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="p-4 rounded-xl border border-stone-200 bg-white shadow-xs">
-              <span className="text-xs font-medium text-stone-500">
+            <div className="p-4 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900/40 shadow-xs">
+              <span className="text-xs font-medium text-stone-500 dark:text-stone-400">
                 Allocated Budget
               </span>
-              <p className="text-xl font-bold text-stone-900 font-display mt-1">
+              <p className="text-xl font-bold text-stone-900 dark:text-stone-100 font-display mt-1">
                 {formatCurrency(budget.allocated_amount)}
               </p>
             </div>
 
-            <div className="p-4 rounded-xl border border-stone-200 bg-white shadow-xs">
-              <span className="text-xs font-medium text-stone-500">
+            <div className="p-4 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900/40 shadow-xs">
+              <span className="text-xs font-medium text-stone-500 dark:text-stone-400">
                 Approved Spend
               </span>
-              <p className="text-xl font-bold text-indigo-600 font-display mt-1">
+              <p className="text-xl font-bold text-indigo-600 dark:text-indigo-400 font-display mt-1">
                 {formatCurrency(budget.approved_expenses)}
               </p>
             </div>
 
-            <div className="p-4 rounded-xl border border-stone-200 bg-white shadow-xs">
-              <span className="text-xs font-medium text-stone-500">
+            <div className="p-4 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900/40 shadow-xs">
+              <span className="text-xs font-medium text-stone-500 dark:text-stone-400">
                 Remaining Balance
               </span>
               <p
                 className={`text-xl font-bold font-display mt-1 ${
                   budget.remaining_budget < 0
-                    ? 'text-rose-600'
-                    : 'text-emerald-600'
+                    ? 'text-rose-600 dark:text-rose-400'
+                    : 'text-emerald-600 dark:text-emerald-400'
                 }`}
               >
                 {formatCurrency(budget.remaining_budget)}
@@ -124,16 +124,16 @@ export const BudgetDetailsModal: React.FC<BudgetDetailsModalProps> = ({
           </div>
 
           {/* Progress / Utilization bar */}
-          <div className="p-4 rounded-xl border border-stone-200 bg-stone-50">
+          <div className="p-4 rounded-xl border border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-stone-900/40">
             <div className="flex justify-between items-center mb-2">
-              <span className="text-xs font-semibold text-stone-700">
+              <span className="text-xs font-semibold text-stone-700 dark:text-stone-300">
                 Budget Utilization
               </span>
-              <span className="text-xs font-bold text-stone-900">
+              <span className="text-xs font-bold text-stone-900 dark:text-stone-100">
                 {Number(budget.utilization_percentage).toFixed(1)}%
               </span>
             </div>
-            <div className="w-full bg-stone-200 rounded-full h-2.5 overflow-hidden">
+            <div className="w-full bg-stone-200 dark:bg-stone-700 rounded-full h-2.5 overflow-hidden">
               <div
                 className={`h-2.5 rounded-full transition-all duration-500 ${
                   budget.is_overrun
@@ -146,7 +146,7 @@ export const BudgetDetailsModal: React.FC<BudgetDetailsModalProps> = ({
               />
             </div>
             {budget.is_overrun && (
-              <p className="text-xs text-rose-500 mt-2 flex items-center gap-1.5 font-medium">
+              <p className="text-xs text-rose-500 dark:text-rose-400 mt-2 flex items-center gap-1.5 font-medium">
                 <AlertTriangle className="w-3.5 h-3.5" />
                 This budget has exceeded allocated limits by {formatCurrency(Math.abs(budget.remaining_budget))}.
               </p>
@@ -155,24 +155,24 @@ export const BudgetDetailsModal: React.FC<BudgetDetailsModalProps> = ({
 
           {/* Recent Approved Expenses */}
           <div>
-            <h4 className="text-sm font-semibold text-stone-900 mb-3">
+            <h4 className="text-sm font-semibold text-stone-900 dark:text-stone-100 mb-3">
               Recent Approved Expenses in Period
             </h4>
             {budget.recent_expenses && budget.recent_expenses.length > 0 ? (
-              <div className="border border-stone-200 rounded-lg overflow-hidden divide-y divide-stone-100">
+              <div className="border border-stone-200 dark:border-stone-800 rounded-lg overflow-hidden divide-y divide-stone-100 dark:divide-stone-800">
                 {budget.recent_expenses.map((expense) => (
                   <div
                     key={expense.expense_id}
-                    className="p-3 bg-white flex items-center justify-between hover:bg-stone-50 transition-colors"
+                    className="p-3 bg-white dark:bg-stone-900/40 flex items-center justify-between hover:bg-stone-50 dark:hover:bg-stone-800/40 transition-colors"
                   >
                     <div>
-                      <p className="text-sm font-medium text-stone-900">
+                      <p className="text-sm font-medium text-stone-900 dark:text-stone-100">
                         {expense.category?.category_name || 'General Expense'}
                       </p>
-                      <p className="text-xs text-stone-500">{formatDate(expense.expense_date)}</p>
+                      <p className="text-xs text-stone-500 dark:text-stone-400">{formatDate(expense.expense_date)}</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-bold text-stone-900">
+                      <p className="text-sm font-bold text-stone-900 dark:text-stone-100">
                         {formatCurrency(expense.amount)}
                       </p>
                       <Badge variant="success" className="text-[10px] py-0">
@@ -183,7 +183,7 @@ export const BudgetDetailsModal: React.FC<BudgetDetailsModalProps> = ({
                 ))}
               </div>
             ) : (
-              <p className="text-xs text-stone-500 italic p-4 text-center border border-dashed border-stone-200 rounded-lg">
+              <p className="text-xs text-stone-500 dark:text-stone-400 italic p-4 text-center border border-dashed border-stone-200 dark:border-stone-700 rounded-lg">
                 No approved expenses recorded for this period yet.
               </p>
             )}
@@ -191,7 +191,7 @@ export const BudgetDetailsModal: React.FC<BudgetDetailsModalProps> = ({
 
           {/* Footer Metadata */}
           {budget.created_by && (
-            <div className="flex items-center gap-2 text-xs text-stone-500 pt-2 border-t border-stone-100">
+            <div className="flex items-center gap-2 text-xs text-stone-500 dark:text-stone-400 pt-2 border-t border-stone-100 dark:border-stone-800">
               <User className="w-3.5 h-3.5" />
               <span>Created by {budget.created_by.full_name}</span>
             </div>

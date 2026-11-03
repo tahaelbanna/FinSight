@@ -7,7 +7,7 @@ export const MainLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#F7F6F3] flex flex-row">
+    <div className="min-h-screen bg-[#F7F6F3] dark:bg-[#0B0E1B] text-stone-900 dark:text-stone-100 flex flex-row transition-colors duration-200">
       {/* Sidebar Navigation */}
       <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 

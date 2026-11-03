@@ -82,18 +82,18 @@ export const ReviewExpenseModal: React.FC<ReviewExpenseModalProps> = ({
         {generalError && <Alert variant="danger">{generalError}</Alert>}
 
         {/* Expense Summary Header */}
-        <div className="p-4 rounded-xl bg-stone-50 border border-stone-200/80 flex items-center justify-between">
+        <div className="p-4 rounded-xl bg-stone-50 dark:bg-stone-900/60 border border-stone-200/80 dark:border-stone-800 flex items-center justify-between">
           <div>
-            <span className="text-xs uppercase tracking-wider font-semibold text-stone-500">
+            <span className="text-xs uppercase tracking-wider font-semibold text-stone-500 dark:text-stone-400">
               Claim Amount
             </span>
-            <h3 className="text-2xl font-extrabold text-stone-900 font-display">
+            <h3 className="text-2xl font-extrabold text-stone-900 dark:text-stone-100 font-display">
               ${Number(expense.amount).toLocaleString('en-US', { minimumFractionDigits: 2 })}
             </h3>
           </div>
           <div className="text-end">
-            <span className="text-xs text-stone-500 block">Category</span>
-            <span className="text-xs font-bold text-stone-800 bg-white px-2.5 py-1 rounded-lg border border-stone-200">
+            <span className="text-xs text-stone-500 dark:text-stone-400 block">Category</span>
+            <span className="text-xs font-bold text-stone-800 dark:text-stone-200 bg-white dark:bg-stone-800 px-2.5 py-1 rounded-lg border border-stone-200 dark:border-stone-700">
               {expense.category.category_name}
             </span>
           </div>
@@ -101,45 +101,45 @@ export const ReviewExpenseModal: React.FC<ReviewExpenseModalProps> = ({
 
         {/* Details Grid */}
         <div className="grid grid-cols-2 gap-3 text-xs">
-          <div className="p-3 rounded-xl border border-stone-100 bg-white">
-            <span className="text-stone-400 font-medium flex items-center gap-1.5 mb-0.5">
+          <div className="p-3 rounded-xl border border-stone-100 dark:border-stone-800 bg-white dark:bg-stone-900/40">
+            <span className="text-stone-400 dark:text-stone-500 font-medium flex items-center gap-1.5 mb-0.5">
               <User className="w-3.5 h-3.5" /> Submitter
             </span>
-            <p className="font-semibold text-stone-900">{expense.submitted_by.full_name}</p>
+            <p className="font-semibold text-stone-900 dark:text-stone-100">{expense.submitted_by.full_name}</p>
           </div>
 
-          <div className="p-3 rounded-xl border border-stone-100 bg-white">
-            <span className="text-stone-400 font-medium flex items-center gap-1.5 mb-0.5">
+          <div className="p-3 rounded-xl border border-stone-100 dark:border-stone-800 bg-white dark:bg-stone-900/40">
+            <span className="text-stone-400 dark:text-stone-500 font-medium flex items-center gap-1.5 mb-0.5">
               <Calendar className="w-3.5 h-3.5" /> Date
             </span>
-            <p className="font-semibold text-stone-900">
+            <p className="font-semibold text-stone-900 dark:text-stone-100">
               {new Date(expense.expense_date).toLocaleDateString()}
             </p>
           </div>
 
-          <div className="p-3 rounded-xl border border-stone-100 bg-white">
-            <span className="text-stone-400 font-medium flex items-center gap-1.5 mb-0.5">
+          <div className="p-3 rounded-xl border border-stone-100 dark:border-stone-800 bg-white dark:bg-stone-900/40">
+            <span className="text-stone-400 dark:text-stone-500 font-medium flex items-center gap-1.5 mb-0.5">
               <Building2 className="w-3.5 h-3.5" /> Department
             </span>
-            <p className="font-semibold text-stone-900">{expense.department.department_name}</p>
+            <p className="font-semibold text-stone-900 dark:text-stone-100">{expense.department.department_name}</p>
           </div>
 
-          <div className="p-3 rounded-xl border border-stone-100 bg-white">
-            <span className="text-stone-400 font-medium flex items-center gap-1.5 mb-0.5">
+          <div className="p-3 rounded-xl border border-stone-100 dark:border-stone-800 bg-white dark:bg-stone-900/40">
+            <span className="text-stone-400 dark:text-stone-500 font-medium flex items-center gap-1.5 mb-0.5">
               <FolderKanban className="w-3.5 h-3.5" /> Allocation Type
             </span>
-            <p className="font-semibold text-stone-900">
+            <p className="font-semibold text-stone-900 dark:text-stone-100">
               {expense.project ? `CapEx: ${expense.project.project_name}` : 'OpEx (Department)'}
             </p>
           </div>
         </div>
 
         {/* Description */}
-        <div className="p-3.5 rounded-xl border border-stone-200/70 bg-white text-xs">
-          <span className="text-[10px] uppercase font-bold text-stone-400 block mb-1">
+        <div className="p-3.5 rounded-xl border border-stone-200/70 dark:border-stone-800 bg-white dark:bg-stone-900/40 text-xs">
+          <span className="text-[10px] uppercase font-bold text-stone-400 dark:text-stone-500 block mb-1">
             Justification & Description
           </span>
-          <p className="text-stone-700 leading-relaxed whitespace-pre-wrap">
+          <p className="text-stone-700 dark:text-stone-300 leading-relaxed whitespace-pre-wrap">
             {expense.description}
           </p>
         </div>
@@ -147,24 +147,24 @@ export const ReviewExpenseModal: React.FC<ReviewExpenseModalProps> = ({
         {/* Attachments */}
         {expense.attachments?.length > 0 && (
           <div className="space-y-1.5">
-            <span className="text-xs font-semibold uppercase tracking-wider text-stone-600 block">
+            <span className="text-xs font-semibold uppercase tracking-wider text-stone-600 dark:text-stone-400 block">
               Receipts ({expense.attachments.length})
             </span>
             {expense.attachments.map((att) => (
               <div
                 key={att.attachment_id}
-                className="flex items-center justify-between p-2 rounded-lg border border-stone-200 bg-white text-xs"
+                className="flex items-center justify-between p-2 rounded-lg border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900/40 text-xs"
               >
                 <div className="flex items-center gap-2 truncate">
-                  <FileText className="w-3.5 h-3.5 text-indigo-600 shrink-0" />
-                  <span className="truncate text-stone-800">{att.file_name}</span>
+                  <FileText className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400 shrink-0" />
+                  <span className="truncate text-stone-800 dark:text-stone-200">{att.file_name}</span>
                 </div>
                 <a
                   href={`/api/v1/expenses/${expense.expense_id}/attachments/${att.attachment_id}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   download={att.file_name}
-                  className="inline-flex items-center gap-1 text-indigo-600 hover:text-indigo-800 font-semibold shrink-0 ml-2"
+                  className="inline-flex items-center gap-1 text-indigo-600 dark:text-indigo-400 hover:text-indigo-800 dark:hover:text-indigo-300 font-semibold shrink-0 ml-2"
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span>View</span>
@@ -176,7 +176,7 @@ export const ReviewExpenseModal: React.FC<ReviewExpenseModalProps> = ({
 
         {/* Reviewer Comment Box */}
         <div className="flex flex-col gap-1.5 text-start pt-1">
-          <label className="text-xs font-semibold uppercase tracking-wider text-stone-700">
+          <label className="text-xs font-semibold uppercase tracking-wider text-stone-700 dark:text-stone-300">
             Manager Review Comment / Rejection Reason
           </label>
           <textarea
@@ -187,15 +187,15 @@ export const ReviewExpenseModal: React.FC<ReviewExpenseModalProps> = ({
               setValidationError(null);
             }}
             placeholder="Add comments or explanation (mandatory if rejecting)..."
-            className="w-full bg-white border border-stone-200 rounded-xl px-3.5 py-2 text-xs text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 hover:border-stone-300 transition-colors"
+            className="w-full bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-700 rounded-xl px-3.5 py-2 text-xs text-stone-900 dark:text-stone-100 placeholder:text-stone-400 dark:placeholder:text-stone-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 hover:border-stone-300 dark:hover:border-stone-600 transition-colors"
           />
           {validationError && (
-            <p className="text-xs font-semibold text-red-600">{validationError}</p>
+            <p className="text-xs font-semibold text-red-600 dark:text-red-400">{validationError}</p>
           )}
         </div>
 
         {/* Decision Actions */}
-        <div className="flex items-center justify-between pt-4 border-t border-stone-100">
+        <div className="flex items-center justify-between pt-4 border-t border-stone-100 dark:border-stone-800">
           <Button variant="outline" size="sm" onClick={onClose} disabled={reviewMutation.isPending}>
             Close
           </Button>

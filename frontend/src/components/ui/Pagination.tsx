@@ -23,10 +23,10 @@ export const Pagination: React.FC<PaginationProps> = ({
   const hasNext = currentPage < totalPages;
 
   return (
-    <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-stone-200/70 text-xs text-stone-500">
+    <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-stone-200/70 dark:border-stone-800 text-xs text-stone-500 dark:text-stone-400">
       <div>
-        Showing page <span className="font-semibold text-stone-800">{currentPage}</span> of{' '}
-        <span className="font-semibold text-stone-800">{totalPages}</span> ({meta.total} total entries)
+        Showing page <span className="font-semibold text-stone-800 dark:text-stone-200">{currentPage}</span> of{' '}
+        <span className="font-semibold text-stone-800 dark:text-stone-200">{totalPages}</span> ({meta.total} total entries)
       </div>
 
       <div className="flex items-center gap-1.5">
@@ -42,7 +42,7 @@ export const Pagination: React.FC<PaginationProps> = ({
           <span>Previous</span>
         </Button>
 
-        <span className="px-3 py-1 font-semibold text-stone-700 bg-stone-100 rounded-lg">
+        <span className="px-3 py-1 font-semibold text-stone-700 dark:text-stone-200 bg-stone-100 dark:bg-stone-800 rounded-lg">
           {currentPage}
         </span>
 

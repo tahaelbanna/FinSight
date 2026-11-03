@@ -203,26 +203,26 @@ export const CreateExpenseModal: React.FC<CreateExpenseModalProps> = ({
         />
 
         <div className="flex flex-col gap-1.5 text-start">
-          <label className="text-xs font-semibold uppercase tracking-wider text-stone-700">
+          <label className="text-xs font-semibold uppercase tracking-wider text-stone-700 dark:text-stone-300">
             Description / Justification
           </label>
           <textarea
             rows={3}
             placeholder="Provide business context, vendor details, and expense purpose..."
-            className="w-full bg-white border border-stone-200 rounded-xl px-3.5 py-2.5 text-sm text-stone-900 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 hover:border-stone-300 transition-colors"
+            className="w-full bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-700 rounded-xl px-3.5 py-2.5 text-sm text-stone-900 dark:text-stone-100 placeholder:text-stone-400 dark:placeholder:text-stone-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 hover:border-stone-300 dark:hover:border-stone-600 transition-colors"
             {...register('description')}
           />
           {errors.description?.message && (
-            <p className="text-xs font-medium text-red-600">{errors.description.message}</p>
+            <p className="text-xs font-medium text-red-600 dark:text-red-400">{errors.description.message}</p>
           )}
         </div>
 
         {/* File Receipts Upload */}
         <div className="flex flex-col gap-1.5 text-start pt-1">
-          <label className="text-xs font-semibold uppercase tracking-wider text-stone-700">
+          <label className="text-xs font-semibold uppercase tracking-wider text-stone-700 dark:text-stone-300">
             Receipt Attachments (PNG, JPG, PDF up to 5MB, max 5)
           </label>
-          <div className="border-2 border-dashed border-stone-200 hover:border-indigo-400 rounded-xl p-4 text-center cursor-pointer transition-colors relative bg-stone-50/40">
+          <div className="border-2 border-dashed border-stone-200 dark:border-stone-700 hover:border-indigo-400 dark:hover:border-indigo-500 rounded-xl p-4 text-center cursor-pointer transition-colors relative bg-stone-50/40 dark:bg-stone-900/40">
             <input
               type="file"
               multiple
@@ -230,28 +230,28 @@ export const CreateExpenseModal: React.FC<CreateExpenseModalProps> = ({
               onChange={handleFileChange}
               className="absolute inset-0 opacity-0 cursor-pointer"
             />
-            <div className="flex flex-col items-center justify-center gap-1.5 text-stone-500">
-              <Upload className="w-6 h-6 text-indigo-500" />
+            <div className="flex flex-col items-center justify-center gap-1.5 text-stone-500 dark:text-stone-400">
+              <Upload className="w-6 h-6 text-indigo-500 dark:text-indigo-400" />
               <p className="text-xs font-medium">
                 Click to browse or drag and drop receipts
               </p>
             </div>
           </div>
-          {fileError && <p className="text-xs font-medium text-red-600">{fileError}</p>}
+          {fileError && <p className="text-xs font-medium text-red-600 dark:text-red-400">{fileError}</p>}
 
           {selectedFiles.length > 0 && (
             <div className="flex flex-wrap gap-2 pt-2">
               {selectedFiles.map((file, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-900 text-xs border border-indigo-200/60"
+                  className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-indigo-50 dark:bg-indigo-950/50 text-indigo-900 dark:text-indigo-200 text-xs border border-indigo-200/60 dark:border-indigo-800/60"
                 >
-                  <FileText className="w-3.5 h-3.5 text-indigo-600" />
+                  <FileText className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
                   <span className="max-w-[120px] truncate">{file.name}</span>
                   <button
                     type="button"
                     onClick={() => removeFile(idx)}
-                    className="p-0.5 hover:text-red-700 rounded transition-colors"
+                    className="p-0.5 hover:text-red-700 dark:hover:text-red-400 rounded transition-colors"
                   >
                     <X className="w-3 h-3" />
                   </button>
@@ -262,7 +262,7 @@ export const CreateExpenseModal: React.FC<CreateExpenseModalProps> = ({
         </div>
 
         {/* Actions */}
-        <div className="flex items-center justify-end gap-3 pt-4 border-t border-stone-100">
+        <div className="flex items-center justify-end gap-3 pt-4 border-t border-stone-100 dark:border-stone-800">
           <Button type="button" variant="outline" size="sm" onClick={onClose} disabled={isSubmitting}>
             Cancel
           </Button>

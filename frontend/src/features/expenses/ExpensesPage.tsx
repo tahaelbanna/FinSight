@@ -44,10 +44,10 @@ export const ExpensesPage: React.FC = () => {
       {/* Header with Title and Create Action */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-extrabold text-stone-900 tracking-tight font-display">
+          <h2 className="text-2xl font-extrabold text-stone-900 dark:text-stone-100 tracking-tight font-display">
             Company Expenses
           </h2>
-          <p className="text-xs text-stone-500 mt-1">
+          <p className="text-xs text-stone-500 dark:text-stone-400 mt-1">
             Track, submit, and review operational and project expenditures across the organization.
           </p>
         </div>
@@ -81,10 +81,10 @@ export const ExpensesPage: React.FC = () => {
                 setPage(1);
               }}
               className={cn(
-                'px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-150 whitespace-nowrap',
+                'px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-150 whitespace-nowrap cursor-pointer',
                 statusFilter === item.value
                   ? 'bg-indigo-600 text-white shadow-xs'
-                  : 'bg-stone-100 text-stone-600 hover:bg-stone-200/70 hover:text-stone-900'
+                  : 'bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300 hover:bg-stone-200/70 dark:hover:bg-stone-700 hover:text-stone-900 dark:hover:text-stone-100'
               )}
             >
               {item.label}
@@ -94,18 +94,18 @@ export const ExpensesPage: React.FC = () => {
 
         {/* Category Filter Dropdown */}
         <div className="flex items-center gap-2">
-          <Filter className="w-4 h-4 text-stone-400 shrink-0" />
+          <Filter className="w-4 h-4 text-stone-400 dark:text-stone-500 shrink-0" />
           <select
             value={categoryFilter}
             onChange={(e) => {
               setCategoryFilter(e.target.value);
               setPage(1);
             }}
-            className="bg-stone-50 border border-stone-200 rounded-xl px-3 py-1.5 text-xs text-stone-800 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="bg-stone-50 dark:bg-stone-900 border border-stone-200 dark:border-stone-700 rounded-xl px-3 py-1.5 text-xs text-stone-800 dark:text-stone-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
-            <option value="">All Categories</option>
+            <option value="" className="dark:bg-stone-900">All Categories</option>
             {categories.map((c) => (
-              <option key={c.category_id} value={c.category_id}>
+              <option key={c.category_id} value={c.category_id} className="dark:bg-stone-900">
                 {c.category_name}
               </option>
             ))}
@@ -114,11 +114,11 @@ export const ExpensesPage: React.FC = () => {
       </Card>
 
       {/* Main Expenses Table */}
-      <Card className="overflow-hidden border-stone-200/80">
+      <Card className="overflow-hidden border-stone-200/80 dark:border-stone-800">
         <div className="overflow-x-auto">
           <table className="w-full text-start text-xs border-collapse">
             <thead>
-              <tr className="bg-stone-50/70 border-b border-stone-200/80 text-[11px] font-bold uppercase tracking-wider text-stone-500">
+              <tr className="bg-stone-50/70 dark:bg-stone-900/60 border-b border-stone-200/80 dark:border-stone-800 text-[11px] font-bold uppercase tracking-wider text-stone-500 dark:text-stone-400">
                 <th scope="col" className="py-3 px-4 text-start">Date</th>
                 <th scope="col" className="py-3 px-4 text-start">Submitter</th>
                 <th scope="col" className="py-3 px-4 text-start">Category</th>
@@ -129,10 +129,10 @@ export const ExpensesPage: React.FC = () => {
                 <th scope="col" className="py-3 px-4 text-end">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-stone-100">
+            <tbody className="divide-y divide-stone-100 dark:divide-stone-800/80">
               {isLoading ? (
                 <tr>
-                  <td colSpan={8} className="py-12 text-center text-stone-400">
+                  <td colSpan={8} className="py-12 text-center text-stone-400 dark:text-stone-500">
                     <div className="flex flex-col items-center justify-center gap-2">
                       <Receipt className="w-6 h-6 animate-pulse text-indigo-500" />
                       <span>Loading expense ledger...</span>
@@ -141,17 +141,17 @@ export const ExpensesPage: React.FC = () => {
                 </tr>
               ) : isError ? (
                 <tr>
-                  <td colSpan={8} className="py-10 text-center text-red-600">
+                  <td colSpan={8} className="py-10 text-center text-red-600 dark:text-red-400">
                     Failed to load expenses. {(error as any)?.message}
                   </td>
                 </tr>
               ) : expenses.length === 0 ? (
                 <tr>
-                  <td colSpan={8} className="py-12 text-center text-stone-400">
+                  <td colSpan={8} className="py-12 text-center text-stone-400 dark:text-stone-500">
                     <div className="flex flex-col items-center justify-center gap-2">
-                      <Receipt className="w-8 h-8 text-stone-300" />
-                      <p className="font-semibold text-stone-600">No expenses found</p>
-                      <p className="text-xs text-stone-400">
+                      <Receipt className="w-8 h-8 text-stone-300 dark:text-stone-600" />
+                      <p className="font-semibold text-stone-600 dark:text-stone-300">No expenses found</p>
+                      <p className="text-xs text-stone-400 dark:text-stone-500">
                         Try adjusting your filters or click "New Expense" to record one.
                       </p>
                     </div>
@@ -159,40 +159,40 @@ export const ExpensesPage: React.FC = () => {
                 </tr>
               ) : (
                 expenses.map((expense: ExpenseItem) => (
-                  <tr key={expense.expense_id} className="hover:bg-stone-50/60 transition-colors">
+                  <tr key={expense.expense_id} className="hover:bg-stone-50/60 dark:hover:bg-stone-800/40 transition-colors">
                     {/* Date */}
-                    <td className="py-3.5 px-4 font-medium text-stone-900 whitespace-nowrap">
+                    <td className="py-3.5 px-4 font-medium text-stone-900 dark:text-stone-100 whitespace-nowrap">
                       {new Date(expense.expense_date).toLocaleDateString()}
                     </td>
 
                     {/* Submitter */}
-                    <td className="py-3.5 px-4 text-stone-800 font-semibold whitespace-nowrap">
+                    <td className="py-3.5 px-4 text-stone-800 dark:text-stone-200 font-semibold whitespace-nowrap">
                       {expense.submitted_by.full_name}
                     </td>
 
                     {/* Category */}
-                    <td className="py-3.5 px-4 text-stone-600 whitespace-nowrap">
+                    <td className="py-3.5 px-4 text-stone-600 dark:text-stone-400 whitespace-nowrap">
                       {expense.category.category_name}
                     </td>
 
                     {/* Department / Scope */}
-                    <td className="py-3.5 px-4 text-stone-600 whitespace-nowrap">
-                      <span className="font-medium text-stone-800">
+                    <td className="py-3.5 px-4 text-stone-600 dark:text-stone-400 whitespace-nowrap">
+                      <span className="font-medium text-stone-800 dark:text-stone-200">
                         {expense.department.department_name}
                       </span>
                       {expense.project ? (
-                        <span className="block text-[10px] text-indigo-600 font-medium">
+                        <span className="block text-[10px] text-indigo-600 dark:text-indigo-400 font-medium">
                           CapEx: {expense.project.project_name}
                         </span>
                       ) : (
-                        <span className="block text-[10px] text-stone-400">
+                        <span className="block text-[10px] text-stone-400 dark:text-stone-500">
                           OpEx (Direct)
                         </span>
                       )}
                     </td>
 
                     {/* Amount */}
-                    <td className="py-3.5 px-4 text-end font-bold text-stone-900 whitespace-nowrap font-display text-sm">
+                    <td className="py-3.5 px-4 text-end font-bold text-stone-900 dark:text-stone-100 whitespace-nowrap font-display text-sm">
                       ${Number(expense.amount).toLocaleString('en-US', { minimumFractionDigits: 2 })}
                     </td>
 
@@ -219,12 +219,12 @@ export const ExpensesPage: React.FC = () => {
                     {/* Receipts count */}
                     <td className="py-3.5 px-4 text-center whitespace-nowrap">
                       {expense.attachments?.length > 0 ? (
-                        <span className="inline-flex items-center gap-1 text-[11px] font-medium text-stone-600 bg-stone-100 px-2 py-0.5 rounded-md">
-                          <FileText className="w-3 h-3 text-indigo-600" />
+                        <span className="inline-flex items-center gap-1 text-[11px] font-medium text-stone-600 dark:text-stone-300 bg-stone-100 dark:bg-stone-800 px-2 py-0.5 rounded-md">
+                          <FileText className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />
                           {expense.attachments.length}
                         </span>
                       ) : (
-                        <span className="text-stone-300">—</span>
+                        <span className="text-stone-300 dark:text-stone-600">—</span>
                       )}
                     </td>
 
@@ -234,7 +234,7 @@ export const ExpensesPage: React.FC = () => {
                         variant="ghost"
                         size="sm"
                         onClick={() => setSelectedExpenseId(expense.expense_id)}
-                        className="h-7 px-2 text-indigo-600 hover:text-indigo-900 hover:bg-indigo-50 gap-1 text-xs"
+                        className="h-7 px-2 text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-300 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 gap-1 text-xs"
                       >
                         <Eye className="w-3.5 h-3.5" />
                         <span>View</span>
@@ -248,7 +248,7 @@ export const ExpensesPage: React.FC = () => {
         </div>
 
         {/* Pagination */}
-        <div className="p-4 bg-white border-t border-stone-100">
+        <div className="p-4 bg-white dark:bg-[#151A2D] border-t border-stone-100 dark:border-stone-800">
           <Pagination
             meta={meta}
             currentPage={page}

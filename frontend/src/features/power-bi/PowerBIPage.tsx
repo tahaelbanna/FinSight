@@ -81,7 +81,7 @@ export const PowerBIPage: React.FC = () => {
   return (
     <div className="space-y-6 max-w-7xl mx-auto">
       {/* Workspace Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-stone-200/80">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-stone-200/80 dark:border-stone-800">
         <div>
           <div className="flex items-center gap-2 mb-1.5">
             <Badge variant="indigo" size="md">
@@ -90,25 +90,25 @@ export const PowerBIPage: React.FC = () => {
             </Badge>
             {config.isConfigured ? (
               <Badge variant="success" size="md">
-                <CheckCircle2 className="w-3.5 h-3.5 mr-1 text-emerald-600" />
+                <CheckCircle2 className="w-3.5 h-3.5 mr-1 text-emerald-600 dark:text-emerald-400" />
                 Live Embedded
               </Badge>
             ) : (
               <Badge variant="warning" size="md">
-                <AlertCircle className="w-3.5 h-3.5 mr-1 text-amber-600" />
+                <AlertCircle className="w-3.5 h-3.5 mr-1 text-amber-600 dark:text-amber-400" />
                 Setup Required
               </Badge>
             )}
             <Badge variant="neutral" size="md">
-              <ShieldCheck className="w-3.5 h-3.5 mr-1 text-stone-500" />
+              <ShieldCheck className="w-3.5 h-3.5 mr-1 text-stone-500 dark:text-stone-400" />
               <span className="capitalize">{user?.role?.replace('_', ' ')} Scope</span>
             </Badge>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-stone-900 tracking-tight font-display">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-stone-900 dark:text-stone-100 tracking-tight font-display">
             Enterprise Power BI Workspace
           </h1>
-          <p className="mt-1 text-xs sm:text-sm text-stone-600 max-w-2xl">
+          <p className="mt-1 text-xs sm:text-sm text-stone-600 dark:text-stone-400 max-w-2xl">
             Interactive analytical dashboards with advanced slicing, multi-year cross-filtering, and organizational drilldowns.
           </p>
         </div>
@@ -119,9 +119,9 @@ export const PowerBIPage: React.FC = () => {
             <Button
               variant="outline"
               size="sm"
-              className="h-9 px-3.5 text-xs text-stone-700 bg-white hover:bg-stone-50 shadow-2xs"
+              className="h-9 px-3.5 text-xs text-stone-700 dark:text-stone-200 shadow-2xs"
             >
-              <LineChart className="w-3.5 h-3.5 mr-1.5 text-indigo-600" />
+              <LineChart className="w-3.5 h-3.5 mr-1.5 text-indigo-600 dark:text-indigo-400" />
               Native Analytics
             </Button>
           </Link>
@@ -133,10 +133,10 @@ export const PowerBIPage: React.FC = () => {
                 size="sm"
                 onClick={handleRefresh}
                 disabled={embedState !== 'rendered'}
-                className="h-9 px-3 text-xs text-stone-700 bg-white hover:bg-stone-50 shadow-2xs"
+                className="h-9 px-3 text-xs text-stone-700 dark:text-stone-200 shadow-2xs"
                 title="Refresh Report Data"
               >
-                <RefreshCw className="w-3.5 h-3.5 mr-1.5 text-stone-500" />
+                <RefreshCw className="w-3.5 h-3.5 mr-1.5 text-stone-500 dark:text-stone-400" />
                 Refresh
               </Button>
 
@@ -145,10 +145,10 @@ export const PowerBIPage: React.FC = () => {
                 size="sm"
                 onClick={handleFullScreen}
                 disabled={embedState !== 'rendered'}
-                className="h-9 px-3 text-xs text-stone-700 bg-white hover:bg-stone-50 shadow-2xs"
+                className="h-9 px-3 text-xs text-stone-700 dark:text-stone-200 shadow-2xs"
                 title="View Fullscreen"
               >
-                <Maximize2 className="w-3.5 h-3.5 mr-1.5 text-stone-500" />
+                <Maximize2 className="w-3.5 h-3.5 mr-1.5 text-stone-500 dark:text-stone-400" />
                 Fullscreen
               </Button>
             </>
@@ -209,16 +209,16 @@ export const PowerBIPage: React.FC = () => {
       )}
 
       {/* Footer Info Banner */}
-      <div className="p-4 rounded-2xl bg-stone-100/70 border border-stone-200/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-stone-600">
+      <div className="p-4 rounded-2xl bg-stone-100/70 dark:bg-stone-900/60 border border-stone-200/80 dark:border-stone-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-stone-600 dark:text-stone-400">
         <div className="flex items-center gap-2">
-          <ShieldCheck className="w-4 h-4 text-indigo-600 shrink-0" />
+          <ShieldCheck className="w-4 h-4 text-indigo-600 dark:text-indigo-400 shrink-0" />
           <span>
-            Active Catalog Report: <strong className="text-stone-900">{activeReport.title}</strong> — Authorized for {activeReport.allowedRoles.map((r) => r.replace('_', ' ')).join(', ')}.
+            Active Catalog Report: <strong className="text-stone-900 dark:text-stone-100">{activeReport.title}</strong> — Authorized for {activeReport.allowedRoles.map((r) => r.replace('_', ' ')).join(', ')}.
           </span>
         </div>
         <Link
           to="/analytics"
-          className="text-indigo-600 font-semibold hover:text-indigo-700 flex items-center gap-1 shrink-0"
+          className="text-indigo-600 dark:text-indigo-400 font-semibold hover:text-indigo-700 dark:hover:text-indigo-300 flex items-center gap-1 shrink-0"
         >
           <span>Switch to Native Analytics</span>
         </Link>

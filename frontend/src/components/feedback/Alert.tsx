@@ -19,10 +19,10 @@ export const Alert: React.FC<AlertProps> = ({
       role="alert"
       className={cn(
         'flex items-start gap-3 p-4 rounded-xl border text-sm leading-relaxed',
-        variant === 'danger' && 'bg-red-50/80 border-red-200 text-red-900',
-        variant === 'warning' && 'bg-amber-50/80 border-amber-200 text-amber-900',
-        variant === 'success' && 'bg-emerald-50/80 border-emerald-200 text-emerald-900',
-        variant === 'info' && 'bg-indigo-50/80 border-indigo-200 text-indigo-900',
+        variant === 'danger' && 'bg-red-50/80 dark:bg-red-950/40 border-red-200 dark:border-red-900/60 text-red-900 dark:text-red-200',
+        variant === 'warning' && 'bg-amber-50/80 dark:bg-amber-950/40 border-amber-200 dark:border-amber-900/60 text-amber-900 dark:text-amber-200',
+        variant === 'success' && 'bg-emerald-50/80 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-900/60 text-emerald-900 dark:text-emerald-200',
+        variant === 'info' && 'bg-indigo-50/80 dark:bg-indigo-950/40 border-indigo-200 dark:border-indigo-900/60 text-indigo-900 dark:text-indigo-200',
         className
       )}
       {...props}

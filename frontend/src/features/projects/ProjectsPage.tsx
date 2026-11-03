@@ -82,10 +82,10 @@ export const ProjectsPage: React.FC = () => {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold font-display text-stone-900">
+          <h1 className="text-2xl font-bold font-display text-stone-900 dark:text-stone-100">
             Capital Projects
           </h1>
-          <p className="text-sm text-stone-500 mt-1">
+          <p className="text-sm text-stone-500 dark:text-stone-400 mt-1">
             Track multi-year enterprise projects and associated CapEx expenditure
           </p>
         </div>
@@ -99,10 +99,10 @@ export const ProjectsPage: React.FC = () => {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-white p-3 rounded-xl border border-stone-200 shadow-xs space-y-3">
+      <div className="bg-white dark:bg-[#151A2D] p-3 rounded-xl border border-stone-200 dark:border-stone-800 shadow-xs space-y-3">
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
-            <Search className="w-4 h-4 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-stone-400 dark:text-stone-500 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               placeholder="Search projects by name..."
@@ -111,7 +111,7 @@ export const ProjectsPage: React.FC = () => {
                 setSearch(e.target.value);
                 setPage(1);
               }}
-              className="w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-stone-200 bg-stone-50/50 text-stone-900 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+              className="w-full pl-9 pr-3 py-2 text-sm rounded-lg border border-stone-200 dark:border-stone-700 bg-stone-50/50 dark:bg-stone-900/60 text-stone-900 dark:text-stone-100 placeholder:text-stone-400 dark:placeholder:text-stone-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
             />
           </div>
 
@@ -123,11 +123,11 @@ export const ProjectsPage: React.FC = () => {
                 setPage(1);
               }}
               aria-label="Filter by department"
-              className="w-full py-2 px-3 text-sm rounded-lg border border-stone-200 bg-stone-50/50 text-stone-900 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+              className="w-full py-2 px-3 text-sm rounded-lg border border-stone-200 dark:border-stone-700 bg-stone-50/50 dark:bg-stone-900/60 text-stone-900 dark:text-stone-100 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
             >
-              <option value="">All Departments</option>
+              <option value="" className="dark:bg-stone-900">All Departments</option>
               {departments.map((d) => (
-                <option key={d.department_id} value={d.department_id}>
+                <option key={d.department_id} value={d.department_id} className="dark:bg-stone-900">
                   {d.department_name}
                 </option>
               ))}
@@ -145,10 +145,10 @@ export const ProjectsPage: React.FC = () => {
                   setSelectedStatus(status);
                   setPage(1);
                 }}
-                className={`px-3 py-1 text-xs font-semibold rounded-lg capitalize transition-colors ${
+                className={`px-3 py-1 text-xs font-semibold rounded-lg capitalize transition-colors cursor-pointer ${
                   selectedStatus === status
                     ? 'bg-indigo-600 text-white shadow-xs'
-                    : 'text-stone-600 hover:bg-stone-100'
+                    : 'text-stone-600 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-800 hover:text-stone-900 dark:hover:text-stone-100'
                 }`}
               >
                 {status.replace('_', ' ')}
@@ -159,23 +159,23 @@ export const ProjectsPage: React.FC = () => {
       </div>
 
       {/* Projects Table */}
-      <Card className="overflow-hidden border border-stone-200 shadow-xs bg-white">
+      <Card className="overflow-hidden border border-stone-200 dark:border-stone-800 shadow-xs bg-white dark:bg-[#151A2D]">
         {isLoading ? (
           <div className="p-8 text-center">
             <div className="w-8 h-8 border-3 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
-            <p className="text-sm text-stone-500">Loading projects...</p>
+            <p className="text-sm text-stone-500 dark:text-stone-400">Loading projects...</p>
           </div>
         ) : error ? (
-          <div className="p-8 text-center text-rose-500">
+          <div className="p-8 text-center text-rose-500 dark:text-rose-400">
             Failed to load projects. Please try refreshing.
           </div>
         ) : projects.length === 0 ? (
           <div className="p-12 text-center">
-            <Briefcase className="w-12 h-12 text-stone-300 mx-auto mb-3" />
-            <h3 className="text-base font-semibold text-stone-900">
+            <Briefcase className="w-12 h-12 text-stone-300 dark:text-stone-600 mx-auto mb-3" />
+            <h3 className="text-base font-semibold text-stone-900 dark:text-stone-100">
               No projects found
             </h3>
-            <p className="text-sm text-stone-500 max-w-sm mx-auto mt-1">
+            <p className="text-sm text-stone-500 dark:text-stone-400 max-w-sm mx-auto mt-1">
               There are no projects matching the specified search or filter criteria.
             </p>
           </div>
@@ -183,7 +183,7 @@ export const ProjectsPage: React.FC = () => {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse text-sm">
               <thead>
-                <tr className="bg-stone-50/75 border-b border-stone-200 text-xs font-semibold text-stone-500 uppercase tracking-wider">
+                <tr className="bg-stone-50/75 dark:bg-stone-900/60 border-b border-stone-200 dark:border-stone-800 text-xs font-semibold text-stone-500 dark:text-stone-400 uppercase tracking-wider">
                   <th scope="col" className="py-3 px-4">Project Name</th>
                   <th scope="col" className="py-3 px-4">Department</th>
                   <th scope="col" className="py-3 px-4">Timeline</th>
@@ -191,29 +191,29 @@ export const ProjectsPage: React.FC = () => {
                   {isAdmin && <th scope="col" className="py-3 px-4 text-right">Actions</th>}
                 </tr>
               </thead>
-              <tbody className="divide-y divide-stone-100">
+              <tbody className="divide-y divide-stone-100 dark:divide-stone-800">
                 {projects.map((p) => (
                   <tr
                     key={p.project_id}
-                    className="hover:bg-stone-50/60 transition-colors"
+                    className="hover:bg-stone-50/60 dark:hover:bg-stone-800/40 transition-colors"
                   >
                     <td className="py-3.5 px-4">
-                      <div className="font-semibold text-stone-900 flex items-center gap-2">
-                        <Briefcase className="w-4 h-4 text-indigo-500" />
+                      <div className="font-semibold text-stone-900 dark:text-stone-100 flex items-center gap-2">
+                        <Briefcase className="w-4 h-4 text-indigo-500 dark:text-indigo-400" />
                         <span>{p.project_name}</span>
                       </div>
                     </td>
 
-                    <td className="py-3.5 px-4 text-stone-600">
+                    <td className="py-3.5 px-4 text-stone-600 dark:text-stone-400">
                       <div className="flex items-center gap-1.5 text-xs">
-                        <Building className="w-3.5 h-3.5 text-stone-400" />
+                        <Building className="w-3.5 h-3.5 text-stone-400 dark:text-stone-500" />
                         <span>{p.department.department_name}</span>
                       </div>
                     </td>
 
-                    <td className="py-3.5 px-4 text-xs text-stone-600 whitespace-nowrap">
+                    <td className="py-3.5 px-4 text-xs text-stone-600 dark:text-stone-400 whitespace-nowrap">
                       <div className="flex items-center gap-1.5">
-                        <Calendar className="w-3.5 h-3.5 text-stone-400" />
+                        <Calendar className="w-3.5 h-3.5 text-stone-400 dark:text-stone-500" />
                         <span>
                           {formatDate(p.start_date)} – {formatDate(p.end_date)}
                         </span>
@@ -227,7 +227,7 @@ export const ProjectsPage: React.FC = () => {
                         <div className="flex items-center justify-end gap-1.5">
                           <button
                             onClick={() => setSelectedProjectForStatus(p)}
-                            className="p-1.5 text-stone-500 hover:text-indigo-600 hover:bg-indigo-50 rounded transition-colors"
+                            className="p-1.5 text-stone-500 dark:text-stone-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 rounded transition-colors"
                             title="Update Status"
                             aria-label={`Update status for ${p.project_name}`}
                           >
@@ -235,7 +235,7 @@ export const ProjectsPage: React.FC = () => {
                           </button>
                           <button
                             onClick={() => setSelectedProjectForEdit(p)}
-                            className="p-1.5 text-stone-500 hover:text-stone-900 hover:bg-stone-100 rounded transition-colors"
+                            className="p-1.5 text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 hover:bg-stone-100 dark:hover:bg-stone-800 rounded transition-colors"
                             title="Edit Details"
                             aria-label={`Edit details for ${p.project_name}`}
                           >
@@ -252,7 +252,7 @@ export const ProjectsPage: React.FC = () => {
         )}
 
         {meta && (
-          <div className="p-4 bg-white border-t border-stone-100">
+          <div className="p-4 bg-white dark:bg-[#151A2D] border-t border-stone-100 dark:border-stone-800">
             <Pagination
               meta={meta}
               currentPage={page}

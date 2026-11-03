@@ -64,25 +64,25 @@ export const DepartmentDetailsModal: React.FC<DepartmentDetailsModalProps> = ({
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="p-4 rounded-xl border border-stone-200 bg-white shadow-xs flex items-center gap-3">
-              <div className="p-2.5 rounded-lg bg-stone-100 text-stone-600">
+            <div className="p-4 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 shadow-xs flex items-center gap-3">
+              <div className="p-2.5 rounded-lg bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300">
                 <User className="w-5 h-5" />
               </div>
               <div>
-                <span className="text-xs font-medium text-stone-500">Designated Manager</span>
-                <p className="text-sm font-semibold text-stone-900">
+                <span className="text-xs font-medium text-stone-500 dark:text-stone-400">Designated Manager</span>
+                <p className="text-sm font-semibold text-stone-900 dark:text-stone-100">
                   {department.manager?.manager_name || 'Unassigned'}
                 </p>
               </div>
             </div>
 
-            <div className="p-4 rounded-xl border border-stone-200 bg-white shadow-xs flex items-center gap-3">
-              <div className="p-2.5 rounded-lg bg-stone-100 text-stone-600">
+            <div className="p-4 rounded-xl border border-stone-200 dark:border-stone-800 bg-white dark:bg-stone-900 shadow-xs flex items-center gap-3">
+              <div className="p-2.5 rounded-lg bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-300">
                 <Users className="w-5 h-5" />
               </div>
               <div>
-                <span className="text-xs font-medium text-stone-500">Total Personnel</span>
-                <p className="text-sm font-semibold text-stone-900">
+                <span className="text-xs font-medium text-stone-500 dark:text-stone-400">Total Personnel</span>
+                <p className="text-sm font-semibold text-stone-900 dark:text-stone-100">
                   {department.usersCount ?? (department as any).users?.length ?? 0} Members
                 </p>
               </div>
@@ -92,20 +92,20 @@ export const DepartmentDetailsModal: React.FC<DepartmentDetailsModalProps> = ({
           {/* Department Users / Staff if provided */}
           {(department as any).users && (department as any).users.length > 0 && (
             <div>
-              <h4 className="text-sm font-semibold text-stone-900 mb-3">
+              <h4 className="text-sm font-semibold text-stone-900 dark:text-stone-100 mb-3">
                 Department Personnel ({(department as any).users.length})
               </h4>
-              <div className="border border-stone-200 rounded-lg overflow-hidden divide-y divide-stone-100 max-h-56 overflow-y-auto">
+              <div className="border border-stone-200 dark:border-stone-800 rounded-lg overflow-hidden divide-y divide-stone-100 dark:divide-stone-800 max-h-56 overflow-y-auto">
                 {(department as any).users.map((u: any) => (
                   <div
                     key={u.user_id}
-                    className="p-3 bg-white flex items-center justify-between"
+                    className="p-3 bg-white dark:bg-stone-900 flex items-center justify-between"
                   >
                     <div>
-                      <p className="text-sm font-medium text-stone-900">
+                      <p className="text-sm font-medium text-stone-900 dark:text-stone-100">
                         {u.full_name}
                       </p>
-                      <p className="text-xs text-stone-500">{u.email}</p>
+                      <p className="text-xs text-stone-500 dark:text-stone-400">{u.email}</p>
                     </div>
                     <Badge variant="neutral" className="text-[10px] capitalize">
                       {u.role.replace('_', ' ')}

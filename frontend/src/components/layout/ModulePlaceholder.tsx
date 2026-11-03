@@ -22,8 +22,8 @@ export const ModulePlaceholder: React.FC<ModulePlaceholderProps> = ({
 }) => {
   return (
     <div className="max-w-4xl mx-auto space-y-6">
-      <Card variant="elevated" className="p-8 sm:p-12 text-center flex flex-col items-center border-stone-200">
-        <div className="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-5 border border-indigo-100 shadow-sm">
+      <Card variant="elevated" className="p-8 sm:p-12 text-center flex flex-col items-center border-stone-200 dark:border-stone-800">
+        <div className="w-14 h-14 rounded-2xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-5 border border-indigo-100 dark:border-indigo-900/50 shadow-sm">
           <Icon className="w-7 h-7" />
         </div>
 
@@ -34,21 +34,21 @@ export const ModulePlaceholder: React.FC<ModulePlaceholderProps> = ({
           </Badge>
         </div>
 
-        <h2 className="text-2xl font-bold text-stone-900 mb-2 font-display">
+        <h2 className="text-2xl font-bold text-stone-900 dark:text-stone-100 mb-2 font-display">
           {title} Module Shell
         </h2>
-        <p className="text-sm text-stone-600 max-w-lg mb-8 leading-relaxed">
+        <p className="text-sm text-stone-600 dark:text-stone-300 max-w-lg mb-8 leading-relaxed">
           {description}
         </p>
 
         {apiEndpoints.length > 0 && (
-          <div className="w-full max-w-md p-4 rounded-xl bg-stone-50 border border-stone-200/80 mb-8 text-start">
-            <p className="text-xs font-bold uppercase tracking-wider text-stone-500 mb-2">
+          <div className="w-full max-w-md p-4 rounded-xl bg-stone-50 dark:bg-stone-900/60 border border-stone-200/80 dark:border-stone-800 mb-8 text-start">
+            <p className="text-xs font-bold uppercase tracking-wider text-stone-500 dark:text-stone-400 mb-2">
               Verified Backend API Contract
             </p>
-            <div className="space-y-1 font-mono text-xs text-stone-700">
+            <div className="space-y-1 font-mono text-xs text-stone-700 dark:text-stone-300">
               {apiEndpoints.map((ep) => (
-                <div key={ep} className="px-2.5 py-1 rounded bg-white border border-stone-200/60 truncate">
+                <div key={ep} className="px-2.5 py-1 rounded bg-white dark:bg-stone-800 border border-stone-200/60 dark:border-stone-700 truncate">
                   {ep}
                 </div>
               ))}

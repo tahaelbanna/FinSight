@@ -62,7 +62,7 @@ export const PowerBIEmbedContainer: React.FC<PowerBIEmbedContainerProps> = ({
   const EmbedComponent = PowerBIEmbed as any;
 
   return (
-    <div className="w-full h-[720px] rounded-2xl overflow-hidden border border-stone-200/90 bg-white shadow-2xs">
+    <div className="w-full h-[720px] rounded-2xl overflow-hidden border border-stone-200/90 dark:border-stone-800 bg-white dark:bg-[#151A2D] shadow-2xs">
       <EmbedComponent
         embedConfig={embedConfig}
         eventHandlers={eventHandlersMap}

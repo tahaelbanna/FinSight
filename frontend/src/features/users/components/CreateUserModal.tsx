@@ -155,7 +155,7 @@ export const CreateUserModal: React.FC<CreateUserModalProps> = ({ isOpen, onClos
           />
         )}
 
-        <div className="pt-4 flex justify-end gap-3 border-t border-stone-100">
+        <div className="pt-4 flex justify-end gap-3 border-t border-stone-100 dark:border-stone-800">
           <Button type="button" variant="outline" onClick={onClose} disabled={isSubmitting}>
             Cancel
           </Button>

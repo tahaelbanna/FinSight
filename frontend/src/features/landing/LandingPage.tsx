@@ -307,9 +307,9 @@ export const LandingPage: React.FC = () => {
                     </div>
                   </div>
                   <div className="pt-3 border-t border-stone-200/70 dark:border-stone-800 flex items-center justify-between text-[11px] text-stone-600 dark:text-stone-400 mt-3">
-                    <span>Audit Status</span>
+                    <span>Demonstration Model</span>
                     <span className="font-semibold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
-                      <CheckCircle2 className="w-3 h-3" /> Reconciled
+                      <CheckCircle2 className="w-3 h-3" /> Formula Balanced
                     </span>
                   </div>
                 </div>
@@ -482,8 +482,8 @@ export const LandingPage: React.FC = () => {
             </div>
 
             <div className="mt-5 pt-3 border-t border-stone-100 dark:border-stone-800 text-[11px] text-stone-500 dark:text-stone-400 flex items-center justify-between">
-              <span>* Data source: FinSight Seed Demonstration Dataset. Excludes unapproved/pending draft submissions.</span>
-              <span className="font-semibold text-indigo-600 dark:text-indigo-400">Dual-Stream Verified</span>
+              <span>* Illustrative demonstration dataset. Excludes unapproved/pending draft submissions.</span>
+              <span className="font-semibold text-indigo-600 dark:text-indigo-400">Demonstration Distribution</span>
             </div>
           </div>
         </div>

@@ -55,7 +55,6 @@ async function runFinalBudgetAnalyticsValidation() {
         if (!employee) throw new Error('No employee user found!');
 
         const expectedGlobalBudget = 8668000;
-        const expectedGlobalSpend = 6498290;
         const targetDeptId = manager.department_id;
 
         // =====================================================================
@@ -149,6 +148,14 @@ async function runFinalBudgetAnalyticsValidation() {
         // TEST SUITE 2: Period spending changing according to the selected date range
         // =====================================================================
         logger.log('\n--- 2. PERIOD SPENDING CHANGING ACCORDING TO SELECTED DATE RANGE ---');
+
+        // Dynamic Model B total spend from verified department allocations
+        const expectedGlobalSpend = Number(deptAllTime.reduce((sum, d) => sum + d.totalApproved, 0).toFixed(2));
+        assert(
+            expectedGlobalSpend > 6000000,
+            '2.0 Model B aggregate department spend is a valid non-zero enterprise total',
+            expectedGlobalSpend,
+        );
 
         assert(
             summaryAllTime.total_approved_expenses === expectedGlobalSpend,

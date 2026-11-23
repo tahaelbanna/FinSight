@@ -2,36 +2,30 @@ import type { PowerBIReportMeta, PowerBIConfigState } from '../types/powerbi.typ
 import type { UserRole } from '../../../types/roles.types';
 
 /**
+ * Designated FinSight Power BI Live Embed Configuration
+ * Target Dashboard: FinSight Power BI Dashboard
+ * Aspect Ratio: 1140 x 541.25 (~2.106:1)
+ */
+export const DEFAULT_POWER_BI_EMBED_URL =
+  'https://app.powerbi.com/reportEmbed?reportId=809f893e-e567-4844-aa24-10971c2c07dc&autoAuth=true&ctid=27a388d0-1a33-462f-a48b-52c5342daf56';
+
+export const DEFAULT_POWER_BI_REPORT_ID = '809f893e-e567-4844-aa24-10971c2c07dc';
+export const DEFAULT_POWER_BI_TENANT_ID = '27a388d0-1a33-462f-a48b-52c5342daf56';
+
+/**
  * FinSight Power BI Enterprise Reports Catalog
- * Maps designated reports to authorized organizational roles
  */
 export const POWER_BI_REPORTS: PowerBIReportMeta[] = [
   {
     id: 'executive-summary',
-    title: 'Executive Financial Overview & KPI Suite',
-    subtitle: 'Consolidated OpEx & CapEx velocity and executive KPIs',
+    title: 'FinSight Enterprise Financial Dashboard',
+    subtitle: 'Model B Dual-Stream OpEx & CapEx spend intelligence',
     description:
-      'High-level executive metrics adhering to Model B accounting, tracking consolidated organizational spend against approved annual budgets.',
+      'Executive-level financial reporting adhering to Model B accounting, tracking consolidated organizational spend, department variances, and project capital allocations.',
     category: 'Executive',
-    allowedRoles: ['admin', 'finance_officer'],
-  },
-  {
-    id: 'department-comparison',
-    title: 'Department Budget Variance & CapEx Realization',
-    subtitle: 'Department operational budgets vs independent project capital investments',
-    description:
-      'Comparative cross-departmental view highlighting spending velocity, project realization, and overrun risk.',
-    category: 'Department',
     allowedRoles: ['admin', 'finance_officer', 'manager'],
-  },
-  {
-    id: 'expense-audit',
-    title: 'Expense Claim Audit & Policy Compliance',
-    subtitle: 'Manager review turnaround, claim categories, and policy adherence',
-    description:
-      'Audit trail analytics analyzing submission cycles, rejection rates with reasons, and categorical expense distributions.',
-    category: 'Compliance',
-    allowedRoles: ['admin', 'finance_officer', 'manager'],
+    embedUrl: DEFAULT_POWER_BI_EMBED_URL,
+    defaultReportId: DEFAULT_POWER_BI_REPORT_ID,
   },
 ];
 
@@ -44,28 +38,23 @@ export function getReportsForRole(role?: UserRole): PowerBIReportMeta[] {
 }
 
 /**
- * Read and validate public client-side environment configuration
+ * Read and validate client-side Power BI configuration.
+ * Defaults to the designated live report embed URL.
  */
 export function getPowerBIConfig(): PowerBIConfigState {
+  const embedUrl =
+    (import.meta.env.VITE_POWER_BI_EMBED_URL as string | undefined) ||
+    DEFAULT_POWER_BI_EMBED_URL;
+  const reportId =
+    (import.meta.env.VITE_POWER_BI_REPORT_ID as string | undefined) ||
+    DEFAULT_POWER_BI_REPORT_ID;
   const workspaceId = import.meta.env.VITE_POWER_BI_WORKSPACE_ID as string | undefined;
-  const reportId = import.meta.env.VITE_POWER_BI_REPORT_ID as string | undefined;
-  const embedUrl = import.meta.env.VITE_POWER_BI_EMBED_URL as string | undefined;
-  const embedToken = import.meta.env.VITE_POWER_BI_EMBED_TOKEN as string | undefined;
-
-  const missingVariables: string[] = [];
-  if (!embedUrl) missingVariables.push('VITE_POWER_BI_EMBED_URL');
-  if (!reportId) missingVariables.push('VITE_POWER_BI_REPORT_ID');
-  if (!workspaceId) missingVariables.push('VITE_POWER_BI_WORKSPACE_ID');
-
-  // To be considered fully configured for embedding, a valid embed URL and report ID must be present
-  const isConfigured = Boolean(embedUrl && reportId && embedToken);
 
   return {
-    isConfigured,
+    isConfigured: Boolean(embedUrl),
     workspaceId: workspaceId || undefined,
-    reportId: reportId || undefined,
-    embedUrl: embedUrl || undefined,
-    embedToken: embedToken || undefined,
-    missingVariables,
+    reportId,
+    embedUrl,
+    missingVariables: [],
   };
 }
